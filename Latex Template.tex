@@ -71,13 +71,14 @@ Some sorts of documents need abstracts. Others do not.
 %The following code is not run because of the percentage sign, but you might find it useful for future work
 % \tableofcontents
 
+
 \section{Introduction}
 
 Start your document with words, written in full sentences and paragraphs.
 %Using the percentage symbol, you can include comments in your code that do not appear in the output.
 It is a good idea to break your document into sections and subsections
 
-\section{Formating}
+\section{Formatting}
 
 We can \emph{emphasis} some words, i.e., make them \emph{italic}, and we can make some words \textbf{bold}.
 Note how using a new line in the code does not correspond to a new line in the output file.
@@ -88,7 +89,7 @@ which starts a new line but not a new paragraph.
 
 \subsection{lists}
 
-Lists can be numbered or ununmbered, and you can have sub-list inside a list.
+Lists can be numbered or unnumbered, and you can have sub-list inside a list.
 
 \begin{enumerate}
 	\item This is the first item in a numbered list.
@@ -110,7 +111,7 @@ Lists can be numbered or ununmbered, and you can have sub-list inside a list.
 
 \subsection{Definitions and theorems}
 
-Definitions, theorems, lemmas and so on, are 'enviroments' (like documents and lists). They need to begin and end.
+Definitions, theorems, lemmas and so on, are 'environments' (like documents and lists). They need to begin and end.
 
 \begin{definition}\label{my_def}
 	A \emph{label} allows the user to tell Latex 'remember the numbering of that definition/theorem/equation'
@@ -126,11 +127,11 @@ Definitions, theorems, lemmas and so on, are 'enviroments' (like documents and l
 \end{proof}
 
 \begin{theorem}
-	And a final theoremm
+	And a final theorem
 \end{theorem}
 
 \begin{proof}
-	Combining Definition \ref{my_def} with Lemman \ref{my_lem} we get Equation \ref{my_eqn} below.
+	Combining Definition \ref{my_def} with Lemma \ref{my_lem} we get Equation \ref{my_eqn} below.
 \end{proof}
 
 \section{Including maths}
@@ -158,7 +159,7 @@ A^{T} & =\begin{pmatrix}1 & 2\\
 \end{align}
 
 \section{References and Figures}
-\LaTeX{} \cite{lamport94} also allows you to cite your sources. For more details on how this can be done, we refer the reader to \cite[sec:~Embedded System]{referencing}. But once you have a bibliography, you can use the cite command easily. Finally we add Figure \ref{fig:logo} to show how to add graphics. Note that we first need to make sure to have the graphic uploaded to Overleaf  or saved in the same folder as your tex file (whichever is relevant to your case). Notice how the picture was resized using the scale command and that \LaTeX{} determine that the picture looks better above.
+\LaTeX{} \cite{lamport94} also allows you to cite your sources. For more details on how this can be done, we refer the reader to \cite[sec:~Embedded System]{referencing}. But once you have a bibliography, you can use the cite command easily. Finally we add Figure \ref{fig:logo} to show how to add graphics. Note that we first need to make sure to have the graphic uploaded to Overleaf  or saved in the same folder as your Tex file (whichever is relevant to your case). Notice how the picture was resized using the scale command and that \LaTeX{} determine that the picture looks better above.
 
 \begin{figure}
     \centering
