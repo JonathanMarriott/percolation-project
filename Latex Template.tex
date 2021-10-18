@@ -59,8 +59,8 @@ Level 6\\
 \today
 \end{center}
 	
-\title{A template and example of Latex}
-\author{authors in alphabetical order}
+\title{Percolation}
+\author{Jonathan Marriott}
 \date{}
 \maketitle
 
@@ -111,7 +111,17 @@ Lists can be numbered or unnumbered, and you can have sub-list inside a list.
 
 \subsection{Definitions and theorems}
 
-Definitions, theorems, lemmas and so on, are 'environments' (like documents and lists). They need to begin and end.
+We start with some basic definitions for Percolation, specifically bond percolation where we consider the edges on the graph to be either open or closed. 
+\begin{definition}\label{ints} 
+	$\mathbb{Z} = \{...,-2,-1,0,1,2,...\}$ and $\mathbb{Z}^d = \{(x_1,x_2,...,x_d) : x_i \in \mathbb{Z} \}$
+\end{definition}
+\begin{definition}\label{dist}
+	For $x,y\in \mathbb{Z}^d$, define the distance from x to y, denoted $\delta(x,y)$, by
+	$$\delta(x,y) := \sum_{i=1}^{d}|x-y|$$
+\end{definition}\label{lattice} 
+
+\begin{definition}\emph{d-dimensional cubic lattice}\\
+\end{definition}
 
 \begin{definition}\label{my_def}
 	A \emph{label} allows the user to tell Latex 'remember the numbering of that definition/theorem/equation'
@@ -133,6 +143,8 @@ Definitions, theorems, lemmas and so on, are 'environments' (like documents and 
 \begin{proof}
 	Combining Definition \ref{my_def} with Lemma \ref{my_lem} we get Equation \ref{my_eqn} below.
 \end{proof}
+
+\section{Existence of a critical value on $\mathbb{Z}^d$}
 
 \section{Including maths}
 
@@ -181,7 +193,7 @@ A^{T} & =\begin{pmatrix}1 & 2\\
 \bibitem{referencing}
     Wikibooks,
     \textit{\LaTeX/Bibliography Management},
-    [0nline],
+    [Online],
     Accessed at https://en.wikibooks.org/wiki/LaTeX/Bibliography\_Management,
     (DATE ACCESSED).
     
