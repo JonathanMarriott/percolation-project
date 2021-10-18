@@ -28,6 +28,7 @@
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem*{example}{Example}
 \newcommand{\ints}{\mathbb{Z}}
+\newcommand{\ztwodual}{(\ints^2)^*}
 %------------------
 
 %Everything before begin document is called the pre-amble and sets out how the document will look
@@ -110,7 +111,7 @@ A project on Percolation
 % 	\end{itemize}
 % \end{enumerate}
 \section{The Percolation Model}
-\subsection{Definitions and theorems}
+\subsection{Initial Definitions}
 
 We start with some basic definitions for Percolation on cubic lattices, specifically bond percolation where we consider the edges on the graph to be either open or closed. 
 \begin{definition}\label{ints} 
@@ -122,9 +123,9 @@ We start with some basic definitions for Percolation on cubic lattices, specific
 \end{definition}\label{lattice} 
 
 \begin{definition}[d-dimensional cubic lattice]{
-	We construct the lattice with vertices $\ints^d$ and edges between vertices when the distance between them is one.
+	We construct the lattice with vertices in $\ints^d$ and edges where the distance between vertices is one.
 	$$E(\ints^d) = \{u,v \in V(\ints^d): \delta(u,v) = 1)\}$$
-	We will often refer to this lattice as simply $\ints^d$ without specifing the edge set.
+	We will often refer to this lattice by the vertex set $\ints^d$ without specifing the edge set.
 }
 \end{definition}
 \subsection{The Model}
@@ -187,15 +188,18 @@ We show the existance of the critical value in this case by bounding it from abo
 	Then we can see there is a clear correspondence between the edges of $\ints^2$ and its dual, since each edge in the dual intersects a unique edge in the original graph. 
 	Thus we can create a mapping from the open and closed edges of $\ints^2$ to the dual graph, where the edge in the dual is open iff the intersecting edge in $\ints^2$ is open.\\
 	Then we notice that if there exists a cycle of closed edges in the dual graph enclosing the origin then the size of the open cluster at the origin is finite. 
-	\begin{lemma}
+	\begin{lemma}\label{originloop}
 		$|C| < \infty \iff \exists$ a cycle of closed edges in $(\ints^2)^*$  enclosing the origin
 	\end{lemma}
 	\begin{proof}
 		\textcolor{red}{todo or leave out?}
 	\end{proof}
-	
+	Let $X_n = \{$There is a length n cycle of closed edges in $\ztwodual$ which surrounds the origin\}
+	Then using Lemma \ref{originloop} we see
+	$$\mathbb{P}(|C| < \infty) = \mathbb{P}(\bigcup_{n=4}^\infty \mathbb{P}(X_n)) \leq \sum_{n=4}^\infty \mathbb{P}(X_n) \leq \sum_{n=4}^\infty n \cdot 4(3^{n-1})q^n$$
+	This sum is finite when $q<1/3$, which is when $p>2/3$. We can make the sum arbitrarily small when $p \rightarrow 1$, when the sum is smaller than 1 this imples $\theta(p) > 0$
 \end{proof}
-
+Hence $p_c \in (1/3,1)$
 
 \subsection {Existence of a critical value on $\ints^d$}
 
