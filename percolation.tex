@@ -135,7 +135,16 @@ We now take some $p \in [0,1]$ which will be our parameter which specifies the p
 Setting $q = 1-p$ we say an edge is open with probability p and closed with probability q.
 We can think of the open and closed edges defining a random subgraph of $\ints^d$ where only edges set to open are retained.\\
 \begin{definition}
-	Let $C(x)$ denote the open cluster containing x, which is the set of 
+	Let $C(x)$ denote the open cluster (component) containing x, which is the set of vertices in $\ints^d$ which are connected to x by a path of open edges.
+	We abbreviate the open cluster containing the origin $C(0) by C$
+\end{definition}
+\begin{definition}[Percolation function]{
+	We define the percolation function $\theta(p)$ as follows
+	$$\theta(p) = \mathbb{P}(|C| = \infty)$$
+	In words the percolation function is simply the probability that we can reach an infinite number of vertices from the origin by open edges. 
+	We also note that this is the same as asking what is the probability of an having an infinite length self-avoiding path of open edges starting at the origin.
+}
+	
 \end{definition}
 
 
@@ -192,7 +201,7 @@ We show the existence of the critical value in this case by bounding it from abo
 	We introduce the dual graph $(\ints^2)^*$ which has vertices in $(\ints^2 + \binom{1/2}{1/2} )$, as edges as you would expect between vertices at distance 1.
 	Then we can see there is a clear correspondence between the edges of $\ints^2$ and its dual, since each edge in the dual intersects a unique edge in the original graph. 
 	Thus we can create a mapping from the open and closed edges of $\ints^2$ to the dual graph, where the edge in the dual is open iff the intersecting edge in $\ints^2$ is open.\\
-	Then we notice that if there exists a cycle of closed edges in the dual graph enclosing the origin then the size of the open component at the origin is finite. 
+	Then we notice that if there exists a cycle of closed edges in the dual graph enclosing the origin then the size of the open cluster at the origin is finite. 
 	\begin{lemma}\label{originloop}
 		$|C| < \infty \iff \exists$ a cycle of closed edges in $(\ints^2)^*$  enclosing the origin
 	\end{lemma}
