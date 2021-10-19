@@ -6,8 +6,9 @@
 \usepackage{graphicx}
 \usepackage{enumerate}
 \usepackage{xcolor}
-%you can add more packages using the same code above
+\usepackage{biblatex}
 
+\addbibresource{percolation.bib}
 %------------------
 
 %\setlength{\topmargin}{0.0in}
@@ -126,12 +127,16 @@ We start with some basic definitions for Percolation on cubic lattices, specific
 	We construct the lattice with vertices in $\ints^d$ and edges where the distance between vertices is one.
 	$$E(\ints^d) = \{u,v \in V(\ints^d): \delta(u,v) = 1)\}$$
 	We will often refer to this lattice by the vertex set $\ints^d$ without specifying the edge set.
+	We also denote the origin by 0.
 }
 \end{definition}
 \subsection{The Model}
 We now take some $p \in [0,1]$ which will be our parameter which specifies the probability a given edge is open. 
 Setting $q = 1-p$ we say an edge is open with probability p and closed with probability q.
-We can think of the open and closed edges defining a subgraph of $\ints^d$ where only edges set to open are retained.
+We can think of the open and closed edges defining a random subgraph of $\ints^d$ where only edges set to open are retained.\\
+\begin{definition}
+	Let $C(x)$ denote the open cluster containing x, which is the set of 
+\end{definition}
 
 
 % \begin{definition}\label{my_def}
@@ -160,11 +165,11 @@ We can think of the open and closed edges defining a subgraph of $\ints^d$ where
 Trivially the critical value is p = 1. Consider the event $X_n = \{$There is an open self-avoiding path of length n starting at the origin$\}$ 
 Then $X_n \supseteq X_{n+1}$ and so 
 $$\lim_{n\rightarrow \infty} \mathbb{P} (X_n) = \theta(p)$$
-And since $\mathbb{P} (X_n) = 2p^n$, as the path can go left or right from the origin. We have for all $p <1$, $\theta(p) = 0$. Thus $\theta(p) > 0$ iff $p = 1$.
+And since $\mathbb{P} (X_n) = 2p^n$, as the path can go left or right from the origin. We have for all $p <1$, $\theta(p) = 0$. Thus $\theta(p) > 0$ iff $p = 1$. 
 
 
 \subsection {Existence of a critical value on $\ints^2$}
-We show the existence of the critical value in this case by bounding it from above and below.
+We show the existence of the critical value in this case by bounding it from above and below. We follow the proofs given in \cite{steif2011mini}
 \begin{theorem}
 	If $p < 1/3$, $\theta(p) = 0$.
 \end{theorem}
@@ -187,7 +192,7 @@ We show the existence of the critical value in this case by bounding it from abo
 	We introduce the dual graph $(\ints^2)^*$ which has vertices in $(\ints^2 + \binom{1/2}{1/2} )$, as edges as you would expect between vertices at distance 1.
 	Then we can see there is a clear correspondence between the edges of $\ints^2$ and its dual, since each edge in the dual intersects a unique edge in the original graph. 
 	Thus we can create a mapping from the open and closed edges of $\ints^2$ to the dual graph, where the edge in the dual is open iff the intersecting edge in $\ints^2$ is open.\\
-	Then we notice that if there exists a cycle of closed edges in the dual graph enclosing the origin then the size of the open cluster at the origin is finite. 
+	Then we notice that if there exists a cycle of closed edges in the dual graph enclosing the origin then the size of the open component at the origin is finite. 
 	\begin{lemma}\label{originloop}
 		$|C| < \infty \iff \exists$ a cycle of closed edges in $(\ints^2)^*$  enclosing the origin
 	\end{lemma}
@@ -199,7 +204,7 @@ We show the existence of the critical value in this case by bounding it from abo
 	$$\mathbb{P}(|C| < \infty) = \mathbb{P}(\bigcup_{n=4}^\infty \mathbb{P}(X_n)) \leq \sum_{n=4}^\infty \mathbb{P}(X_n) \leq \sum_{n=4}^\infty n \cdot 4(3^{n-1})q^n$$
 	This sum is finite when $q<1/3$, which is when $p>2/3$. We can make the sum arbitrarily small when $p \rightarrow 1$, when the sum is smaller than 1 this implies $\theta(p) > 0$
 \end{proof}
-Hence $p_c \in (1/3,1)$
+Hence the critical value $p_c \in (1/3,1)$
 
 \subsection {Existence of a critical value on $\ints^d$}
 
@@ -238,22 +243,23 @@ Hence $p_c \in (1/3,1)$
 %     \label{fig:logo}
 % \end{figure}
 
-
+\printbibliography
 % \begin{thebibliography}{99}
+% \bibitem{steif}
 
-% \bibitem{lamport94}
-%   Leslie Lamport,
-%   \textit{\LaTeX: a document preparation system},
-%   Addison Wesley, Massachusetts,
-%   2nd edition,
-%   1994.
+% % \bibitem{lamport94}
+% %   Leslie Lamport,
+% %   \textit{\LaTeX: a document preparation system},
+% %   Addison Wesley, Massachusetts,
+% %   2nd edition,
+% %   1994.
   
-% \bibitem{referencing}
-%     Wikibooks,
-%     \textit{\LaTeX/Bibliography Management},
-%     [Online],
-%     Accessed at https://en.wikibooks.org/wiki/LaTeX/Bibliography\_Management,
-%     (DATE ACCESSED).
+% % \bibitem{referencing}
+% %     Wikibooks,
+% %     \textit{\LaTeX/Bibliography Management},
+% %     [Online],
+% %     Accessed at https://en.wikibooks.org/wiki/LaTeX/Bibliography\_Management,
+% %     (DATE ACCESSED).
     
 
 % \end{thebibliography}
