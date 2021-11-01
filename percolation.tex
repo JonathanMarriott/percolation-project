@@ -132,12 +132,26 @@ We start with some basic definitions for Percolation on cubic lattices, specific
 \end{definition}
 \subsection{The Model}
 We now take some $p \in [0,1]$ which will be our parameter which specifies the probability a given edge is open. 
-Setting $q = 1-p$ we say an edge is open with probability p and closed with probability q.
+Setting $q = 1-p$ we say each edge is independently open with probability p and closed with probability q.
 We can think of the open and closed edges defining a random subgraph of $\ints^d$ where only edges set to open are retained.\\
 \begin{definition}
 	Let $C(x)$ denote the open cluster (component) containing x, which is the set of vertices in $\ints^d$ which are connected to x by a path of open edges.
-	We abbreviate the open cluster containing the origin $C(0) by C$
+	We abbreviate the open cluster containing the origin $C(0)$ by $C$
 \end{definition}
+
+\subsection{Probability Space}
+We now introduce the Measure thoery basics required to define the probability measure for our percolation model.
+\begin{definition}[$\sigma$-algebra]
+	For some set $X$, we call $\mathcal{A} \subseteq \mathcal{P}(X)$ a  $\sigma$-algebra if:
+	\begin{enumerate}
+		\item $\emptyset,X \in \mathcal{A}$
+		\item $A \in \mathcal{A} \implies A^c := X \setminus A \in \mathcal{A}$ (Closed under complement)
+		\item For $A_i \in \mathcal{A}, i \in \mathbb{N}$ we have that $\bigcup^\infty_{i=1} A_i \in \mathcal{A}$ (Closed under countable unions)
+	\end{enumerate}
+	We call the elements of $\mathcal{A}$ measurable sets.
+\end{definition}
+We note by De Morgan's Laws that a $\sigma$-algebra is also closed under countable intersections.
+
 \begin{definition}[Percolation function]{
 	We define the percolation function $\theta(p)$ as follows
 	$$\theta(p) = \mathbb{P}(|C| = \infty)$$
@@ -195,10 +209,10 @@ We show the existence of the critical value in this case by bounding it from abo
 \end{proof}
 
 \begin{theorem}
-	For p close to 1, we have $\theta(p) > 1$
+	For p close to 1, we have $\theta(p) > 0$
 \end{theorem}
 \begin{proof}
-	We introduce the dual graph $(\ints^2)^*$ which has vertices in $(\ints^2 + \binom{1/2}{1/2} )$, as edges as you would expect between vertices at distance 1.
+	We introduce the dual graph $(\ints^2)^*$ which has vertices in $(\ints^2 + \binom{1/2}{1/2} )$, and edges as you would expect between vertices at distance 1.
 	Then we can see there is a clear correspondence between the edges of $\ints^2$ and its dual, since each edge in the dual intersects a unique edge in the original graph. 
 	Thus we can create a mapping from the open and closed edges of $\ints^2$ to the dual graph, where the edge in the dual is open iff the intersecting edge in $\ints^2$ is open.\\
 	Then we notice that if there exists a cycle of closed edges in the dual graph enclosing the origin then the size of the open cluster at the origin is finite. 
@@ -206,7 +220,7 @@ We show the existence of the critical value in this case by bounding it from abo
 		$|C| < \infty \iff \exists$ a cycle of closed edges in $(\ints^2)^*$  enclosing the origin
 	\end{lemma}
 	\begin{proof}
-		\textcolor{red}{todo or leave out?}
+		{Thinking visually since there is a ring of closed edges in the dual, the open edges from the origin in the original graph cannot extend beyond this ring. A more formal pure graph theory proof can be made but is ommitted here.  }
 	\end{proof}
 	Let $X_n = \{$There is a length n cycle of closed edges in $\ztwodual$ which surrounds the origin\}
 	Then using Lemma \ref{originloop} we see
