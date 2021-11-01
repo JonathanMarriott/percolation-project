@@ -9,6 +9,7 @@
 \usepackage{biblatex}
 
 \addbibresource{percolation.bib}
+
 %------------------
 
 %\setlength{\topmargin}{0.0in}
@@ -168,7 +169,9 @@ We now take some $p \in [0,1]$ which will be our parameter which specifies the p
 Setting $q = 1-p$ we say each edge is independently open with probability p and closed with probability q.
 We can think of the open and closed edges defining a random subgraph of $\ints^d$ where only edges set to open are retained.\\
 We let our sample space $\Omega = \prod_{e \in E(\ints^d)} \{0,1\}$ where an edge in state 1 represents it is open, and 0 that it is closed.\\
-Then we must define $\mathcal{F}$, some \sigalg of $\Omega$, the events we wish to assign a probability to. Clearly we cannot just take the $\mathcal{F} = \mathcal{P}(\Omega)$, since we have uncountably many elements in  
+Then we must define $\mathcal{F}$, some \sigalg of $\Omega$, the events we wish to assign a probability to. Clearly we cannot just take $\mathcal{F} = \mathcal{P}(\Omega)$, since we have uncountably many elements, which we call configurations in $\Omega$. This can be easily seen via a diagonalization argument. 
+It turns out we can generate the \sigalg by cylinder sets.
+
 \begin{definition}
 	Let $C(x)$ denote the open cluster (component) containing x, which is the set of vertices in $\ints^d$ which are connected to x by a path of open edges.
 	We abbreviate the open cluster containing the origin $C(0)$ by $C$
