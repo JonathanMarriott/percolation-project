@@ -32,6 +32,7 @@
 \newcommand{\ints}{\mathbb{Z}}
 \newcommand{\sigalg}{$\sigma$-algebra }
 \newcommand{\ztwodual}{(\ints^2)^*}
+\newcommand{\prob}{\mathbb{P}_p}
 %------------------
 
 %Everything before begin document is called the pre-amble and sets out how the document will look
@@ -117,9 +118,11 @@ A project on Percolation
 \subsection{Initial Definitions}
 
 We start with some basic definitions for Percolation on cubic lattices, specifically bond percolation where we consider the edges on the graph to be either open or closed. 
+
 \begin{definition}\label{ints} 
 	$\mathbb{Z} = \{...,-2,-1,0,1,2,...\}$ and $\mathbb{Z}^d = \{(x_1,x_2,...,x_d) : x_i \in \mathbb{Z} \}$
 \end{definition}
+
 \begin{definition}\label{dist}
 	For $x,y\in \mathbb{Z}^d$, define the distance from x to y, denoted $\delta(x,y)$, by
 	$$\delta(x,y) := \sum_{i=1}^{d}|x-y|$$
@@ -135,7 +138,9 @@ We start with some basic definitions for Percolation on cubic lattices, specific
 
 
 \subsection{Probability Space}
+
 We now introduce the Measure theory basics required to define the probability measure and subsequently the probability space for our percolation model.
+
 \begin{definition}[$\sigma$-algebra]
 	For some set $X$, we call $\mathcal{A} \subseteq \mathcal{P}(X)$, a subset of the power set of X, a  $\sigma$-algebra of $X$ if:
 	\begin{enumerate}
@@ -145,15 +150,19 @@ We now introduce the Measure theory basics required to define the probability me
 	\end{enumerate}
 	We call the pair $(X,\mathcal{A})$ a measurable space, and elements of $\mathcal{A}$ measurable sets.
 \end{definition}
+
 We note by De Morgan's Laws that a $\sigma$-algebra is also closed under countable intersections.
+
 \begin{definition}[Measure]
 	A measure $\mu$ on a measurable space $(X,\mathcal{A})$ is a function $\mu: \mathcal{A} \rightarrow [0,\infty]$ where 
 	$\mu(\emptyset) = 0 $ and for disjoint $A_i \in \mathcal{A}, i \in \mathbb{N}$ we have that
 	$$ \mu(\bigcup^\infty_{i=1} A_i) = \sum_{i = 1}^{\infty} \mu(A_i)  $$
 	We call the triple $(X,\mathcal{A},\mu)$ a measure space.
 \end{definition}
+
 In the context above if we think about X being our set of outcomes, and the sigma algebra of X representing the set of events we wish to assign a probability to, it's intuitive to give these events a probability by a measure. 
 Clearly we need to restrict our probability measure such that its domain is the interval $[0,1]$ 
+
 \begin{definition}[Probability Measure]
 	Let $\Omega$ be the set of all outcomes (the sample space) and $\mathcal{F}$ be a \sigalg of $\Omega$ where the elements are events we wish to consider (the event space). Then a measure $\mathbb{P}$ on $(\Omega,\mathcal{F})$ is a probability measure if:
 	\begin{enumerate}
@@ -165,17 +174,32 @@ Clearly we need to restrict our probability measure such that its domain is the 
 \end{definition}
 
 \subsection{The Model}
+
 We now take some $p \in [0,1]$ which will be our parameter which specifies the probability a given edge is open. 
 Setting $q = 1-p$ we say each edge is independently open with probability p and closed with probability q.
 We can think of the open and closed edges defining a random subgraph of $\ints^d$ where only edges set to open are retained.\\
+
 We let our sample space $\Omega = \prod_{e \in E} \{0,1\}$ where $E = E(\ints^d)$ and an edge in state 1 represents it is open, and 0 that it is closed.\\
-Then we must define $\mathcal{F}$, some \sigalg of $\Omega$, the events we wish to assign a probability to. Clearly we cannot just take $\mathcal{F} = \mathcal{P}(\Omega)$, since we have uncountably many elements, which we call configurations in $\Omega$. This can be easily seen via a diagonalization argument. 
-It turns out we can generate the \sigalg we want by the cylinder sets of $\Omega$.
+We may refer to $\Omega$ as the set of configurations, where a configuration $\omega$ is a function assigning edges to be open or closed, meaning 
+$$\omega:E \to \{0,1\}, e \mapsto \omega_e$$
+Then we must define $\mathcal{F}$, some \sigalg of $\Omega$, the events we wish to assign a probability to. 
+Clearly we cannot just take $\mathcal{F} = \mathcal{P}(\Omega)$, since we have uncountably many configurations in $\Omega$. 
+This can be easily seen via a diagonalization argument. 
+It turns out we can generate the \sigalg we want by the cylinder sets of $\Omega$. We base our definition on the one given by \cite{bollo2006}
+
 \begin{definition}[Cylinder Set]
-	We say a subset $C \subseteq \Omega$ is a cylinder set if and only if there exists a finite subset $F \subseteq E$ and such that 
-	
+	We say a subset $C \subseteq \Omega$ is a cylinder set if and only if there exists a finite subset $F \subseteq E$ and $\sigma \in \{0,1\}^F$ such that 
+	$$C(F,\sigma) = \{\omega \in \Omega: \omega_f = \sigma_f \text{ for }f \in F\}$$
+	In essence the cylinder set is the set of configurations $\omega$ which map all the edges in F to the same state that $\sigma$ does.
 \end{definition}
 
+Then we define $\mathcal{F}$ to be the set of all unions of cylinder sets of $\Omega$, then $\mathcal{F}$ is said to be generated by the cylinder sets of $\Omega$.
+In this case $\mathcal{F}$ is a \sigalg of $\Omega$. Intuitively $\mathcal{F}$ is the set of events which only depend on a finite number of edges.\\
+Next we define our probability measure on $(\Omega, \mathcal{F})$ by 
+$$\prob(C(F,\sigma)) = \prod_{f \in F} (p(\sigma_f) + q(1-\sigma_f)) $$
+Where as usual $q = 1-p$, and we use the subscript $p$ to emphasize that $p$ is the parameter in our model. Then $(\Omega, \mathcal{F}, \prob)$ is our probability space in which we examine the percolation model.
+\\
+We now lay out some definitions specific for percolation.
 \begin{definition}
 	Let $C(x)$ denote the open cluster (component) containing x, which is the set of vertices in $\ints^d$ which are connected to x by a path of open edges.
 	We abbreviate the open cluster containing the origin $C(0)$ by $C$
