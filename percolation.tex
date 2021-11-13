@@ -75,7 +75,7 @@ Level 6\\
 % \end{abstract}
 
 %The following code is not run because of the percentage sign, but you might find it useful for future work
-%  \tableofcontents
+\tableofcontents{}
 
 
 \section{Introduction}
@@ -299,7 +299,31 @@ We can easily derive the result that $p_c(d)\in (0,1)$ from the previous section
 We notice that for all $d\geq 2$ we can extract $\ints^d$ from $\ints^{d+1}$ by simply ignoring the extra edges and their states.
 Thus, if there exists an infinite open cluster in $\ints^d$ this would also imply there is one in $\ints^{d+1}$.
 Since we have just shown $p_c(2) \in (0,1)$ then we must also have $p_c(d) \in (0,1)$ for all d.
-% TODO #2 Fill in existance of critcal value on Z^d from Z^2
+
+{\color{red}{TODO: explain percolation function is non-decreasing in d?}}
+
+
+\section{Harris-Kesten Theorem}
+An important result in percolation theory is that the critical value for the square lattice is $\frac{1}{2}$. 
+This result came in two parts, firstly Harris \cite{harris_1960} showed that $p_c(2) \leq \frac{1}{2}$ in 1960.
+Then 20 years later Kesten \cite{kesten1980critical} proved $p_c(2) \geq \frac{1}{2}$, these results combined gave the result.
+
+\begin{theorem}[Harris-Kesten theorem]
+	The critical value on $\ints^2$,  $p_c(2) =  \frac{1}{2}$.
+\end{theorem}
+In this project our aim is to show the Harris part of the theorem, that $p_c(2) \leq \frac{1}{2}$. 
+To do this we first introduce some more foundational results.
+
+\begin{definition}[Increasing Event]
+	An event $ A \subseteq \Omega$ is increasing if when $\omega \in A$ and
+	$$\forall e \in E(\ints^d) \text{, } \omega_e = 1 \implies \omega'_e = 1$$
+	then $\omega' \in A$
+	Intuitively these are events where adding extra open edges to the configuration 
+\end{definition}
+
+\begin{theorem}[Harris' Inequality]
+
+\end{theorem}
 
 % \section{Including maths}
 
