@@ -317,13 +317,19 @@ To do this we first introduce some more foundational results.
 \begin{definition}[Increasing Event]
 	An event $ A \subseteq \Omega$ is increasing if when $\omega \in A$ and
 	$$\forall e \in E(\ints^d) \text{, } \omega_e = 1 \implies \omega'_e = 1$$
-	then $\omega' \in A$
-	Intuitively these are events where adding extra open edges to the configuration 
-\end{definition}
+	Then $\omega' \in A$. \\
+	\end{definition}
 
 \begin{theorem}[Harris' Inequality]
-
+If $A, B \subseteq \Omega$ are increasing events then 
+$$\mathbb{P}(A \cap B) \geq \mathbb{P}(A)\mathbb{P}(B)$$
 \end{theorem}
+\begin{proof}
+	Suppose some increasing events $A,B \subseteq \Omega$ which only depend on the states of a finite number of edges.
+	Say these edges are $e_1, e_2, ... , e_n$.
+	We work by induction on the size of $n$.\\
+	Consider when $n = 1$, then both $A$ and $B$ just depend on the state of $e_1$
+\end{proof}
 
 % \section{Including maths}
 
