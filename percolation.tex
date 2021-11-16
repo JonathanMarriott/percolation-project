@@ -185,7 +185,7 @@ $$\omega:E \to \{0,1\}, e \mapsto \omega_e$$
 Then we must define $\mathcal{F}$, some \sigalg of $\Omega$, the events we wish to assign a probability to. 
 Clearly we cannot just take $\mathcal{F} = \mathcal{P}(\Omega)$, since we have uncountably many configurations in $\Omega$. 
 This can be easily seen via a diagonalization argument. 
-It turns out we can generate the \sigalg we want by the cylinder sets of $\Omega$. We base our definition on the one given by \cite{bollo2006}
+It turns out we can generate the \sigalg we want by the cylinder sets of $\Omega$. We base our definition on the one given by \cite{bollo2006}.
 
 \begin{definition}[Cylinder Set]
 	We say a subset $C \subseteq \Omega$ is a cylinder set if and only if there exists a finite subset $F \subseteq E$ and $\sigma \in \{0,1\}^F$ such that 
@@ -198,6 +198,7 @@ In this case $\mathcal{F}$ is a \sigalg of $\Omega$. Intuitively $\mathcal{F}$ i
 Next we define our probability measure on $(\Omega, \mathcal{F})$ by 
 $$\prob(C(F,\sigma)) = \prod_{f \in F} (p(\sigma_f) + q(1-\sigma_f)) $$
 Where as usual $q = 1-p$, and we use the subscript $p$ to emphasize that $p$ is the parameter in our model. Then $(\Omega, \mathcal{F}, \prob)$ is our probability space in which we examine the percolation model.
+{\color{red}{TODO: Carathéodory's extension theorem gives extension of this to the \sigalg}}
 \\
 We now lay out some definitions specific for percolation.
 \begin{definition}
@@ -212,6 +213,7 @@ We now lay out some definitions specific for percolation.
 	We also note that this is the same as asking what is the probability of an having an infinite length self-avoiding path of open edges starting at the origin.
 }
 	
+{\color{red}{TODO: Show percolation function is increasing in p}}
 \end{definition}
 An interesting property of our percolation model is that it exhibits a phase transition. Where at some point the behaviour of the model changes notably.
 For the percolation model we see there is some value of our parameter $p$, before which we know almost surely there is no infinitely connected cluster, and after which there may be one.
@@ -300,13 +302,13 @@ We notice that for all $d\geq 2$ we can extract $\ints^d$ from $\ints^{d+1}$ by 
 Thus, if there exists an infinite open cluster in $\ints^d$ this would also imply there is one in $\ints^{d+1}$.
 Since we have just shown $p_c(2) \in (0,1)$ then we must also have $p_c(d) \in (0,1)$ for all d.
 
-{\color{red}{TODO: explain percolation function is non-decreasing in d?}}
+{\color{red}{TODO: explain critical value is non-decreasing in d}}
 
 
 \section{Harris-Kesten Theorem}
 An important result in percolation theory is that the critical value for the square lattice is $\frac{1}{2}$. 
 This result came in two parts, firstly Harris \cite{harris_1960} showed that $p_c(2) \leq \frac{1}{2}$ in 1960.
-Then 20 years later Kesten \cite{kesten1980critical} proved $p_c(2) \geq \frac{1}{2}$, these results combined gave the result.
+Then 20 years later Kesten \cite{kesten1980critical} proved $p_c(2) \geq \frac{1}{2}$, these proofs combined resulted in the following theorem.
 
 \begin{theorem}[Harris-Kesten theorem]
 	The critical value on $\ints^2$,  $p_c(2) =  \frac{1}{2}$.
@@ -328,7 +330,21 @@ $$\mathbb{P}(A \cap B) \geq \mathbb{P}(A)\mathbb{P}(B)$$
 	Suppose some increasing events $A,B \subseteq \Omega$ which only depend on the states of a finite number of edges.
 	Say these edges are $e_1, e_2, ... , e_n$.
 	We work by induction on the size of $n$.\\
-	Consider when $n = 1$, then both $A$ and $B$ just depend on the state of $e_1$
+	Consider when $n = 1$, then both $A$ and $B$ just depend on the state of $e_1$. 
+	As both $A$ and $B$ are increasing, they must occur when $e_1$ is open since an increasing event cannot depend on edges being closed.
+	$$\mathbb{P}(A \cap B) =\prob(\omega_{e_1} = 1)= p \geq p^2 = \prob(\omega_{e_1} = 1)^2= \mathbb{P}(A)\mathbb{P}(B)$$
+	Since $p \in [0,1]$. So the theorem holds when $n=1$.\\
+	
+	% \\If $A$ and $B$ occur when $e_1$ is closed then similarly to above we get.
+	% $$\mathbb{P}(A \cap B) = q \geq q^2 = \mathbb{P}(A)\mathbb{P}(B)$$
+	% Again since $q \in [0,1]$. So the theorem holds.
+	% Finally, if one of $A$ and $B$ occur when $e_1$ is open and the other when it is closed then.
+	
+	Now suppose the theorem holds for $n=k$ and consider when $A$ and $B$ depend on the states of edges $e_1, e_2, ... , e_k,e_{k+1}$.
+	Let $A = A_0 \cup A_1$ where:
+	$$A_i =\{\omega \setminus (e_{k+1},\omega_{e_{k+1}}):\omega \in A\text{, }\omega_{k+1} = i\} $$
+	Similarly let $B = B_0 \cup B_1$ where the $B_i$  are defined in the same way as above.
+	{\color{red}{Look at Duminil-Copin notes}}
 \end{proof}
 
 % \section{Including maths}
