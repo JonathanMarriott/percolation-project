@@ -1,0 +1,1 @@
+{"rule":"WHERE_AS","sentence":"^\\QNext we define our probability measure on \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q by \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q Where as usual \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, and we use the subscript \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q to emphasize that \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q is the parameter in our model.\\E$"}
