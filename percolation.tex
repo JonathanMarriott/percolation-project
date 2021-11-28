@@ -212,31 +212,33 @@ We now lay out some definitions specific for percolation.
 \begin{definition}[Increasing Event]
 	An event $ A \subseteq \Omega$ is increasing if when $\omega \in A$ and
 	$$\forall e \in E(\ints^d) \text{, } \omega_e = 1 \implies \omega'_e = 1$$
-	Then $\omega' \in A$. \\
+	Then $\omega' \in A$. 
 	\end{definition} 
 
-	We notice that the event $\{|C| = \infty\}$ is clearly an increasing event 
+	We notice that the event $\{|C| = \infty\}$ is clearly an increasing event, since adding open edges to a configuration with an infinite connected cluster containing the origin will not remove the infinite cluster.
 
-\begin{definition}[Percolation function]{
+\begin{definition}[Percolation function]
 	We define the percolation function $\theta(p)$ as follows
 	$$\theta(p) = \prob(|C| = \infty)$$
 	In words the percolation function is simply the probability that we can reach an infinite number of vertices from the origin by open edges. 
-	We also note that this is the same as asking what is the probability of an having an infinite length self-avoiding path of open edges starting at the origin.
-}
+	Furthermore, we also note that this is the same as asking what is the probability of having an infinite length self-avoiding path of open edges starting at the origin.
+\end{definition}
+
+We intend to show that this percolation function is non-decreasing, but first we show a more general result for increasing events.
 
 \begin{lemma} \label{incEventlemma}
 	If $A \subseteq \Omega$ is an increasing event then $\prob(A)$ is non-decreasing in $p$. 
 \end{lemma}
 
 \begin{proof}
-	We use the coupling of probability measures to show that $\prob(A)$ is non-decreasing. We use the definition of couplings given by \cite{roch2015modern}.
+	We use the coupling of percolation processes to show that $\prob(A)$ is non-decreasing. We use the definition of couplings given by \cite{roch2015modern}.
 
 	\begin{definition}[Coupling]
 		Let $\mathbb{P}$ and $\mathbb{P}'$ be probability measures on the same measurable space $(\Omega,\mathcal{F})$.
 		A coupling of $\mathbb{P}$ and $\mathbb{P}'$ is a probability measure $\mathbf{P}$ on $(\Omega\times\Omega,\mathcal{F}\times \mathcal{F})$ such that the marginals of $\mathbf{P}$ coincide with $\mathbb{P}$ and $\mathbb{P}'$.
 		Meaning 
 		$$\mathbf{P}(A \times \Omega) = \mathbb{P}(A) \quad \text{  and  } \quad \mathbf{P}(\Omega \times A) = \mathbb{P}'(A) \text{, }\quad \forall A \in \mathcal{F}$$
-		We say $(X,Y)$ coupling of random variables $X,Y$ 
+		We say $(X,Y)$ is coupling of $\mathbb{P}$ and $\mathbb{P}'$ for random variables $X,Y$ if the law of $(X,Y)$ is a coupling of $\mathbb{P}$ and $\mathbb{P}'$ as defined above.
 	
 	\end{definition}
 
@@ -258,6 +260,7 @@ We now lay out some definitions specific for percolation.
 	Then $(\omega,\omega')$ is a coupling of $\mathbb{P}_{p}$ and $\mathbb{P}_{p'}$ with the property that $\mathbf{P}(\omega \leq \omega') = 1$
 	Let some increasing event $A \subseteq \Omega$, by definition if $\omega \in A$, then $\omega' \in A$ so:
 	$$\mathbb{P}_p(A) = \mathbf{P}(\omega \in A) \leq \mathbf{P}(\omega' \in A) = \mathbb{P}_{p'}(A)$$
+	So we conclude $\prob(A)$ is non-decreasing in p
 
 \end{proof}
 
@@ -268,7 +271,7 @@ We now lay out some definitions specific for percolation.
 \begin{proof}
 	Since we already saw that the event $\{|C| = \infty\}$ is an increasing event, then by Lemma \ref{incEventlemma} we know that $\theta(p) = \prob(|C| = \infty)$ is non-decreasing in p.
 \end{proof}
-\end{definition}
+
 An interesting property of our percolation model is that it exhibits a phase transition. Where at some point the behaviour of the model changes notably.
 For the percolation model we see there is some value of our parameter $p$, before which we know almost surely there is no infinitely connected cluster, and after which there may be one.
 We call this value of $p$ the critical value or percolation threshold.
