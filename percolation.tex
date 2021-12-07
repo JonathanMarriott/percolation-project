@@ -33,6 +33,7 @@
 \newcommand{\sigalg}{$\sigma$-algebra }
 \newcommand{\ztwodual}{(\ints^2)^*}
 \newcommand{\prob}{\mathbb{P}_p}
+\newcommand{\expp}{\mathbb{E}_p}
 %------------------
 
 %Everything before begin document is called the pre-amble and sets out how the document will look
@@ -371,37 +372,88 @@ Then 20 years later Kesten \cite{kesten1980critical} proved $p_c(2) \geq \frac{1
 	The critical value on $\ints^2$,  $p_c(2) =  \frac{1}{2}$.
 \end{theorem}
 In this project our aim is to show the Harris part of the theorem, that $p_c(2) \leq \frac{1}{2}$. 
-To do this we first introduce some more foundational results.
+To do this we first introduce some more foundational results.\\
 
+Recall from earlier the definition of an increasing event.
 \begin{definition}[Increasing Event]
 	An event $ A \subseteq \Omega$ is increasing if when $\omega \in A$ and
 	$$\forall e \in E(\ints^d) \text{, } \omega_e = 1 \implies \omega'_e = 1$$
 	Then $\omega' \in A$. \\
 	\end{definition}
-
-\begin{theorem}[Harris' Inequality]
+We follow the definitions and proof for the Harris Inequality given by \cite{duminil2018introduction}.
+\begin{theorem}[Harris Inequality]
 If $A, B \subseteq \Omega$ are increasing events then 
 $$\mathbb{P}(A \cap B) \geq \mathbb{P}(A)\mathbb{P}(B)$$
+This is a specific case of a more general inequality, the FKG inequality.
+If $f$ and $g$ are two bounded increasing functions then
+$$ \mathbb{E}_p(fg) \geq \mathbb{E}_p(f)\mathbb{E}_p(g)$$
 \end{theorem}
 \begin{proof}
-	Suppose some increasing events $A,B \subseteq \Omega$ which only depend on the states of a finite number of edges.
-	Say these edges are $e_1, e_2, ... , e_n$.
-	We work by induction on the size of $n$.\\
-	Consider when $n = 1$, then both $A$ and $B$ just depend on the state of $e_1$. 
-	As both $A$ and $B$ are increasing, they must occur when $e_1$ is open since an increasing event cannot depend on edges being closed.
-	$$\mathbb{P}(A \cap B) =\prob(\omega_{e_1} = 1)= p \geq p^2 = \prob(\omega_{e_1} = 1)^2= \mathbb{P}(A)\mathbb{P}(B)$$
-	Since $p \in [0,1]$. So the theorem holds when $n=1$.\\
+	% Suppose some increasing events $A,B \subseteq \Omega$ which only depend on the states of a finite number of edges.
+	% Say these edges are $e_1, e_2, ... , e_n$.
+	% We work by induction on the size of $n$.\\
+	% Consider when $n = 1$, then both $A$ and $B$ just depend on the state of $e_1$. 
+	% As both $A$ and $B$ are increasing, they must occur when $e_1$ is open since an increasing event cannot depend on edges being closed.
+	% $$\mathbb{P}(A \cap B) =\prob(\omega_{e_1} = 1)= p \geq p^2 = \prob(\omega_{e_1} = 1)^2= \mathbb{P}(A)\mathbb{P}(B)$$
+	% Since $p \in [0,1]$. So the theorem holds when $n=1$.\\
 	
-	% \\If $A$ and $B$ occur when $e_1$ is closed then similarly to above we get.
-	% $$\mathbb{P}(A \cap B) = q \geq q^2 = \mathbb{P}(A)\mathbb{P}(B)$$
-	% Again since $q \in [0,1]$. So the theorem holds.
-	% Finally, if one of $A$ and $B$ occur when $e_1$ is open and the other when it is closed then.
+	% % \\If $A$ and $B$ occur when $e_1$ is closed then similarly to above we get.
+	% % $$\mathbb{P}(A \cap B) = q \geq q^2 = \mathbb{P}(A)\mathbb{P}(B)$$
+	% % Again since $q \in [0,1]$. So the theorem holds.
+	% % Finally, if one of $A$ and $B$ occur when $e_1$ is open and the other when it is closed then.
 	
-	Now suppose the theorem holds for $n=k$ and consider when $A$ and $B$ depend on the states of edges $e_1, e_2, ... , e_k,e_{k+1}$.
-	Let $A = A_0 \cup A_1$ where:
-	$$A_i =\{\omega \setminus (e_{k+1},\omega_{e_{k+1}}):\omega \in A\text{, }\omega_{k+1} = i\} $$
-	Similarly let $B = B_0 \cup B_1$ where the $B_i$  are defined in the same way as above.
+	% Now suppose the theorem holds for $n=k$ and consider when $A$ and $B$ depend on the states of edges $e_1, e_2, ... , e_k,e_{k+1}$.
+	% Let $A = A_0 \cup A_1$ where:
+	% $$A_i =\{\omega \setminus (e_{k+1},\omega_{e_{k+1}}):\omega \in A\text{, }\omega_{k+1} = i\} $$
+	% Similarly let $B = B_0 \cup B_1$ where the $B_i$  are defined in the same way as above.
 	{\color{red}{Look at Duminil-Copin notes}}
+
+	We show that the FKG inequality holds, since we can easily derive Harris' inequality by setting f and g to be indicator functions of the increasing events A and B.
+	We first show the result holds for increasing functions which depend on a finite number of edges, then we see how this restriction can be removed using the Martingale convergence theorem.\\
+	We work by induction on the number of edges these functions f and g depend on.
+	Label the edges in $E = \{e_i : i \geq 1 \text{, } e_i \in E\}$.
+	We also shorten our notation for the state of a given edge $\omega_{e_i} = \omega_i$ for readability during this proof.
+	In the base case $n = 1$ we suppose f and g depend solely on $\omega_1$.
+	We note that we can just show the inequality holds for $f(0) = g(0) = 0$ since additional constants in f and g will not affect the inequality. 
+	Since f and g are increasing we know that $f(1) \geq 0$ and $g(1) \geq 0$.
+	So we find by the definition of expectation 
+
+	$$\expp(fg) - \expp(f)\expp(g) = (p \cdot f(1)g(1) + q \cdot  0) - (p \cdot f(1) + q \cdot 0)(p \cdot g(1) + q \cdot 0) $$
+	
+	Then simplifying by removing terms multiplied by zero
+	$$\expp(fg) - \expp(f)\expp(g) = pf(1)g(1) - p^2f(1)g(1) \geq 0$$
+	Since $p,f(1),g(1) \geq 0$.
+	So the result holds for $n=1$.\\
+	Now assuming as our inductive hypothesis that the inequality holds for functions dependent on $n = k$ edges.
+	We consider when $ n = k+1$.
+	We fix the state of the first k edges, $\omega_1,...,\omega_k$, and condition on them since we aim to use the tower law for expectation later.
+	Then,
+	$$\expp(fg|\omega_1,...,\omega_k) = p f(\omega_1,...,\omega_k,1)g(\omega_1,...,\omega_k,1)
+	+ qf(\omega_1,...,\omega_k,0)g(\omega_1,...,\omega_k,0)$$
+	Where the functions $f(\omega_1,...,\omega_k,1)$ and $g(\omega_1,...,\omega_k,1)$ now depend only on the edge $\omega_{k+1}$
+	Then letting $ \mathbb{P}_{\omega_{k+1}}$ be the law (distribution) of $\omega_{k+1}$ and similarly $\mathbb{E}_{\omega_{k+1}}$.
+	We see that 
+	\begin{align*}
+		\expp(fg|\omega_1,...,\omega_k) &= p f(\omega_1,...,\omega_k,1)g(\omega_1,...,\omega_k,1)\\
+	&+ qf(\omega_1,...,\omega_k,0)g(\omega_1,...,\omega_k,0)\\
+	&= \mathbb{E}_{\omega_{k+1}}(f(\omega_1,...,\omega_k,\cdot)g(\omega_1,...,\omega_k,\cdot))\\
+	\end{align*}
+
+	Then applying our inductive hypothesis.
+	$$\mathbb{E}_{\omega_{k+1}}(f(\omega_1,...,\omega_k,\cdot)g(\omega_1,...,\omega_k,\cdot))
+	\geq \mathbb{E}_{\omega_{k+1}}(f(\omega_1,...,\omega_k,\cdot))\mathbb{E}_{\omega_{k+1}}(g(\omega_1,...,\omega_k,\cdot))$$
+	Which means
+	$$ \mathbb{E}_p(fg|\omega_1,...,\omega_k) \geq \mathbb{E}_p(f|\omega_1,...,\omega_k)\mathbb{E}_p(g|\omega_1,...,\omega_k)$$
+	So applying the tower law of expectation 
+	\begin{align*}
+		\expp(fg) &= \expp(\expp(fg|\omega_1,...,\omega_k))\\
+		&\geq \expp(\expp(f|\omega_1,...,\omega_k)\expp(g|\omega_1,...,\omega_k))\\
+		&\geq \expp(\expp(f|\omega_1,...,\omega_k))\expp(\expp(g|\omega_1,...,\omega_k))]\\
+		&= \expp(f)\expp(g)
+	\end{align*}
+	Now to extend this to arbitrary increasing functions we consider the martingale convergence theorem.
+	
+
 \end{proof}
 
 % \section{Including maths}
