@@ -347,9 +347,17 @@ We show the existence of the critical value in this case by bounding it from abo
 	Let $X_n = \{$There is a length n cycle of closed edges in $\ztwodual$ which surrounds the origin\}
 	Then using Lemma \ref{originloop} we see
 	$$\prob(|C| < \infty) = \prob(\bigcup_{n=4}^\infty \prob(X_n)) \leq \sum_{n=4}^\infty \prob(X_n) \leq \sum_{n=4}^\infty n \cdot 4(3^{n-1})q^n$$
-	This sum is finite when $q<1/3$, which is when $p>2/3$. We can make the sum arbitrarily small when $p \rightarrow 1$, when the sum is smaller than 1 this implies $\theta(p) > 0$
+	Where in the last summation we get $4(3^{n-1})q^n$ as before by counting the number of possible edges a self avoiding walk can take then multiplying by the probability this path is open in the dual graph. 
+	We multiply this term by $n$ since we know for every cycle around the origin in the dual there is some smallest $i \in \mathbb{N}$ for which the cycle crosses the edge $\{i,i-1\}$, i.e the positive x-axis. 
+	Then we can translate this cycle left and right to the another n positions, this gives up to n new cycles enclosing the origin in the dual graph.\\
+	This sum is finite when $q<1/3$, which is when $p>2/3$. 
+	We can make the sum arbitrarily small when $p \rightarrow 1$, when the sum is smaller than 1 this implies $\theta(p) > 0$
+	Taking the value $p=0.9$ for example, we can calculate, using Wolfram Alpha in this case, that the sum converges to 
+	$$\sum_{n=4}^\infty n \cdot 4(3^{n-1})(1-0.9)^n = 0.0683265$$
+	Thus $\theta(0.9) > 0$.
+
 \end{proof}
-Hence the critical value $p_c(2) \in (\frac{1}{3},1)$
+Hence the critical value $p_c(2) \in (\frac{1}{3},0.9)$
 
 
 
@@ -360,7 +368,7 @@ We notice that for all $d\geq 2$ we can extract $\ints^d$ from $\ints^{d+1}$ by 
 Thus, if there exists an infinite open cluster in $\ints^d$ this would also imply there is one in $\ints^{d+1}$.
 Since we have just shown $p_c(2) \in (0,1)$ then we must also have $p_c(d) \in (0,1)$ for all d.
 
-{\color{red}{TODO: explain critical value is non-decreasing in d}}
+{\color{red}{TODO: explain critical value is non-decreasing in d, by coupling argument?}}
 
 
 \section{Harris-Kesten Theorem}
@@ -455,6 +463,23 @@ $$ \mathbb{E}_p(fg) \geq \mathbb{E}_p(f)\mathbb{E}_p(g)$$
 	
 
 \end{proof}
+
+\section{Conformal Invariance}
+Discuss what conformal invariance is and perhaps talk about the result on the triangular lattice due to Smirnov
+
+\section{Simulation}
+Discuss various ways of exploring percolation via simulations.
+\subsection{The "water level" of open crossings in finite boxes}
+Discuss how uniform R.V.s can be assigned to edges to simulate percolation. 
+Then plot the threshold for open crossings across some size box. 
+Then see the sharpening of said plot when the box size increases.
+\subsection{Finding the pivotal edges in a finite box}
+Discuss an algorithm to find the pivotal edges in the percolation box, perhaps relate to Russo's formula for pivotal edges.
+\subsection{Fast Monte Carlo algorithm for percolation}
+Discuss the Newman and Ziff paper "A fast Monte Carlo algorithm for site or bond percolation". Explaining the data structures etc, and perhaps implement it.
+
+\section{Conclusion}
+Is a conclusion necessary for this project?
 
 % \section{Including maths}
 
