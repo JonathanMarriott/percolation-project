@@ -357,7 +357,7 @@ We show the existence of the critical value in this case by bounding it from abo
 	Thus $\theta(0.9) > 0$.
 
 \end{proof}
-Hence the critical value $p_c(2) \in (\frac{1}{3},0.9)$
+Hence, the critical value $p_c(2) \in (\frac{1}{3},0.9)$
 
 
 
@@ -414,7 +414,7 @@ $$ \mathbb{E}_p(fg) \geq \mathbb{E}_p(f)\mathbb{E}_p(g)$$
 	% Let $A = A_0 \cup A_1$ where:
 	% $$A_i =\{\omega \setminus (e_{k+1},\omega_{e_{k+1}}):\omega \in A\text{, }\omega_{k+1} = i\} $$
 	% Similarly let $B = B_0 \cup B_1$ where the $B_i$  are defined in the same way as above.
-	{\color{red}{Look at Duminil-Copin notes}}
+	
 
 	We show that the FKG inequality holds, since we can easily derive Harris' inequality by setting f and g to be indicator functions of the increasing events A and B.
 	We first show the result holds for increasing functions which depend on a finite number of edges, then we see how this restriction can be removed using the Martingale convergence theorem.\\
@@ -459,10 +459,101 @@ $$ \mathbb{E}_p(fg) \geq \mathbb{E}_p(f)\mathbb{E}_p(g)$$
 		&\geq \expp(\expp(f|\omega_1,...,\omega_k))\expp(\expp(g|\omega_1,...,\omega_k))]\\
 		&= \expp(f)\expp(g)
 	\end{align*}
-	Now to extend this to arbitrary increasing functions we consider the martingale convergence theorem.
+	So we have shown the result for all increasing functions which depend on a finite number of edges.
+	Now to extend this to arbitrary bounded increasing functions we consider the martingale convergence theorem.
+	For our bounded increasing functions $f$ and $g$ we define:
+	\begin{align*}
+		f_n &:= \expp(f | \omega_1,...,\omega_n)\\
+		g_n &:= \expp(g | \omega_1,...,\omega_n)
+	\end{align*}
+	Then $(f_n)$ and $(g_n)$ form sub-martingales since $f$ and $g$ are increasing. 
+	Then since we assumed $f$ and $g$ are bounded we can apply the Martingale convergence Theorem to see that $f_n$ converges to $f$  as $n \rightarrow \infty$ and similarly $g_n$ converges to $g$.
+	We do not give a rigorous proof of this here but the reader may wish to seek further information on Doob's Martingale convergence Theorem from \cite{williams_1991}.
 	
 
 \end{proof}
+We also note a useful rearrangement of Harris' Inequality which captures the idea that the events $A$ and $B$ are positively correlated.
+\begin{corollary}
+	If $A, B \subseteq \Omega$ are increasing events then 
+	$$\prob(A|B) \geq \prob(A)$$
+	Intuitively this makes sense, the probability A occurs increases when we know more edges are open, and knowing B has occurred tells us about open edges.
+\end{corollary}
+
+We now prove a useful inequality for events that occur disjointly, first we define what we mean for events to occur disjointly.
+\begin{definition}[Disjoint realisation of events]
+	Let $A$ and $B$ be events. For a configuration $\omega \in A$, there is some witness set $I \subset E$ for $\omega$ such that for any other configuration $\omega'$ which satisfies:
+	$$\forall e \in I \text{, } \omega_e = \omega'_e$$
+	Then $\omega' \in A$, in essence the states of edges in $I$ tell us the event $A$ has occurred in $\omega$.\\
+	We say the events $A$ and $B$ occur disjointly in $\omega$, denoted $A \circ B$, if there exists disjoint witnesses $I$ and $J$ for $A$ and $B$ respectively. I.e. $I \cap J = \emptyset$
+
+\end{definition}
+
+This concept is different to the intersection of events, since intuitively the edges on which each event occurs cannot overlap.
+For example given some $n\times n$ box of $\ints^2$, the event there is an open crossing from top to bottom and the event there is an open crossing left to right cannot occur disjointly. Since the open paths will cross at some point.
+We now state the inequality we aim to prove.
+\begin{theorem}[BK inequality]
+	If $A, B \subseteq \Omega$ are increasing events then
+	$$\prob(A \circ B) \leq \prob(A)\prob(B)$$
+\end{theorem}
+\begin{proof}
+	We follow the proof given by \cite{bollo2006} which is easier than the original.
+	We work by induction on the size of the edge set $E$ which we denote by $n$, remembering the sample space $\Omega = \{0,1\}^E$.
+	When $n = 0$ the inequality holds trivially.
+	Supposing as our inductive hypothesis that the inequality holds when the edge set has size less than $n$.
+	We show it also holds when $E$ has size n.
+	First we define for any subset $D \subseteq \{0,1\}^E$:
+	\begin{align*}
+		D_0 &= \{(\omega_1,...,\omega_{n-1}) : (\omega_1,...,\omega_{n-1}, 0 ) \in D\}\\
+		D_1 &= \{(\omega_1,...,\omega_{n-1}) : (\omega_1,...,\omega_{n-1}, 1 ) \in D\}
+	\end{align*}
+	Then we can decompose the probability of D since the states of edges are independent.
+	$$\prob(D) = p\prob(D_1) + q\prob(D_0)$$
+	Now for our increasing $A,B \subseteq \{0,1\}^E$, define $C = A \circ B$, we now see that 
+	$$C_0 = A_0 \circ B_0$$
+	$$C_1 = (A_1 \circ B_0) \cup (A_0 \circ B_1)$$
+	Applying our assumption that $A$ and $B$ are increasing its clear that $A_0 \subseteq A_1$ and $B_0 \subseteq B_1$.
+	Thus we find
+	$$C_0 = A_0 \circ B_0 \subseteq (A_1 \circ B_0) \cap (A_0 \circ B_1)$$
+	$$C_1 = (A_1 \circ B_0) \cup (A_0 \circ B_1) \subseteq A_1 \circ B_1$$
+	Using this decomposition in conjunction with our inductive hypothesis we find 
+	$$\prob(C_0) = \prob(A_0 \circ B_0) \leq \prob(A_0)\prob(B_0)$$
+	$$\prob(C_1) \leq \prob(A_1 \circ B_1) = \prob(A_1)\prob(B_1)$$
+	Now we can also get by adding the probabilities of $C_0$ and $C_1$ that 
+	\begin{align*}
+		\prob(C_0) + \prob(C_1) &\leq \prob((A_1 \circ B_0) \cap (A_0 \circ B_1)) + \prob((A_1 \circ B_0) \cup (A_0 \circ B_1))\\
+								&= \prob(A_0 \circ B_1) + \prob(A_1 \circ B_0)\\
+								&\leq \prob(A_0)\prob(B_1) + \prob(A_1)\prob(B_0)
+	\end{align*}
+	The next step is to combine these by finding 
+	$$(1-p)^2\prob(C_0) + p^2\prob(C_1) + p(1-p)(\prob(C_0) + \prob(C_1))$$
+	$$=((1-p)^2 + p(1-p))\prob(C_0) + (p^2 + p(1-p))\prob(C_1) = (1-p)\prob(C_0) + p\prob(C_1)$$
+	Then looking at the right-hand sides
+	\begin{align*}
+		(1-p)\prob(C_0) + p\prob(C_1) \leq& (1-p)^2[\prob(A_0)\prob(B_0)]\\
+		&+ p^2[\prob(A_1)\prob(B_1)]\\
+		& +p(1-p)[\prob(A_0)\prob(B_1) + \prob(A_1)\prob(B_0)]
+	\end{align*}
+	Which simplifies to 
+	$$(1-p)\prob(C_0) + p\prob(C_1) \leq [p\prob(A_1) + (1-p)\prob(A_0)][p\prob(B_1) + (1-p)\prob(B_0)]$$
+	Then using $\prob(D) = p\prob(D_1) + (1-p)\prob(D_0)$ we see that
+	$$\prob(A \circ B) = \prob(C) \leq \prob(A)\prob(B)$$
+
+\end{proof}
+The restriction of the BK inequality to increasing events was removed by Reimer, but it is not particularly useful to us so we do not prove it.
+
+Using the BK inequality we can now show a useful inequality more specific to percolation.
+\begin{corollary}
+	For a finite subset $S \subset \ints^d$ which contains the origin, and some $x \notin S$, 
+	$$\prob(0 \longleftrightarrow x) \sum_{y\in \partial S} \prob({0\stackrel{S}{\longleftrightarrow}y})\prob(y \longleftrightarrow x)$$
+	Where $0\stackrel{S}{\longleftrightarrow}y$ occurs if $0$ is connected to $y$ by open edges in $S$.
+	And where $\partial S$ denotes the vertex boundary of S, ie $\forall s \in \partial S$, the neighbourhood of s contains some $x \in \ints^d \setminus S$
+\end{corollary}
+\begin{proof}
+	{\color{red}{todo}}
+	Work on an n by n box
+\end{proof}
+
+
 
 \section{Conformal Invariance}
 Discuss what conformal invariance is and perhaps talk about the result on the triangular lattice due to Smirnov
