@@ -545,8 +545,8 @@ Using the BK inequality we can now show a useful inequality more specific to per
 \begin{corollary}
 	For a finite subset $S \subset \ints^d$ which contains the origin, and some $x \notin S$, 
 	$$\prob(0 \longleftrightarrow x) \sum_{y\in \partial S} \prob({0\stackrel{S}{\longleftrightarrow}y})\prob(y \longleftrightarrow x)$$
-	Where $0\stackrel{S}{\longleftrightarrow}y$ occurs if $0$ is connected to $y$ by open edges in $S$.
-	And where $\partial S$ denotes the vertex boundary of S, ie $\forall s \in \partial S$, the neighbourhood of s contains some $x \in \ints^d \setminus S$
+	Where $0\stackrel{S}{\longleftrightarrow}y$ occurs if $0$ is connected to $y$ by open edges in $S$. If no set S is given we allow any open edges.
+	Also, $\partial S$ denotes the vertex boundary of S, i.e. $\forall s \in \partial S$, the neighbourhood of s contains some $x \in \ints^d \setminus S$
 \end{corollary}
 \begin{proof}
 	{\color{red}{todo}}
@@ -559,11 +559,19 @@ Using the BK inequality we can now show a useful inequality more specific to per
 Discuss what conformal invariance is and perhaps talk about the result on the triangular lattice due to Smirnov
 
 \section{Simulation}
-Discuss various ways of exploring percolation via simulations.
+We discuss various ways of exploring percolation via simulations.
 \subsection{The "water level" of open crossings in finite boxes}
 Discuss how uniform R.V.s can be assigned to edges to simulate percolation. 
 Then plot the threshold for open crossings across some size box. 
 Then see the sharpening of said plot when the box size increases.
+
+As we have seen previously the task of determining the percolation threshold for a given lattice structure is highly non-trivial 
+\begin{figure}
+	    \centering
+	    \includegraphics[scale=0.52]{CrossingSimulationPlot2.png}
+	    \caption{Crossing thresholds for simulated lattices}
+	    \label{fig:thresholdplot}
+\end{figure}
 \subsection{Finding the pivotal edges in a finite box}
 Discuss an algorithm to find the pivotal edges in the percolation box, perhaps relate to Russo's formula for pivotal edges.
 \subsection{Fast Monte Carlo algorithm for percolation}
