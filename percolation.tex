@@ -561,11 +561,24 @@ Discuss what conformal invariance is and perhaps talk about the result on the tr
 \section{Simulation}
 We discuss various ways of exploring percolation via simulations.
 \subsection{The "water level" of open crossings in finite boxes}
-Discuss how uniform R.V.s can be assigned to edges to simulate percolation. 
+{\color{red}{Discuss how uniform R.V.s can be assigned to edges to simulate percolation. 
 Then plot the threshold for open crossings across some size box. 
-Then see the sharpening of said plot when the box size increases.
+Then see the sharpening of said plot when the box size increases.}}
 
-As we have seen previously the task of determining the percolation threshold for a given lattice structure is highly non-trivial 
+As we have seen previously the task of determining the percolation threshold for a given lattice structure is highly non-trivial and so for many lattices the task of finding exact values is still an open problem \cite{StoverThreshold}. Subsequently, a great deal of work has been carried out to determine approximate values for a variety of lattices and distributions of open sites or bonds by way of computer simulations. In this section we explore a method I used to estimate the bond percolation threshold for the square lattice, since we can compare this to the exact value of $1/2$ we proved earlier. 
+
+While we know that the fact that a configuration having an open crossing from one side to another of a single finite box in $\ints^2$ does not affect the probability of there being an infinite connected cluster. It is clear that we would expect the probability of such a crossing in a very large box to tend towards the percolation threshold for the infinite cluster. Hence, we can exploit this behaviour to find an estimate for the percolation threshold, create some large square grid, assign some configuration of open and closed edges with probability $p$, then check for a left-right crossing. We alter the value of $p$ repeatedly until we find the lowest value at which a crossing occurs.
+
+There are a number of factors to consider when setting up this simulation such that it can run sufficiently fast, firstly how do we assign each edge to be open or closed so that we can traverse the graph with different values of p.
+
+The simplest approach would be to assign a Bernoulli random variable with probability $p$ to each edge, however this has the drawback of requiring us to revaluate the random variable on each edge when we change the value of $p$, and to mirror the non-decreasing nature of the percolation function $\theta(p)$, we would have to only do this for previously closed edges. To avoid these issues I chose to implement a method similar to one we used to prove \ref{incEventlemma}, where we coupled configurations using uniform random variables. To recap this, by assigning an edge with a value from independent uniform random on $[0,1]$ we can then set an edge to be open if this value is less than or equal to $p$ and closed otherwise. In this way every edge is open with probability $p$, and increasing p has the desired property that edges which were previously open remain so. Additionally, after the values between 0 and 1 have been assigned to each edge, we gain the benefit of only needing to query the state of edges as we come to them by comparing the assigned value to $p$, rather than needing to assign the open or closed states to every edge each time we alter $p$.
+
+We could remove the initial pass of assigning the uniform random variable values to each edge initially. Instead, we could define some hash function mapping the existing attributes of each edge to the range $[0,1]$, allowing us to compute the states of edges on the fly. However, I did not find this speed up necessary.
+
+Secondly how do we check quickly for a given box if there is a left-right crossing. The first step in simplifying this problem to add two auxiliary vertices to the graph, one connected to every vertex on the left-hand side of the box, the other to the right-hand side vertices. Then our problem reduces to whether there is a path between these two auxiliary vertices via open edges.
+The fastest way to go about this, since we have an unweighted graph, is to use a version of breadth first search.  
+
+I created my simulation using Python due to its extensive set of community libraries and ease of prototyping. Since Python is an interpreted language it can be less performant than other complied languages which can be an important consideration for very large simulations. However, there are alternative implementations of Python such as PyPy which can mitigate this issue, which I will discuss later.
 \begin{figure}
 	    \centering
 	    \includegraphics[scale=0.52]{CrossingSimulationPlot2.png}
