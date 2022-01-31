@@ -7,6 +7,8 @@
 \usepackage{enumerate}
 \usepackage{xcolor}
 \usepackage{biblatex}
+\usepackage{rotating}
+\usepackage{pdflscape}
 
 \addbibresource{percolation.bib}
 
@@ -585,6 +587,14 @@ I created my simulation using Python due to its extensive set of community libra
 	    \caption{Crossing thresholds for simulated lattices}
 	    \label{fig:thresholdplot}
 \end{figure}
+\begin{landscape}
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.52]{CrossingSimulationPlot3.png}
+	\caption{Crossing thresholds for simulated lattices}
+	\label{fig:thresholdplot2}
+\end{figure}
+\end{landscape}
 \subsection{Finding the pivotal edges in a finite box}
 Discuss an algorithm to find the pivotal edges in the percolation box, perhaps relate to Russo's formula for pivotal edges.
 \subsection{Fast Monte Carlo algorithm for percolation}
