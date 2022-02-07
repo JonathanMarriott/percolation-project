@@ -8,7 +8,16 @@
 \usepackage{xcolor}
 \usepackage{biblatex}
 \usepackage{rotating}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usepackage{pdflscape}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+    colorlinks=false, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=black,  %choose some color if you want links to stand out
+}
+
 
 \addbibresource{percolation.bib}
 
@@ -578,15 +587,99 @@ The simplest approach would be to assign a Bernoulli random variable with probab
 We could remove the initial pass of assigning the uniform random variable values to each edge initially. Instead, we could define some hash function mapping the existing attributes of each edge to the range $[0,1]$, allowing us to compute the states of edges on the fly. However, I did not find this speed up necessary.
 
 Secondly how do we check quickly for a given box if there is a left-right crossing. The first step in simplifying this problem to add two auxiliary vertices to the graph, one connected to every vertex on the left-hand side of the box, the other to the right-hand side vertices. Then our problem reduces to whether there is a path between these two auxiliary vertices via open edges.
-The fastest way to go about this, since we have an unweighted graph, is to use a version of breadth first search.  
+The fastest way to go about this, since we have an unweighted graph, is to use a version of breadth first search. Taking the subgraph induced by the open edges, note we always set edges incident to the auxiliary edges to be open, we follow a simple algorithm.
+\begin{algorithm}
+	\caption{Breadth first search from vertex u to v}\label{bfs}
+	\begin{algorithmic}[1]
+	\Procedure{bfsPath}{$G,u,v$}
+	\State{\textbf{Let} $Q$ be a queue}
+	\State{\textbf{Let} explored be a list of booleans}
+	\State{\textbf{Let} parent be a list of nodes}
+	\State{explored[$u$] $\gets$ True}
+	\State{parent[$u$] $\gets$ None}
+	\State $Q$.enqueue($u$)
+	\While{$Q$ is not empty}
+		\State $x \gets Q\text{.dequeue()}$
+		\If {$x$ is $v$} \Comment{Retrace parents to find path}
+			\State path $\gets [x]$
+			\While{parent[$x$] is not None}
+				\State path.prepend(parent[$x$])
+				\State $x \gets$ parent($x$)
+			\EndWhile
+			\State
+			\Return path
+		\EndIf
+		\For{every edge w in G.adjacent(x)}
+			\If{explored[w] is False}
+				\State explored[$w$] $\gets$ True
+				\State parent[$w$] $\gets$ $x$
+				\State $Q$.enqueue($w$)
+			\EndIf
+		\EndFor
+	\EndWhile
+	\If{explored[$v$] is False}
+	 \Return None
+	\EndIf
+	\EndProcedure
+	\end{algorithmic}
+	\end{algorithm}
+
+We note a queue is a simple data structure which works in the same way as a queue at a shop. The first item added to the queue is the first to then be removed.
+The above algorithm runs in $O(|V|+|E|)$ worst-case time, where $V$ and $E$ are the vertex and edge sets of the graph $G$ respectively. With a little thought it is clear no algorithm can do better for this problem. 
+
+We also note that Algorithm \ref*{bfs} returns the list of nodes on the path between the two vertices. Depending on the use case this can be easily modified to just return true if a path exists. 
+
+Now we can determine if there is a path from one side of a box to another for a given percolation parameter $p$, we want to determine the lowest threshold for which a crossing path exists for a given configuration of uniform random variables. For the case of the planar square lattice we could use some heuristic based on our prior knowledge that the threshold should lie around 1/2. However, to enable the general applicability of the algorithm described to any graph, we do not make any specific assumptions about the threshold distribution.
+
+While a variety of possible approaches exist, a rather efficient one is an adapted form of binary search on the parameter. While usually a binary search can be used to identity sorted items in a list, in some sense our parameter values are also sorted. All the values with a left right crossing appear before those which do have a crossing, this is only true due to our implementation via uniform random variables on each edge.
+In order to check if a given value of $p$ is the crossing threshold, we must check a value very close to $p$ to see if it is different. Say we have some precision constant $\epsilon$ then we define:
+\begin{itemize}
+	\item If $p$ admits a box crossing, then $p$ is the crossing threshold if and only if $p-\epsilon$ does not.
+	\item If $p$ does not admit a box crossing, then $p+\epsilon$ is the crossing threshold if and only if $p+\epsilon$ does admit a crossing.
+\end{itemize}
+
+Now we can follow an adapted binary search to centre in on the threshold, where we use the aforementioned change to Algorithm \ref*{bfs} so that it return a boolean value.
+
+\begin{algorithm}
+	\caption{Find the crossing threshold for a given graph}\label{findthreshold}
+	\begin{algorithmic}[1]
+	\Procedure{findThreshold}{$G,u,v,\epsilon$} \Comment{u and v are the auxiliary nodes}
+	\State lo $\gets 0$
+	\State hi $\gets 1$
+	\While{lo $\leq$ hi}
+		\State $p \gets (\text{lo}+\text{hi})/2$
+		\State \textbf{Let} OpenG be the induced subgraph of G by the open edges w.r.t $p$
+		\State pHasCrossing $\gets $ bfePath(openG, u, v)
+		\If{pHasCrossing}
+			\State \textbf{Let} AltG be the induced subgraph of G by the open edges w.r.t $p-\epsilon$
+			\If{bfsPath(AltG,u,v)}
+				\State hi $\gets p - \epsilon$
+			\Else
+				\Return $p$
+			\EndIf
+		\Else
+			\State \textbf{Let} AltG be the induced subgraph of G by the open edges w.r.t $p+\epsilon$
+			\If{bfsPath(AltG,u,v)}
+				\Return $p +\epsilon$
+			\Else
+			\State lo $\gets p+\epsilon$
+			\EndIf
+		\EndIf
+	\EndWhile
+	\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
 
 I created my simulation using Python due to its extensive set of community libraries and ease of prototyping. Since Python is an interpreted language it can be less performant than other complied languages which can be an important consideration for very large simulations. However, there are alternative implementations of Python such as PyPy which can mitigate this issue, which I will discuss later.
-\begin{figure}
-	    \centering
-	    \includegraphics[scale=0.52]{CrossingSimulationPlot2.png}
-	    \caption{Crossing thresholds for simulated lattices}
-	    \label{fig:thresholdplot}
-\end{figure}
+
+% \begin{figure}
+% 	    \centering
+% 	    \includegraphics[scale=0.52]{CrossingSimulationPlot2.png}
+% 	    \caption{Crossing thresholds for simulated lattices}
+% 	    \label{fig:thresholdplot}
+% \end{figure}
+
+
 \begin{landscape}
 \begin{figure}
 	\centering
