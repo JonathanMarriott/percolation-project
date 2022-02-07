@@ -593,31 +593,31 @@ The fastest way to go about this, since we have an unweighted graph, is to use a
 	\begin{algorithmic}[1]
 	\Procedure{bfsPath}{$G,u,v$}
 	\State{\textbf{Let} $Q$ be a queue}
-	\State{\textbf{Let} explored be a list of booleans}
-	\State{\textbf{Let} parent be a list of nodes}
-	\State{explored[$u$] $\gets$ True}
-	\State{parent[$u$] $\gets$ None}
+	\State{\textbf{Let} $explored$ be a list of booleans}
+	\State{\textbf{Let} $parent$ be a list of nodes}
+	\State{$explored[u] \gets$ True}
+	\State{$parent[u] \gets$ None}
 	\State $Q$.enqueue($u$)
 	\While{$Q$ is not empty}
 		\State $x \gets Q\text{.dequeue()}$
 		\If {$x$ is $v$} \Comment{Retrace parents to find path}
-			\State path $\gets [x]$
-			\While{parent[$x$] is not None}
-				\State path.prepend(parent[$x$])
-				\State $x \gets$ parent($x$)
+			\State $path \gets [x]$
+			\While{$parent[x]$ is not None}
+				\State $path$.prepend(parent[$x$])
+				\State $x \gets parent[x]$
 			\EndWhile
 			\State
-			\Return path
+			\Return $path$
 		\EndIf
-		\For{every edge w in G.adjacent(x)}
-			\If{explored[w] is False}
-				\State explored[$w$] $\gets$ True
-				\State parent[$w$] $\gets$ $x$
+		\For{every edge $w$ in $G$.adjacent($x$)}
+			\If{$explored[w]$ is False}
+				\State $explored[w] \gets$ True
+				\State $parent[w] \gets$ $x$
 				\State $Q$.enqueue($w$)
 			\EndIf
 		\EndFor
 	\EndWhile
-	\If{explored[$v$] is False}
+	\If{$explored[v]$ is False}
 	 \Return None
 	\EndIf
 	\EndProcedure
@@ -638,29 +638,31 @@ In order to check if a given value of $p$ is the crossing threshold, we must che
 	\item If $p$ does not admit a box crossing, then $p+\epsilon$ is the crossing threshold if and only if $p+\epsilon$ does admit a crossing.
 \end{itemize}
 
-Now we can follow an adapted binary search to centre in on the threshold, where we use the aforementioned change to Algorithm \ref*{bfs} so that it return a boolean value.
+Now we can follow an adapted binary search to centre in on the threshold, where we let isPath(G, u, v) be the aforementioned change to Algorithm \ref*{bfs} so that it returns a boolean value.
 
 \begin{algorithm}
 	\caption{Find the crossing threshold for a given graph}\label{findthreshold}
 	\begin{algorithmic}[1]
-	\Procedure{findThreshold}{$G,u,v,\epsilon$} \Comment{u and v are the auxiliary nodes}
+	\Procedure{findThreshold}{$G,u,v,\epsilon$} \Comment{u \& v are the auxiliary nodes}
 	\State lo $\gets 0$
 	\State hi $\gets 1$
 	\While{lo $\leq$ hi}
 		\State $p \gets (\text{lo}+\text{hi})/2$
-		\State \textbf{Let} OpenG be the induced subgraph of G by the open edges w.r.t $p$
-		\State pHasCrossing $\gets $ bfePath(openG, u, v)
-		\If{pHasCrossing}
-			\State \textbf{Let} AltG be the induced subgraph of G by the open edges w.r.t $p-\epsilon$
-			\If{bfsPath(AltG,u,v)}
+		\State openEdges $\gets$ $\{e \in E(G)\text{: e has uniform r.v. value}\leq p\}$
+		\State \textbf{let} OpenG be the subgraph of G induced by openEdges
+		\If{isPath(openG, u, v)}
+			\State altOpenEdges $\gets$ $\{e \in E(G)\text{: unifRV}(e)\leq p-\epsilon\}$
+			\State \textbf{let} AltG be the subgraph of G induced by altOpenEdges
+			\If{isPath(AltG, u, v)}
 				\State hi $\gets p - \epsilon$
 			\Else
-				\Return $p$
+				\State \Return $p$
 			\EndIf
 		\Else
-			\State \textbf{Let} AltG be the induced subgraph of G by the open edges w.r.t $p+\epsilon$
-			\If{bfsPath(AltG,u,v)}
-				\Return $p +\epsilon$
+			\State altOpenEdges $\gets$ $\{e \in E(G)\text{: unifRV}(e)\leq p+\epsilon\}$
+			\State \textbf{let} AltG be the subgraph of G induced by altOpenEdges
+			\If{isPath(AltG, u, v)}
+				\State \Return $p +\epsilon$
 			\Else
 			\State lo $\gets p+\epsilon$
 			\EndIf
@@ -670,7 +672,16 @@ Now we can follow an adapted binary search to centre in on the threshold, where 
 	\end{algorithmic}
 \end{algorithm}
 
-I created my simulation using Python due to its extensive set of community libraries and ease of prototyping. Since Python is an interpreted language it can be less performant than other complied languages which can be an important consideration for very large simulations. However, there are alternative implementations of Python such as PyPy which can mitigate this issue, which I will discuss later.
+You can inspect the above algorithm to see how whenever the current value of $p$ is not the threshold we can safely throw out one half of the current search range. This technique, commonly referred to as divide and conquer, gives good asymptotic search performance. We would say in general a binary search finds the target in $O(nlog(n))$ worst-case time where n is the number of elements to be searched. In our case the effective number of ``items'' depends on the precision parameter $\epsilon$, where the number of potential threshold values to check is $\frac{1}{\epsilon}$. Thus Algorithm \ref*{findthreshold} runs in $O(\frac{1}{\epsilon}log(\frac{1}{\epsilon}))$ worst-case time.
+
+You may notice a possible optimization when both the algorithms are used together. Instead of first constructing the induced subgraph by the open edges then seeing if there is a crossing, we can directly only consider the open edges during our breadth first search by requiring in line 18 of Algorithm \ref*{bfs} that the edges w must have associated uniform r.v. value of less than or equal to p. In essence, we construct the subgraph induced by the open edges on the fly, saving us one pass over the edge set. 
+
+My initial plan to investigate the percolation threshold for the planar square lattice was to simulate many boxes each of increasing width to see how the variation in the crossing threshold decreases with box width. Using the previously described algorithms to find the threshold for each box.
+
+I implemented the simulation using Python due to its extensive set of community libraries and ease of prototyping. Since Python is an interpreted language it can be less performant than other complied languages which can be an important consideration for very large simulations. However, I will later discuss other alternative implementations of Python such as PyPy which can mitigate this issue.
+I decided to simulate one box of each width from width 2 (3x3 vertices) to width 1950, with a precision of $0.0001$. I then used the matplotlib library to draw a scatter plot of the box width against the computed crossing threshold, which can be seen in Figure \ref*{fig:thresholdplot2}. The red dashed line lies at the threshold value 0.5 which we know is the true value for an infinite lattice.
+
+You can clearly see how the variability of crossing threshold decreases as the box width increases, becoming more concentrated around 0.5. Supposing we did not already know the true value of the infinite lattice, this would provide us with a strong insight that the percolation threshold lies around 0.5. In fact if we calculate the mean of the crossing thresholds for each box, disregarding the first 50 due to their small size, we would get a value of 0.499979 which when rounded to our precision of 0.0001 is 0.5000.
 
 % \begin{figure}
 % 	    \centering
@@ -683,7 +694,7 @@ I created my simulation using Python due to its extensive set of community libra
 \begin{landscape}
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.52]{CrossingSimulationPlot3.png}
+	\includegraphics[scale=0.472]{CrossingSimulationPlot3.png}
 	\caption{Crossing thresholds for simulated lattices}
 	\label{fig:thresholdplot2}
 \end{figure}
