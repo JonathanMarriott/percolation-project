@@ -595,7 +595,8 @@ We now prove an important result similar to that of Lemma \ref*{originloop}, for
 \end{lemma}
 
 \begin{proof}
-	WLOG we scale the lattice to avoid working with fractions. Let the lattice $L = (0,2) + 4\ints^2$, and hence its dual $L^* = (2,0)+4\ints^2$. Then let R be a $k$ by $l$ rectangle on $L$ with vertex set $\{(4i,4j+2): 0 \leq i \leq k \text{, } 0 \leq j \leq l-1 \}$
+	WLOG we scale the lattice to avoid working with fractions. Let the lattice $L = (0,2) + 4\ints^2$, and hence its dual $L^* = (2,0)+4\ints^2$. Then let R be a $k$ by $l$ rectangle on $L$ with vertex set $\{(4i,4j+2): 0 \leq i \leq k \text{, } 0 \leq j \leq l-1 \}$, and thus we have that $R^h$ has vertex set $\{(4i+2,4j): 0 \leq i \leq k-1 \text{, } 0 \leq j \leq l \}$. Suppose some percolation configuration of $\ints^2$ and let G be the graph induced by the open edges of $R$, similarly let the open edges of $R^h$ induce the graph $G^h$. Now it suffices to show that either $G$ contains a left-right path or $G^h$ contains a top-bottom path, but not both. If we wish to show that $G$ has a left-right, ie a path from $(0,4m+2)$ to $(4k,4n+2)$ for some $m,n \in \mathbb{N}$, then we can assume WLOG that $G$ contains all $2(l-1)$ edges on its left and right most sides. We make a similar assumption that $G^h$ has all $2(k-1)$ on its top and bottom. This means we only have to consider one vertex each of the sides of the rectangles.
+	We now construct a third graph, $M$, which lies between $G$ and $G^h$. Let $R_{odd}$ be a $2k\times 2l$ rectangle with vertex set $\{(2i+1,2j+1): 0 \leq i \leq 2k-1 \text{, } 0 \leq j \leq 2l-1 \}$, then let M be the subgraph of $R_{odd}$ which just contains edges that do not intersect edges of $G$ nor $G^h$. We direct all the edges of $M$ such that edges of $G$ lie on the right and $G^h$ lie on the left. 
 \end{proof}
 
 
