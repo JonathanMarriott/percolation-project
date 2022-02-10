@@ -347,15 +347,15 @@ We show the existence of the critical value in this case by bounding it from abo
 \begin{proof}
 	We introduce the dual graph $(\ints^2)^*$ which has vertices in $(\ints^2 + \binom{1/2}{1/2} )$, and edges as you would expect between vertices at distance 1.
 	Then we can see there is a clear correspondence between the edges of $\ints^2$ and its dual, since each edge in the dual intersects a unique edge in the original graph. 
-	Thus, we can create a mapping from the open and closed edges of $\ints^2$ to the dual graph, where the edge in the dual is open if and only if the intersecting edge in $\ints^2$ is open.\\
-	Then we notice that if there exists a cycle of closed edges in the dual graph enclosing the origin then the size of the open cluster at the origin is finite. 
+	Thus, we can create a mapping from the open and closed edges of $\ints^2$ to the dual graph, where the edge in the dual is open if and only if the intersecting edge in $\ints^2$ is closed, and vice versa.\\
+	Then we notice that if there exists a cycle of open edges in the dual graph enclosing the origin then the size of the open cluster at the origin is finite. 
 	\begin{lemma}\label{originloop}
-		$|C| < \infty \iff \exists$ a cycle of closed edges in $(\ints^2)^*$  enclosing the origin
+		$|C| < \infty \iff \exists$ a cycle of open edges in $(\ints^2)^*$  enclosing the origin
 	\end{lemma}
 	\begin{proof}
-		{Thinking visually since there is a ring of closed edges in the dual, the open edges from the origin in the original graph cannot extend beyond this ring. A more formal pure graph theory proof can be made but is omitted here.}
+		{Thinking visually since there is a ring of open edges in the dual, the open edges from the origin in the original graph cannot extend beyond this ring. A more formal pure graph theory proof can be made but is omitted here.}
 	\end{proof}
-	Let $X_n = \{$There is a length n cycle of closed edges in $\ztwodual$ which surrounds the origin\}
+	Let $X_n = \{$There is a length n cycle of open edges in $\ztwodual$ which surrounds the origin\}
 	Then using Lemma \ref{originloop} we see
 	$$\prob(|C| < \infty) = \prob(\bigcup_{n=4}^\infty \prob(X_n)) \leq \sum_{n=4}^\infty \prob(X_n) \leq \sum_{n=4}^\infty n \cdot 4(3^{n-1})q^n$$
 	Where in the last summation we get $4(3^{n-1})q^n$ as before by counting the number of possible edges a self avoiding walk can take then multiplying by the probability this path is open in the dual graph. 
@@ -552,6 +552,7 @@ We now state the inequality we aim to prove.
 \end{proof}
 The restriction of the BK inequality to increasing events was removed by Reimer, but it is not particularly useful to us so we do not prove it.
 
+{\color{red}
 Using the BK inequality we can now show a useful inequality more specific to percolation.
 \begin{corollary}
 	For a finite subset $S \subset \ints^d$ which contains the origin, and some $x \notin S$, 
@@ -560,10 +561,42 @@ Using the BK inequality we can now show a useful inequality more specific to per
 	Also, $\partial S$ denotes the vertex boundary of S, i.e. $\forall s \in \partial S$, the neighbourhood of s contains some $x \in \ints^d \setminus S$
 \end{corollary}
 \begin{proof}
-	{\color{red}{todo}}
+	{\color{red} todo}
 	Work on an n by n box
 \end{proof}
+}
 
+We now introduce some notation to allow us to discuss rectangles and their crossings in a succinct manner.
+\begin{definition}
+	Let $R = [a,b]\times[c, d]$ for integers $a<b$, $c<d$ be a rectangle, we identify this rectangle with a subgraph of $\ints^2$ which includes all vertices and edges on the boundary and inside. Let $k = b-a$ and $l = d-c$, then we say that R is a $k$ by $l$ rectangle.
+	
+	We now let $H(R)$ denote the event that there is a horizontal open crossing of R, i.e. a path from the left boundary of R to the right only using open edges. Similarly we define $V(R)$ to be the event that there is a vertical open crossing of R. 
+\end{definition}
+
+We note from this definition that if $R$ and $R'$ are distinct rectangles, which includes their boundaries being distinct. Then the events $H(R),V(R)$ are independent of $H(R'),V(R')$.
+
+It is also useful to specify how the subgraph identified with a rectangle is related to the dual graph, $\ztwodual$.
+\begin{definition}
+	The (horizontal) dual of a rectangle $R = [a,b]\times[c,d]$ in $\ints^2$ is the rectangle $R^h = [a+1/2,b-1/2]\times[c-1/2,d+1/2]$ in $\ztwodual$. As a reminder an edge in the dual is open if and only if the edges it intersects in the primal lattice is closed.
+	Let $V^*(R^h)$ be the event there is a vertical crossing of $R^h$ in the dual graph by open edges.
+\end{definition}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.6]{drawings/RectangleDual.png}
+	\caption{An example 6 by 4 rectangle R shown in black and the dual $R^h$ in red.}
+	\label{fig:rectangle}
+\end{figure}
+
+We now prove an important result similar to that of Lemma \ref*{originloop}, for rectangles. Relating the horizontal crossings in primal rectangles to vertical crossings in their duals.
+
+\begin{lemma}
+	Let $R$ be a rectangle in $\ints^2$. For any configuration $\omega$ of $\ints^2$, exactly one of the events $H(R)$ and $V^*(R^h)$ holds.
+\end{lemma}
+
+\begin{proof}
+	WLOG we scale the lattice to avoid working with fractions. Let the lattice $L = (0,2) + 4\ints^2$, and hence its dual $L^* = (2,0)+4\ints^2$. Then let R be a $k$ by $l$ rectangle on $L$ with vertex set $\{(4i,4j+2): 0 \leq i \leq k \text{, } 0 \leq j \leq l-1 \}$
+\end{proof}
 
 
 \section{Conformal Invariance}
@@ -674,7 +707,7 @@ Now we can follow an adapted binary search to centre in on the threshold, where 
 
 You can inspect the above algorithm to see how whenever the current value of $p$ is not the threshold we can safely throw out one half of the current search range. This technique, commonly referred to as divide and conquer, gives good asymptotic search performance. We would say in general a binary search finds the target in $O(nlog(n))$ worst-case time where n is the number of elements to be searched. In our case the effective number of ``items'' depends on the precision parameter $\epsilon$, where the number of potential threshold values to check is $\frac{1}{\epsilon}$. Thus Algorithm \ref*{findthreshold} runs in $O(\frac{1}{\epsilon}log(\frac{1}{\epsilon}))$ worst-case time.
 
-You may notice a possible optimization when both the algorithms are used together. Instead of first constructing the induced subgraph by the open edges then seeing if there is a crossing, we can directly only consider the open edges during our breadth first search by requiring in line 18 of Algorithm \ref*{bfs} that the edges w must have associated uniform r.v. value of less than or equal to p. In essence, we construct the subgraph induced by the open edges on the fly, saving us one pass over the edge set. 
+You may notice a possible optimization when both the algorithms are used together. Instead of first constructing the induced subgraph by the open edges then seeing if there is a crossing, we can directly only consider the open edges during our breadth first search by requiring in line 18 of Algorithm \ref*{bfs} that the edges $w$ must have associated uniform random variable value of less than or equal to p. In essence, we can construct the subgraph induced by the open edges on the fly, saving us one pass over the edge set. 
 
 My initial plan to investigate the percolation threshold for the planar square lattice was to simulate many boxes each of increasing width to see how the variation in the crossing threshold decreases with box width. Using the previously described algorithms to find the threshold for each box.
 
