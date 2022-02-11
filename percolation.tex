@@ -324,7 +324,7 @@ $$\lim_{n\rightarrow \infty} \prob (X_n) = \theta(p)$$
 And since $\prob (X_n) = 2p^n$, as the path can go left or right from the origin. We have for all $p <1$, $\theta(p) = 0$. Thus, $\theta(p) > 0$ if and only if $p = 1$. 
 
 
-\subsection {Existence of a critical value on $\ints^2$}
+\subsection {Existence of a critical value on $\ints^2$} \label{critvalZ2}
 We show the existence of the critical value in this case by bounding it from above and below. We follow the proofs given in \cite{steif2011mini}
 \begin{theorem}
 	If $p < 1/3$, $\theta(p) = 0$.
@@ -390,8 +390,8 @@ Then 20 years later Kesten \cite{kesten1980critical} proved $p_c(2) \geq \frac{1
 \begin{theorem}[Harris-Kesten theorem]
 	The critical value on $\ints^2$,  $p_c(2) =  \frac{1}{2}$.
 \end{theorem}
-In this project our aim is to show the Harris part of the theorem, that $p_c(2) \leq \frac{1}{2}$. 
-To do this we first introduce some more foundational results.\\
+In this project our aim is to show the Harris part of the theorem, that $p_c(2) \leq \frac{1}{2}$. We roughly follow the proofs and methods of \cite{bollobas2006short}, which in turn is largely based on the proofs by Russo, Seymour and Welsh.
+To do this we first introduce some more foundational results.
 
 Recall from earlier the definition of an increasing event.
 \begin{definition}[Increasing Event]
@@ -552,7 +552,7 @@ We now state the inequality we aim to prove.
 \end{proof}
 The restriction of the BK inequality to increasing events was removed by Reimer, but it is not particularly useful to us so we do not prove it.
 
-{\color{red}
+{\color{red} MIGHT NOT BE NEEDED WITH RSW PROOF.
 Using the BK inequality we can now show a useful inequality more specific to percolation.
 \begin{corollary}
 	For a finite subset $S \subset \ints^d$ which contains the origin, and some $x \notin S$, 
@@ -590,13 +590,50 @@ It is also useful to specify how the subgraph identified with a rectangle is rel
 
 We now prove an important result similar to that of Lemma \ref*{originloop}, for rectangles. Relating the horizontal crossings in primal rectangles to vertical crossings in their duals.
 
-\begin{lemma}
+\begin{lemma}\label{rectangleProof}
 	Let $R$ be a rectangle in $\ints^2$. For any configuration $\omega$ of $\ints^2$, exactly one of the events $H(R)$ and $V^*(R^h)$ holds.
 \end{lemma}
 
 \begin{proof}
 	WLOG we scale the lattice to avoid working with fractions. Let the lattice $L = (0,2) + 4\ints^2$, and hence its dual $L^* = (2,0)+4\ints^2$. Then let R be a $k$ by $l$ rectangle on $L$ with vertex set $\{(4i,4j+2): 0 \leq i \leq k \text{, } 0 \leq j \leq l-1 \}$, and thus we have that $R^h$ has vertex set $\{(4i+2,4j): 0 \leq i \leq k-1 \text{, } 0 \leq j \leq l \}$. Suppose some percolation configuration of $\ints^2$ and let G be the graph induced by the open edges of $R$, similarly let the open edges of $R^h$ induce the graph $G^h$. Now it suffices to show that either $G$ contains a left-right path or $G^h$ contains a top-bottom path, but not both. If we wish to show that $G$ has a left-right, ie a path from $(0,4m+2)$ to $(4k,4n+2)$ for some $m,n \in \mathbb{N}$, then we can assume WLOG that $G$ contains all $2(l-1)$ edges on its left and right most sides. We make a similar assumption that $G^h$ has all $2(k-1)$ on its top and bottom. This means we only have to consider one vertex each of the sides of the rectangles.
-	We now construct a third graph, $M$, which lies between $G$ and $G^h$. Let $R_{odd}$ be a $2k\times 2l$ rectangle with vertex set $\{(2i+1,2j+1): 0 \leq i \leq 2k-1 \text{, } 0 \leq j \leq 2l-1 \}$, then let M be the subgraph of $R_{odd}$ which just contains edges that do not intersect edges of $G$ nor $G^h$. We direct all the edges of $M$ such that edges of $G$ lie on the right and $G^h$ lie on the left. 
+
+	We now construct a third graph, $M$, which lies between $G$ and $G^h$. Let $R_{odd}$ be a $2k\times 2l$ rectangle with vertex set $\{(2i+1,2j+1): 0 \leq i \leq 2k-1 \text{, } 0 \leq j \leq 2l-1 \}$, then let M be the subgraph of $R_{odd}$ which just contains edges that do not intersect edges of $G$ nor $G^h$. We direct all the edges of $M$ such that edges of $G$ lie on the right and $G^h$ lie on the left. It is evident that this results in all vertices of M having one edge in and one edge out, except for 4 vertices of degree one which lie in the ``corners'' of the rectangle, label them counter-clockwise $x,y,z,w$ as in Figure \ref*{fig:rectangleProof}. Clearly due to the way we previously oriented the edges of $M$, $x$ and $z$ have one out edge, $y$ and $w$ have one in edge. Hence, the component of $M$ which $x$ lies in must be a path, say $P$, which ends at either $y$ or $w$. In the case where $P$ ends at $y$, then we have that the subgraph of $G^h$ to the left of $P$ must be connected from the top to the bottom. Thus, by basic graph theory this subgraph must contain a top-bottom path. If we are in the case where $P$ ends at $w$ then we must have the subgraph of $G$ to the right of $P$ is connected from left to right, thus meaning it admits a left-right path. Clearly then at least one of $H(R)$ and $V^*(R^h)$ occurs.
+	\begin{figure}
+		\centering
+		\includegraphics[scale=0.6]{drawings/rectanglesproof.png}
+		\caption{An example with $G$ in black, $G^h$ in red and $M$ in green. The dashed green line shows the Jordan Curve construction.}
+		\label{fig:rectangleProof}
+	\end{figure}
+	To show that exactly one  $H(R)$ and $V^*(R^h)$ occurs we utilise the Jordan Curve Theorem. A brief summary of this result is, given a non-self-intersecting continuous closed loop in the plane, $J$, called a Jordan Curve, then $J$ divides the plane into two distinct regions, an inside and an outside whose boundary is $J$. We refer the reader to \cite{kosniowski_1980} for a proof of the Jordan Curve Theorem. If the path $P$ runs from $x$ to $w$ then $P$ can be extended to a Jordan curve $J$ by simply adding a curve from $w$ to $x$ over the top of all the vertices of $R^h$. This results in all the vertices on the top of $R^h$ lying inside the Jordan curve and the vertices at the bottom of $R^h$ lie on the outside of the curve. Hence, any top-bottom path in $G^h$ must cross $J$ which means it crosses an edge of $M$, but this contradicts the definition of the edges of $M$. So only $H(R)$ occurs.
+	Similarly, in the case that $P$ ends at $y$, we form a Jordan curve by connecting $x$ to $y$ on the left of the vertices on the left side of $G$. Then by an analogous argument to before, we cannot have a left-right path in $G$ since the left and right sides lie in the interior and exterior of the Jordan curve respectively. Hence only $V^*(R^h)$ occurs in this case.
+\end{proof}
+
+We note that the edges of $L^*$ above are open with probability $1-p$, and so we can form some useful results for rectangles in $\ints^2$ directly from this lemma.
+
+\begin{corollary}
+	If $R$ is a $k$ by $l-1$ rectangle in $\ints^2$ and $R'$ is a $k-1$ by $l$ rectangle. Then,
+	$$\prob(H(R))+\mathbb{P}_{1-p}(V(R')) = 1 $$
+\end{corollary}
+
+Further to this, if $k = l = n+1$ for some $n$, then $R'$ is simply a 90-degree rotation of $R$. Hence, $\prob(H(R)) = \mathbb{P}_{1-p}(V(R')$. From this we find the key statement due to the self-duality of $\ints^2$ we discussed in Section \ref*{critvalZ2}.
+
+\begin{corollary}\label{squareGEQhalf}
+	If $R$ is an n+1 by n rectangle then $\mathbb{P}_{1/2}(H(R)) = 1/2$. So for $n$ sided square $S$, which is just defined as an $n$ by $n$ rectangle. We must have,
+	$$\mathbb{P}_{1/2}(H(S))=\mathbb{P}_{1/2}(V(S)) \geq 1/2$$
+\end{corollary}
+
+While it might now feel intuitively obvious that $p_c(2) \geq 1/2$, and certainly Corollary \ref*{squareGEQhalf} is essential in the reasoning for this, we are yet to prove it rigorously.
+
+In order to make this idea rigorous, we now aim to show that $\theta(1/2) = 0$. This is Harris' Theorem, although the method we use will be different to Harris' original as previously mentioned, we follow the ideas of Russo, Seymour and Welsh.
+
+\begin{lemma}
+	Let $R = [0,m]\times[0,2n]$ be an $m$ by $2n$ rectangle with $m\geq n$. Let $X(R)$ be the event that there are paths $P_1$ and $P_2$ of open edges, where $P_1$ crosses the square $S = [0,n]\times[0,n]$ from top to bottom, and $P_2$ lies inside $R$ and joins some vertex on $P_1$ to some vertex on the right side of $R$. Then, 
+	$$\prob(X(R))\geq \frac{1}{2}\prob(H(R))\prob(V(S))$$
+\end{lemma}
+\begin{proof}
+	We first suppose that $V(S)$ holds, so there is a path $P$ of open edges crossing the square top to bottom. This path separates $S$ into two regions, by the Jordan Curve Theorem. In fact, we choose the left most path $P$, call it $LV(S)$, and we note that the event $\{LV(S) = P_1\}$ does not depend on any edges to the right of $P_1$. We can do this due to our proof of Lemma~\ref{rectangleProof}, if $V(S)$ holds we have a path from $x$ to $y$ in $M$, and $LV(S)$ is directly adjacent on the left of the path(when viewed from the edge direction) from $x$ to $y$, in doing so we only needed to look at the edges to the left of $LV(S)$.
+
+
 \end{proof}
 
 
@@ -605,16 +642,16 @@ Discuss what conformal invariance is and perhaps talk about the result on the tr
 
 \section{Simulation}
 We discuss various ways of exploring percolation via simulations.
-\subsection{The "water level" of open crossings in finite boxes}
-{\color{red}{Discuss how uniform R.V.s can be assigned to edges to simulate percolation. 
-Then plot the threshold for open crossings across some size box. 
-Then see the sharpening of said plot when the box size increases.}}
+\subsection{The ``water level'' of open crossings in finite boxes}
+% {\color{red}{Discuss how uniform R.V.s can be assigned to edges to simulate percolation. 
+% Then plot the threshold for open crossings across some size box. 
+% Then see the sharpening of said plot when the box size increases.}}
 
 As we have seen previously the task of determining the percolation threshold for a given lattice structure is highly non-trivial and so for many lattices the task of finding exact values is still an open problem \cite{StoverThreshold}. Subsequently, a great deal of work has been carried out to determine approximate values for a variety of lattices and distributions of open sites or bonds by way of computer simulations. In this section we explore a method I used to estimate the bond percolation threshold for the square lattice, since we can compare this to the exact value of $1/2$ we proved earlier. 
 
 While we know that the fact that a configuration having an open crossing from one side to another of a single finite box in $\ints^2$ does not affect the probability of there being an infinite connected cluster. It is clear that we would expect the probability of such a crossing in a very large box to tend towards the percolation threshold for the infinite cluster. Hence, we can exploit this behaviour to find an estimate for the percolation threshold, create some large square grid, assign some configuration of open and closed edges with probability $p$, then check for a left-right crossing. We alter the value of $p$ repeatedly until we find the lowest value at which a crossing occurs.
 
-There are a number of factors to consider when setting up this simulation such that it can run sufficiently fast, firstly how do we assign each edge to be open or closed so that we can traverse the graph with different values of p.
+There are a number of factors to consider when setting up this simulation such that it can run sufficiently fast, firstly how do we assign each edge to be open or closed so that we can traverse the graph with different values of $p$.
 
 The simplest approach would be to assign a Bernoulli random variable with probability $p$ to each edge, however this has the drawback of requiring us to revaluate the random variable on each edge when we change the value of $p$, and to mirror the non-decreasing nature of the percolation function $\theta(p)$, we would have to only do this for previously closed edges. To avoid these issues I chose to implement a method similar to one we used to prove \ref{incEventlemma}, where we coupled configurations using uniform random variables. To recap this, by assigning an edge with a value from independent uniform random on $[0,1]$ we can then set an edge to be open if this value is less than or equal to $p$ and closed otherwise. In this way every edge is open with probability $p$, and increasing p has the desired property that edges which were previously open remain so. Additionally, after the values between 0 and 1 have been assigned to each edge, we gain the benefit of only needing to query the state of edges as we come to them by comparing the assigned value to $p$, rather than needing to assign the open or closed states to every edge each time we alter $p$.
 
@@ -712,10 +749,12 @@ You may notice a possible optimization when both the algorithms are used togethe
 
 My initial plan to investigate the percolation threshold for the planar square lattice was to simulate many boxes each of increasing width to see how the variation in the crossing threshold decreases with box width. Using the previously described algorithms to find the threshold for each box.
 
-I implemented the simulation using Python due to its extensive set of community libraries and ease of prototyping. Since Python is an interpreted language it can be less performant than other complied languages which can be an important consideration for very large simulations. However, I will later discuss other alternative implementations of Python such as PyPy which can mitigate this issue.
+I implemented the simulation using Python due to its extensive set of community libraries and ease of prototyping. Since Python is an interpreted language it can be less performant than other complied languages which can be an important consideration for very large simulations. However, alternative interpreters  of Python such as PyPy can mitigate this issue \cite{PyPy}. PyPy uses just-in-time compilation and other optimization techniques to speed up native python code.
 I decided to simulate one box of each width from width 2 (3x3 vertices) to width 1950, with a precision of $0.0001$. I then used the matplotlib library to draw a scatter plot of the box width against the computed crossing threshold, which can be seen in Figure \ref*{fig:thresholdplot2}. The red dashed line lies at the threshold value 0.5 which we know is the true value for an infinite lattice.
 
 You can clearly see how the variability of crossing threshold decreases as the box width increases, becoming more concentrated around 0.5. Supposing we did not already know the true value of the infinite lattice, this would provide us with a strong insight that the percolation threshold lies around 0.5. In fact if we calculate the mean of the crossing thresholds for each box, disregarding the first 50 due to their small size, we would get a value of 0.499979 which when rounded to our precision of 0.0001 is 0.5000.
+
+This verifies the method we have used as giving a good approximation for the percolation threshold. Since no part of our simulation or algorithm depended on specific structure of the square planar lattice, it would be very easy to use this approach to investigate other planar graph structure. In fact, with some adaptations the Algorithm~\ref*{bfs} could be extended to consider an $n$-dimension hypercube to allow the investigation of Bernoulli percolation on arbitrary dimension lattices. Further to this we can easily assign values from different random distributions to each edge, and explore how this affects the crossing threshold.
 
 % \begin{figure}
 % 	    \centering
@@ -776,24 +815,5 @@ Is a conclusion necessary for this project?
 % \end{figure}
 
 \printbibliography
-% \begin{thebibliography}{99}
-% \bibitem{steif}
-
-% % \bibitem{lamport94}
-% %   Leslie Lamport,
-% %   \textit{\LaTeX: a document preparation system},
-% %   Addison Wesley, Massachusetts,
-% %   2nd edition,
-% %   1994.
-  
-% % \bibitem{referencing}
-% %     Wikibooks,
-% %     \textit{\LaTeX/Bibliography Management},
-% %     [Online],
-% %     Accessed at https://en.wikibooks.org/wiki/LaTeX/Bibliography\_Management,
-% %     (DATE ACCESSED).
-    
-
-% \end{thebibliography}
 
 \end{document}
