@@ -467,7 +467,7 @@ $$ \mathbb{E}_p(fg) \geq \mathbb{E}_p(f)\mathbb{E}_p(g)$$
 	\begin{align*}
 		\expp(fg) &= \expp(\expp(fg|\omega_1,...,\omega_k))\\
 		&\geq \expp(\expp(f|\omega_1,...,\omega_k)\expp(g|\omega_1,...,\omega_k))\\
-		&\geq \expp(\expp(f|\omega_1,...,\omega_k))\expp(\expp(g|\omega_1,...,\omega_k))]\\
+		&\geq \expp(\expp(f|\omega_1,...,\omega_k))\expp(\expp(g|\omega_1,...,\omega_k))\\
 		&= \expp(f)\expp(g)
 	\end{align*}
 	So we have shown the result for all increasing functions which depend on a finite number of edges.
@@ -477,7 +477,7 @@ $$ \mathbb{E}_p(fg) \geq \mathbb{E}_p(f)\mathbb{E}_p(g)$$
 		f_n &:= \expp(f | \omega_1,...,\omega_n)\\
 		g_n &:= \expp(g | \omega_1,...,\omega_n)
 	\end{align*}
-	Then $(f_n)$ and $(g_n)$ form sub-martingales since $f$ and $g$ are increasing. 
+	We note that $(f_n)$ and $(g_n)$ form martingales due to the tower law of expectation.
 	Then since we assumed $f$ and $g$ are bounded we can apply the Martingale convergence Theorem to see that $f_n$ converges to $f$  as $n \rightarrow \infty$ and similarly $g_n$ converges to $g$.
 	We do not give a rigorous proof of this here but the reader may wish to seek further information on Doob's Martingale convergence Theorem from \cite{williams_1991}.
 	
@@ -636,6 +636,8 @@ In order to make this idea rigorous, we now aim to show that $\theta(1/2) = 0$. 
 
 \end{proof}
 
+
+Borel-Cantelli Lemma
 
 \section{Conformal Invariance}
 Discuss what conformal invariance is and perhaps talk about the result on the triangular lattice due to Smirnov
