@@ -653,7 +653,7 @@ In order to make this idea rigorous, we now aim to show that $\theta(1/2) = 0$. 
 
 We now prove an important corollary of the above lemma which bounds below the probability of a horizontal crossing in specific shapes of rectangles. We follow the method used in \cite{bollobas2006short} by Bollob\'as and Riordan which differs from the original methods of Russo, Seymour and Welsh, which can be found in \cite{grimmett1999percolation}.
 
-\begin{corollary}
+\begin{corollary}\label{rectangleBound}
 	Let $\rho >1$ be a fixed integer. Then there is a constant $c_2(\rho) > 0$ which is only dependent on $\rho$ such that, for any $2\rho n$ by $2n$ rectangle $R$ we have $\mathbb{P}_{1/2}(H(R)) \geq c_2(\rho)$
 \end{corollary}
 
@@ -668,14 +668,20 @@ We now prove an important corollary of the above lemma which bounds below the pr
 
 	So in order to show $(\star)$ holds we consider intersecting rectangles $R = [0,m]\times [0,2n]$ and $R' = [n-m,n] \times [0,2n]$, in addition to the lower square $S = [0,n] \times [0,n]$ inside both.
 	Let $E_1 = X(R)$ then let $E_2$ be the corresponding event reflected in the line $y=n/2$ for $R'$. Let $E_3 = H(S)$ be the event there is a horizontal crossing of S.
-	Then if $E_1,E_2,E_3$ all hold we have that $H(R \cup  R')$ holds, by the fact that the horizontal crossing of $S$ must cross the two vertical crossing of $S$ which occur due to $E_1,E_2$. This is shown in Figure~\ref{}.
+	Then if $E_1,E_2,E_3$ all hold we have that $H(R \cup  R')$ holds, by the fact that the horizontal crossing of $S$ must cross the two vertical crossing of $S$ which occur due to $E_1,E_2$. This is shown in Figure~\ref{fig:doubleRectangle}.
+	\begin{figure}
+		\centering
+		\includegraphics[scale=0.6]{drawings/doubleRectangle.png}
+		\caption{An example of an overlapping $R$ and $R'$, with the edges of the event $E_1$ in black, $E_2$ in red and $E_3$ in blue.}
+		\label{fig:doubleRectangle}
+	\end{figure}
 	Then we note that $E_1,E_2,E_3$ are all increasing events, so we can use Harris' Inequality which gives us:
 	\begin{align*}
 	\prbhlf(H(R \cup R')) &\geq \prbhlf(E_1 \cap E_2\cap E_3)\\
 	& \geq \prbhlf(E_1)\prbhlf(E_2)\prbhlf(E_3)\\
 	& \geq \prbhlf(X(R))^2\prbhlf(H(S))
 	\end{align*}
-	Where the last line is a result of the symmetry of $E_1$ and $E_2$. From Corollary~\ref{squareGEQhalf} we know $\prbhlf(V(S)) =\prbhlf(H(S)) \ geq 1/2$, and using the result Lemma~\ref{mby2nlemma} we can plug into the above to get.
+	Where the last line is a result of the symmetry of $E_1$ and $E_2$. From Corollary~\ref{squareGEQhalf} we know $\prbhlf(V(S)) =\prbhlf(H(S)) \ geq 1/2$, and using the result Lemma~\ref{mby2nLemma} we can plug into the above to get.
 	\begin{align*}
 		\prbhlf(H(R \cup R')) & \geq \prbhlf(X(R))^2\prbhlf(H(S)) \\
 		& \geq \{2^{-1} \prbhlf (H(R)) \prbhlf (V(S))\}^2*1/2 \\
@@ -692,12 +698,24 @@ We now need one more result before we can prove Harris' Theorem, the second Bore
 
 We are now in a position to prove Harris' theorem.
 
-\begin{theorem}
-	$\theta(1/2) = 0$
+\begin{theorem}[Harris' theorem]
+	For Bernoulli bond percolation on $\ints^2$ we have that $\theta(1/2) = 0$.
 \end{theorem}
 
 \begin{proof}
-	
+	We work by constructing a sequence of square annuli in the dual graph. The first annulus is formed by arranging four 6n by 2n rectangles around the origin such that the 2n by 2n ends of each rectangle overlap. See Figure~\ref{fig:squareAnnulus} for the arrangement, we note that the chosen direction to offset the annuus in the dual does not matter so long as it encloses the origin of the primal graph. 
+	\begin{figure}
+		\centering
+		\includegraphics[scale=0.48]{drawings/squareAnnulus.png}
+		\caption{An example of the first square annulus in the dual graph with the four rectangle crossings shown in red which enclose the origin.}
+		\label{fig:squareAnnulus}
+	\end{figure}
+	Then by Corollary~\ref{rectangleBound} each rectangle has an open crossing in the long direction with probability at least $c_2(3)$, and thus all of them do with probability at least $c_2(3)^4$. When all four rectangles have an open crossing they form an open path in the dual which encloses the origin. Let $A_k$ be the square annulus in the dual graph formed by overlapping four $(2k+4)n$ by $2n$ rectangles as above. Then let $E_k$ be the event that the annulus contains an open cycle enclosing the origin. Then $\prbhlf(E_k) \geq c_2(k+2)$ by Corollary~\ref{rectangleBound}. Now since the annuli $(A_k)$ lie on disjoint regions, we have that the $(E_k)$ are all independent.
+	Since $\sum_{k=1}^{\infty}\prbhlf(E_k) \geq \sum_{k=1}^{\infty}c_2(k+2)^4 = \infty$ we can apply the second Borel-Cantelli Lemma.
+
+	$$\prbhlf(\text{infinitely many }E_k\text{ occur}) = 1$$
+
+	Take the first $E_k$ which occurs, then the annulus $A_k$ in the dual graph contains an open cycle enclosing the origin. Thus, there cannot be an infinite cluster containing the origin in the primal graph.
 \end{proof}
 
 
