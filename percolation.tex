@@ -11,6 +11,8 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{pdflscape}
+\usepackage[UKenglish]{babel}
+
 \usepackage[hidelinks]{hyperref}
 \hypersetup{
     colorlinks=false, %set true if you want colored links
@@ -898,5 +900,85 @@ Is a conclusion necessary for this project?
 % \end{figure}
 
 \printbibliography
+
+\section{Appendix}
+Here is the Python code I used to carry out my simulations:
+\begin{verbatim}
+	import networkx as nx
+	import random
+	import time
+	
+	def gen2dLattice(n):
+		'''Create a 2n by 2n square graph'''
+		return nx.grid_2d_graph(range(-n,n+1),range(-n,n+1))
+	
+	def percGraph(n):
+		G = gen2dLattice(n)
+		num_edges = nx.number_of_edges(G)
+		unifRvs = [random.random() for _ in range(num_edges)]
+		dictUnifRvs = {coord:rv for coord,rv in zip(G.edges,iter(unifRvs))} # Dictionary from edges to their unif rv
+		nx.set_edge_attributes(G,dictUnifRvs,name="unifRv") # binds the unif rvs to the edges in the graph 
+		#create aug graph with s and f nodes which connect to the left an right sides resp
+		GAug = G.copy()
+		GAug.add_node('s') 
+		GAug.add_node('f')
+		for i in range(-n,n+1): # Add the edges to s and f
+			GAug.add_edge('s',(-n,i))
+			GAug.add_edge((n,i),'f')
+		return G , GAug
+	
+	def find_crossing_path(openEdges,GAug) -> list:
+		'''finds left/right crossing by open edges if one exists
+		Returns: List of edges on the path
+		''' # find the subgraph of open edges plus the aux left right edges
+		GOpen = nx.edge_subgraph(GAug,list(GAug.edges('f')) + list(GAug.edges('s')) + [(e[0],e[1]) for e in openEdges])
+		edgepath = []
+		try:
+			openPaths = nx.algorithms.shortest_paths.bidirectional_shortest_path(GOpen,'s','f')
+		except:
+			openPaths = []
+		for i in range(len(openPaths)): #Convert from list of nodes to list of edges
+			edgepath.append((openPaths[i-1],openPaths[i]))
+		openPaths = edgepath
+		return openPaths
+	
+	def find_threshold_binary_search(i,precision):
+		'''Finds the threshold for a left right crossing on a 2i x 2i box'''
+		G, GAug = percGraph(i)
+		lo=0
+		hi=1
+		p = (lo+hi)/2
+		openEdges = [e for e in G.edges(data=True) if e[2]['unifRv']<=p]
+		crossing = find_crossing_path(openEdges, GAug)
+		while lo <= hi:
+			p = (lo+hi)/2
+			openEdges = [e for e in G.edges(data=True) if e[2]['unifRv']<=p]
+			crossing = len(find_crossing_path(openEdges, GAug))
+			if crossing == 0:
+				pAlt = p + precision
+				openEdgesAlt = [e for e in G.edges(data=True) if e[2]['unifRv']<=pAlt]
+				crossingAlt = len(find_crossing_path(openEdgesAlt, GAug))
+				if crossingAlt >0:
+					return pAlt
+				else:
+					lo = pAlt    
+			else:
+				pAlt = p - precision
+				openEdgesAlt = [e for e in G.edges(data=True) if e[2]['unifRv']<=pAlt]
+				crossingAlt = len(find_crossing_path(openEdgesAlt, GAug))
+				if crossingAlt ==0:
+					return p
+				else:
+					
+					hi = pAlt
+		return 'Error'
+	
+	start_time = time.time()
+	thresholds = [find_threshold_binary_search(i,0.0001) for i in range(1,1000)]
+	print(thresholds)
+	end_time = time.time()
+	print(f"It took {end_time-start_time:.2f} seconds to compute")
+	
+\end{verbatim}
 
 \end{document}
