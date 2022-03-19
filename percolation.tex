@@ -713,6 +713,7 @@ We are now in a position to prove Harris' theorem.
 		\includegraphics[scale=0.48]{drawings/squareAnnulus.png}
 		\caption{An example of the first square annulus in the dual graph with the four rectangle crossings shown in red which enclose the origin.}
 		\label{fig:squareAnnulus}
+
 	\end{figure}
 	Then by Corollary~\ref{rectangleBound} each rectangle has an open crossing in the long direction with probability at least $c_2(3)$, and thus all of them do with probability at least $c_2(3)^4$. When all four rectangles have an open crossing they form an open path in the dual which encloses the origin. Let $A_k$ be the square annulus in the dual graph formed by overlapping four $(2k+4)n$ by $2n$ rectangles as above. Then let $E_k$ be the event that the annulus contains an open cycle enclosing the origin. Then $\prbhlf(E_k) \geq c_2(k+2)$ by Corollary~\ref{rectangleBound}. Now since the annuli $(A_k)$ lie on disjoint regions, we have that the $(E_k)$ are all independent.
 	Since $\sum_{k=1}^{\infty}\prbhlf(E_k) \geq \sum_{k=1}^{\infty}c_2(k+2)^4 = \infty$ we can apply the second Borel-Cantelli Lemma.
@@ -722,10 +723,19 @@ We are now in a position to prove Harris' theorem.
 	Take the first $E_k$ which occurs, then the annulus $A_k$ in the dual graph contains an open cycle enclosing the origin. Thus, there cannot be an infinite cluster containing the origin in the primal graph.
 \end{proof}
 
+\subsection{Kestern's Theorem}
+We now move onto proving Kesten's theorem, specifically that the percolation threshold is less than or equal to a half. Again we follow the methods detailed in \cite{bollobas2006short}. First we introduce a very powerful result due to Friedgut and
+Kalai \cite{friedgut1996every} which we give without proof.
+
+\begin{theorem}[Sharp threshold theorem]
+	
+\end{theorem}
+
+We do not give the proof since it is too long to induce within the scope of this project, but the reader is recommended to view the corresponding reference for details. 
 
 
-\section{Conformal Invariance}
-Discuss what conformal invariance is and perhaps talk about the result on the triangular lattice due to Smirnov
+% \section{Conformal Invariance}
+% Discuss what conformal invariance is and perhaps talk about the result on the triangular lattice due to Smirnov
 
 \section{Simulation}
 We discuss various ways of exploring percolation via simulations.
@@ -861,13 +871,13 @@ This verifies the method we have used as giving a good approximation for the per
 	\label{fig:thresholdplot2}
 \end{figure}
 \end{landscape}
-\subsection{Finding the pivotal edges in a finite box}
-Discuss an algorithm to find the pivotal edges in the percolation box, perhaps relate to Russo's formula for pivotal edges.
-\subsection{Fast Monte Carlo algorithm for percolation}
-Discuss the Newman and Ziff paper "A fast Monte Carlo algorithm for site or bond percolation". Explaining the data structures etc, and perhaps implement it.
+% \subsection{Finding the pivotal edges in a finite box}
+% Discuss an algorithm to find the pivotal edges in the percolation box, perhaps relate to Russo's formula for pivotal edges.
+% \subsection{Fast Monte Carlo algorithm for percolation}
+% Discuss the Newman and Ziff paper "A fast Monte Carlo algorithm for site or bond percolation". Explaining the data structures etc, and perhaps implement it.
 
-\section{Conclusion}
-Is a conclusion necessary for this project?
+% \section{Conclusion}
+% Is a conclusion necessary for this project?
 
 
 \printbibliography
