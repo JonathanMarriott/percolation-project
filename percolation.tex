@@ -389,8 +389,8 @@ Since we have just shown $p_c(2) \in (0,1)$ then we must also have $p_c(d) \in (
 
 \section{Harris-Kesten Theorem}
 An important result in percolation theory is that the critical value for the square lattice is $\frac{1}{2}$. 
-This result came in two parts, firstly Harris \cite{harris_1960} showed that $p_c(2) \leq \frac{1}{2}$ in 1960.
-Then 20 years later Kesten \cite{kesten1980critical} proved $p_c(2) \geq \frac{1}{2}$, these proofs combined resulted in the following theorem.
+This result came in two parts, firstly Harris \cite{harris_1960} showed that $p_c(2) \geq \frac{1}{2}$ in 1960.
+Then 20 years later Kesten \cite{kesten1980critical} proved $p_c(2) \leq \frac{1}{2}$, these proofs combined resulted in the following theorem.
 
 \begin{theorem}[Harris-Kesten theorem]
 	The critical value on $\ints^2$,  $p_c(2) =  \frac{1}{2}$.
@@ -570,6 +570,7 @@ Using the BK inequality we can now show a useful inequality more specific to per
 	Work on an n by n box
 \end{proof}
 }
+\subsection{Crossing rectangles}
 
 We now introduce some notation to allow us to discuss rectangles and their crossings in a succinct manner.
 \begin{definition}
@@ -628,6 +629,8 @@ Further to this, if $k = l = n+1$ for some $n$, then $R'$ is simply a 90-degree 
 \end{corollary}
 
 While it might now feel intuitively obvious that $p_c(2) \geq 1/2$, and certainly Corollary \ref*{squareGEQhalf} is essential in the reasoning for this, we are yet to prove it rigorously.
+
+\subsection{Harris' Theorem}
 
 In order to make this idea rigorous, we now aim to show that $\theta(1/2) = 0$. This is Harris' Theorem, although the method we use will be different to Harris' original as previously mentioned, we follow the ideas of Russo, Seymour and Welsh.
 
@@ -724,15 +727,32 @@ We are now in a position to prove Harris' theorem.
 \end{proof}
 
 \subsection{Kestern's Theorem}
-We now move onto proving Kesten's theorem, specifically that the percolation threshold is less than or equal to a half. Again we follow the methods detailed in \cite{bollobas2006short}. First we introduce a very powerful result due to Friedgut and
-Kalai \cite{friedgut1996every} which we give without proof.
+We now move onto proving Kesten's theorem, specifically that the percolation threshold is less than or equal to a half. In this section we again follow the definitions and methods detailed in \cite{bollobas2006short}. Firstly we introduce a powerful result due to Friedgut and Kalai \cite{friedgut1996every}.
+We assume the reader has some basic group theory knowledge, although it is not critical to understanding.
 
-\begin{theorem}[Sharp threshold theorem]
-	
+\begin{definition}[Symmetric event]
+	An event $\mathcal{A} \subseteq \mathcal{P}(X)$ is symmetric if there is a permutation group  $\Gamma$ acting transitively on $\mathcal{P}(X)$ which preserves $\mathcal{A}$
+\end{definition}
+ To explain briefly, the action of a group $G$ on a set $X$ is transitive if for all $x,y \in X$, there exists $g \in G$ such that $g \cdot  x = y$. This means G shuffles the elements of X, in essence given some $x \in X$ you can obtain any $y \in X$ by some $g \in G$. Then an event $\mathcal{A}$ is preserved under $G$, just if the probability of $\mathcal{A}$ remains unchanged under the group action of $G$.
+
+
+\begin{theorem}[Friedgut-Kalai sharp threshold theorem]
+	There is an absolute constant $c_1$ such that if $|X| = N$, $\mathcal{A} \subset \mathcal{P}(X)$ is a symmetric increasing event, and for $0 < \epsilon < 1/2$ if $\prob(\mathcal{A}) > \epsilon$ then $\mathbb{P}_q(\mathcal{A}) > 1 - \epsilon$
+	whenever we have 
+	$$q - p \geq c_1 \frac{log(1/(2\epsilon))}{log N}$$
 \end{theorem}
 
-We do not give the proof since it is too long to induce within the scope of this project, but the reader is recommended to view the corresponding reference for details. 
+We do not give the proof since it is too long to include within the scope of this project, but the reader is recommended to view \cite{friedgut1996every} for details. 
 
+Using the Friedgut-Kalai sharp threshold theorem we will now work to prove that when $p>1/2$ the probability of crossing rectangles larger than a certain size is close to 1.
+
+\begin{lemma}
+	Let $p >1/2$ and fix some integer $\rho >1$. Then there exists constants $\delta = \delta(p) > 0$ and $n_0 = n_0(p,\rho)$ such that when $n > n_0$ and $R_n$ is a $4\rho n$ by $4n$ rectangle on the square lattice then, $$\prob(H(R_n)) \geq 1-n^{-\delta}$$
+\end{lemma}
+
+\begin{proof}
+	We work with the case $\rho = 3$ initially. 
+\end{proof}
 
 % \section{Conformal Invariance}
 % Discuss what conformal invariance is and perhaps talk about the result on the triangular lattice due to Smirnov
