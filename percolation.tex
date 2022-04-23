@@ -50,6 +50,8 @@
 \newcommand{\prob}{\mathbb{P}_p}
 \newcommand{\expp}{\mathbb{E}_p}
 \newcommand{\prbhlf}{\mathbb{P}_{1/2}}
+\newcommand{\probtorus}{\mathbb{P}^{\mathbb{T}}_{p}}
+\newcommand{\probtorush}{\mathbb{P}^{\mathbb{T}}_{1/2}}
 %------------------
 
 %Everything before begin document is called the pre-amble and sets out how the document will look
@@ -405,7 +407,7 @@ Recall from earlier the definition of an increasing event.
 	Then $\omega' \in A$. \\
 	\end{definition}
 We follow the definitions and proof for the Harris Inequality given by \cite{duminil2018introduction}.
-\begin{theorem}[Harris Inequality]
+\begin{theorem}[Harris' Inequality] \label{harrisLemma}
 If $A, B \subseteq \Omega$ are increasing events then 
 $$\mathbb{P}(A \cap B) \geq \mathbb{P}(A)\mathbb{P}(B)$$
 This is a specific case of a more general inequality, the FKG inequality.
@@ -731,27 +733,83 @@ We now move onto proving Kesten's theorem, specifically that the percolation thr
 We assume the reader has some basic group theory knowledge, although it is not critical to understanding.
 
 \begin{definition}[Symmetric event]
-	An event $\mathcal{A} \subseteq \mathcal{P}(X)$ is symmetric if there is a permutation group  $\Gamma$ acting transitively on $\mathcal{P}(X)$ which preserves $\mathcal{A}$
+	An event $\mathcal{A} \subseteq \mathcal{P}(X)$ is symmetric if there is a permutation group  $G$ acting transitively on $\mathcal{P}(X)$ which preserves $\mathcal{A}$
 \end{definition}
- To explain briefly, the action of a group $G$ on a set $X$ is transitive if for all $x,y \in X$, there exists $g \in G$ such that $g \cdot  x = y$. This means G shuffles the elements of X, in essence given some $x \in X$ you can obtain any $y \in X$ by some $g \in G$. Then an event $\mathcal{A}$ is preserved under $G$, just if the probability of $\mathcal{A}$ remains unchanged under the group action of $G$.
+ To explain briefly, the action of a group $G$ on a set $X$ is transitive if for all $x,y \in X$, there exists $g \in G$ such that $g \cdot  x = y$. This means G shuffles the elements of X, in essence given some $x \in X$ you can obtain any $y \in X$ by some $g \in G$. Then an event $\mathcal{A}$ being preserved under $G$ just means that if $A \in \mathcal{A}$ then there exists $g \in G$ such that $g(A) \in \mathcal{A}$. 
 
 
-\begin{theorem}[Friedgut-Kalai sharp threshold theorem]
-	There is an absolute constant $c_1$ such that if $|X| = N$, $\mathcal{A} \subset \mathcal{P}(X)$ is a symmetric increasing event, and for $0 < \epsilon < 1/2$ if $\prob(\mathcal{A}) > \epsilon$ then $\mathbb{P}_q(\mathcal{A}) > 1 - \epsilon$
+\begin{theorem}[Friedgut-Kalai sharp threshold theorem]\label{sharpThreshold}
+	There is an absolute constant $c_1$ such that if $\mathcal{A} \subset \mathcal{P}(X)$ is a symmetric increasing event and if $\prob(\mathcal{A}) > \epsilon$ for some $0 < \epsilon < 1/2$ then, 
+	$$\mathbb{P}_q(\mathcal{A}) > 1 - \epsilon$$
 	whenever we have 
-	$$q - p \geq c_1 \frac{log(1/(2\epsilon))}{log N}$$
+	$$q - p \geq c_1 \frac{log(1/(2\epsilon))}{log |X|}$$
 \end{theorem}
 
-We do not give the proof since it is too long to include within the scope of this project, but the reader is recommended to view \cite{friedgut1996every} for details. 
+We do not give the proof since it is too long to include within the scope of this project, but the reader is recommended to view \cite{friedgut1996every} for details. This theorem tells us all symmetric increasing events have 'sharp threshold', meaning a small increase of order $1/log|X|$ to the parameter $p$ is enough to take the probability of the event from a value close 0 to nearly 1.
 
 Using the Friedgut-Kalai sharp threshold theorem we will now work to prove that when $p>1/2$ the probability of crossing rectangles larger than a certain size is close to 1.
 
-\begin{lemma}
+\begin{lemma}\label{kesternLemma}
 	Let $p >1/2$ and fix some integer $\rho >1$. Then there exists constants $\delta = \delta(p) > 0$ and $n_0 = n_0(p,\rho)$ such that when $n > n_0$ and $R_n$ is a $4\rho n$ by $4n$ rectangle on the square lattice then, $$\prob(H(R_n)) \geq 1-n^{-\delta}$$
 \end{lemma}
 
 \begin{proof}
-	We work with the case $\rho = 3$ initially. 
+	For the sake of simplicity, we prove the case of $\rho = 3$ since this implies the result for $\rho =2$ and these are the only cases we will later need. Let $p>1/2$, then by Corollary~\ref*{rectangleBound} with $\rho = 7$ we know there exists a constant $0<c_2<1/2$ such that for any 14n by 2n rectangle $R$, the probability of a horizontal crossing is bounded below by $c_2$, $\mathbb{P}_{1/2}(H(R)) \geq c_2$. Now we cannot directly apply the Friedgut-Kalai sharp threshold theorem since $H(R)$ is not a symmetric event, since $X$ in this case is the set of all edges in $\ints^2$. In order to get around this we introduce new symmetric events on the discrete torus. 
+	\begin{definition}[Discrete Torus]
+	For $n \geq 3$, the $n$ by $n$ discrete torus, $\mathbb{T}_n$, is the Cartesian product of two length n cycles. Equivalently $\mathbb{T}_n$ can be formed by identifying all pairs of vertices on $\ints^2$ whose coordinates are congruent modulo $n$. We note that $\mathbb{T}_n$ has $n^2$ vertices and $2n^2$ edges.
+	\end{definition}
+
+	\begin{figure}
+		\centering
+		\includegraphics[scale=0.8]{drawings/torus.png}
+		\caption{$\mathbb{T}_4,$ the 4 by 4 discrete torus.}
+		\label{fig:torus}
+	\end{figure}
+
+	Now for $1 \leq k,l \leq n-2$, we define a $k$ by $l$ rectangle $R$ in $\mathbb{T}_n$ to be an induced subgraph in $\mathbb{T}_n$ which has an associated $k$ by $l$ rectangle $R' = [a,a+k] \times [b,b+l]$ in $\ints^2$, for some $a,b \in \ints$. Due to the restriction in size of $k$ and $l$ our rectangles in the torus never wrap around on themselves and thus always have an associated planar rectangle in $\ints^2$.
+	
+	We define Bernoulli bond percolation on $\mathbb{T}_n$ as you would expect, where each edge is open independently with probability $p$. We will write $\mathbb{P}^{\mathbb{T}_n}_{p} = \probtorus$ for the corresponding probability measure, dropping the $n$ when it is clear from the context for readability.
+	
+	Then define $E_n$ to be the event that $\mathbb{T}_{16n}$ admits a $14n$ by $2n$ rectangle with an open horizontal crossing, or it admits a $2n$ by $14n$ rectangle with an open vertical crossing. Now $E_n$ is a symmetric event on $\mathcal{P}(X)$ where $X$ is the edge set of the 16 by 16 torus, we note $|X| = 512n^2$. Suppose a fixed $14n$ by $2n$ rectangle R in $\mathbb{T}_{16n}$ and its corresponding rectangle $R'$ in $\ints^2$, we know 
+	$$\probtorush(E_n) \geq \probtorush(H(R)) = \prbhlf(H(R')) \geq c_2$$
+	Now we aim to apply Theorem~\ref{sharpThreshold}, firstly setting $$\delta = \delta(p) = \frac{p-1/2}{64 c_1}$$
+	$$\epsilon = n^{-128 \delta}$$
+	where $c_1$ is the absolute constant from the sharp threshold theorem. Then since $\delta$ is only dependent on $p$, clearly there exists an $n_0 = n_0(p)$ such that $\epsilon < c_2< 1/2$ for all $n \geq n_0$. 
+	So by some rearrangement, 
+	$$p-1/2 = 64 c_1 \delta = c_1\frac{-(-128 \delta)log(n)}{2log(n)} = c_1\frac{log(1/\epsilon)}{log(n^2)} > c_1\frac{log(1/(2\epsilon))}{log(512n^2)}$$  
+	Now since $\probtorush(E_n) \geq c_2 > \epsilon$, by Theorem~\ref*{sharpThreshold}, we obtain the bound
+	$$\probtorus(E_n) \geq 1-\epsilon = 1-n^{-128 \delta}$$
+	for all $n>n_0$
+
+	Now if we consider covering $\mathbb{T}_{16n}$ with 64 $12n$ by $4n$ rectangles labelled $R_1,...,R_{64}$, positioning a corner of each $R_i$ on a multiple of $2n$. Then any $14n$ by $2n$ rectangle $R$ on $\mathbb{T}_{16n}$ crosses one of the $R_i$ the long way and the width of $R$ is inside the $R_i$, see Figure~\ref*{fig:rectangleOverlap}. With an equivalent argument, we can place $4n$ by $12n$ rectangles $R_{65},...,R_{128}$ to cover $\mathbb{T}_{16n}$ such that any $2n$ by $14n$ rectangle in $\mathbb{T}_{16n}$ crosses one the long way. Let $E_{n,i}$, $i = 1,...,128$ be the event that rectangle $R_i$ has an open crossing the long way. Clearly if $E_n$ occurs then so does one of the $E_{n,i}$, as illustrated by the purple path in Figure~\ref*{fig:rectangleOverlap}. Hence, $E^c_n$, the complement of $E_n$, must contain the intersection of all $E^c_{n,i}$.
+
+	\begin{figure}
+		\centering
+		\includegraphics[scale=0.8]{drawings/rectangleOverlap.png}
+		\caption{An example $14n$ by $2n$ rectangle in black, with overlapping $12n$ by $4n$ rectangle $R_i$ in red. The $12n$ by $2n$ rectangle induced by their intersection is shaded in green. The purple open horizontal crossing in $R$ clearly implies an open horizontal crossing in $R_i$.}
+		\label{fig:rectangleOverlap}
+	\end{figure}
+
+	Then for each $i$ we can take complements of Harris' Lemma (Lemma~\ref*{harrisLemma}) to see that the decreasing events $E^c_{n,i}$ and $\cap_{j<i}E^c_{n,j}$ are positively correlated. Thus we see,
+	$$\probtorus(E^c_n) \geq \probtorus\left(\bigcap^{128}_{i=1}E^c_{n,i}\right) \geq \prod_{i=1}^{128}\probtorus(E^c_{n,i}) = \probtorus(E^c_{n,1})^{128}$$
+	Where we have repeatedly applied Harris' Lemma to get the second inequality.
+	Now combining this with our earlier result that $\probtorus(E_n) \geq 1-n^{-128 \delta}$, we find that for $n> n_0$:
+	$$\probtorus(E_{n,1}^c) \leq \probtorus(E_n^c)^{1/128} \leq n^{- \delta}$$
+	Hence,
+	$$\probtorus(E_{n,1}) \geq 1- n^{- \delta}$$
+	Since $E_{n,1}$ is the event there is an open horizontal crossing of a $12n$ by $4n$ rectangle, say $R$, in $\mathbb{T}_{16n}$. Then by our previous reasoning $R$ has a corresponding $12n$ by $4n$ rectangle $R'$ in $\ints^2$. 
+	Hence, we get our final result for $n>n_0$ that:
+	$$\prob(H(R')) = \probtorus(H(R)) \geq 1-n^{-\delta}$$
+\end{proof}
+
+Using this lemma we are in a position to prove Kestern's Theorem, for the proof we follow the method outlined in \cite{bollo2006}.
+
+\begin{theorem}[Kestern's Theorem]
+	For Bernoulli bond percolation on $\ints^2$, if $p>1/2$ then $\theta(p) > 0$
+\end{theorem}
+
+\begin{proof}
+	Let $p >1/2$
 \end{proof}
 
 % \section{Conformal Invariance}
