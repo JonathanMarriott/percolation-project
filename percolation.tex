@@ -13,7 +13,9 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{pdflscape}
+
 \usepackage[UKenglish]{babel}
+\usepackage{csquotes}
 
 \usepackage[hidelinks]{hyperref}
 \hypersetup{
@@ -198,7 +200,7 @@ We now take some $p \in [0,1]$ which will be our parameter which specifies the p
 Setting $q = 1-p$ we say each edge is independently open with probability p and closed with probability q.
 We can think of the open and closed edges defining a random subgraph of $\ints^d$ where only edges set to open are retained.\\
 
-We let our sample space $\Omega = \prod_{e \in E} \{0,1\}$ where $E = E(\ints^d)$ and an edge in state 1 represents it is open, and 0 that it is closed.\\
+Now we let our sample space $\Omega = \prod_{e \in E} \{0,1\}$ where $E = E(\ints^d)$ and an edge in state 1 represents it is open, and 0 that it is closed.\\
 We may refer to $\Omega$ as the set of configurations, where a configuration $\omega$ is a function assigning edges to be open or closed, meaning 
 $$\omega:E \to \{0,1\}, e \mapsto \omega_e$$
 Then we must define $\mathcal{F}$, some \sigalg of $\Omega$, the events we wish to assign a probability to. 
@@ -261,7 +263,7 @@ We intend to show that this percolation function is non-decreasing, but first we
 	
 	\end{definition}
 
-	We construct a pair of configurations $\omega, \omega' \in \Omega$ using a family of uniform random variables $(U_e)_{e\in E}$ which are iid on [0,1].
+	We construct a pair of configurations $\omega, \omega' \in \Omega$ using a family of uniform random variables $(U_e)_{e\in E}$ which are i.i.d. on [0,1].
 	Then fixing a pair $p,p' \in [0,1]$ such that $p < p'$, for each $e \in E$ we define its state in $\omega$ by:
 	$$\omega_e = \begin{cases}
 		1 & \text{if }U_e \leq p\\
@@ -288,7 +290,7 @@ We intend to show that this percolation function is non-decreasing, but first we
 \end{corollary}
 
 \begin{proof}
-	Since we already saw that the event $\{|C| = \infty\}$ is an increasing event, then by Lemma \ref{incEventlemma} we know that $\theta(p) = \prob(|C| = \infty)$ is non-decreasing in p.
+	Since we already saw that the event $\{|C| = \infty\}$ is an increasing event, then by Lemma~\ref{incEventlemma} we know that $\theta(p) = \prob(|C| = \infty)$ is non-decreasing in p.
 \end{proof}
 
 An interesting property of our percolation model is that it exhibits a phase transition. Where at some point the behaviour of the model changes notably.
@@ -324,20 +326,20 @@ We call this value of $p$ the critical value or percolation threshold.
 % \end{proof}
 
 \section{Existence of a critical value}
-\subsection {Existence of a critical value on $\ints$}\label{critvalforZ}
+\subsection {Existence of a critical value on \texorpdfstring{$\ints$}{ Z}}\label{critvalforZ}
 Trivially the critical value is p = 1. Consider the event $X_n = \{$There is an open self-avoiding path of length n starting at the origin$\}$ 
 Then $X_n \supseteq X_{n+1}$ and so 
 $$\lim_{n\rightarrow \infty} \prob (X_n) = \theta(p)$$
 And since $\prob (X_n) = 2p^n$, as the path can go left or right from the origin. We have for all $p <1$, $\theta(p) = 0$. Thus, $\theta(p) > 0$ if and only if $p = 1$. 
 
 
-\subsection {Existence of a critical value on $\ints^2$} \label{critvalZ2}
+\subsection {Existence of a critical value on \texorpdfstring{$\ints^2$}{ Z2}} \label{critvalZ2}
 We show the existence of the critical value in this case by bounding it from above and below. We follow the proofs given in \cite{steif2011mini}
 \begin{theorem}
 	If $p < 1/3$, $\theta(p) = 0$.
 \end{theorem}
 \begin{proof}
-	Let $X_n = \{$There is an open self-avoiding path of length n starting at the origin$\}$ as in Section \ref{critvalforZ}.
+	Let $X_n = \{$There is an open self-avoiding path of length n starting at the origin$\}$ as in Section~\ref{critvalforZ}.
 	Then the probability for a path of length n to be open on every edge is $p^n$. The number of paths of length n from the origin is at most $4(3^{n-1})$ since there are 4 edges to choose from at the origin, then for each next step in the path there are at most 3 edges we can pick as the path is self-avoiding.
 	Hence, we get $\prob(X_n) \leq  4(3^{n-1})p^n  $. Then we take the limit since
 	$\lim_{n\rightarrow \infty}\prob(X_n) = \theta(p)$.
@@ -363,10 +365,10 @@ We show the existence of the critical value in this case by bounding it from abo
 		{Thinking visually since there is a ring of open edges in the dual, the open edges from the origin in the original graph cannot extend beyond this ring. A more formal pure graph theory proof can be made but is omitted here.}
 	\end{proof}
 	Let $X_n = \{$There is a length n cycle of open edges in $\ztwodual$ which surrounds the origin\}
-	Then using Lemma \ref{originloop} we see
+	Then using Lemma~\ref{originloop} we see
 	$$\prob(|C| < \infty) = \prob(\bigcup_{n=4}^\infty \prob(X_n)) \leq \sum_{n=4}^\infty \prob(X_n) \leq \sum_{n=4}^\infty n \cdot 4(3^{n-1})q^n$$
 	Where in the last summation we get $4(3^{n-1})q^n$ as before by counting the number of possible edges a self avoiding walk can take then multiplying by the probability this path is open in the dual graph. 
-	We multiply this term by $n$ since we know for every cycle around the origin in the dual there is some smallest $i \in \mathbb{N}$ for which the cycle crosses the edge $\{i,i-1\}$, i.e the positive x-axis. 
+	We multiply this term by $n$ since we know for every cycle around the origin in the dual there is some smallest $i \in \mathbb{N}$ for which the cycle crosses the edge $\{i,i-1\}$, i.e. the positive x-axis. 
 	Then we can translate this cycle left and right to the another n positions, this gives up to n new cycles enclosing the origin in the dual graph.\\
 	This sum is finite when $q<1/3$, which is when $p>2/3$. 
 	We can make the sum arbitrarily small when $p \rightarrow 1$, when the sum is smaller than 1 this implies $\theta(p) > 0$
@@ -380,13 +382,13 @@ Hence, the critical value $p_c(2) \in (\frac{1}{3},0.9)$
 
 
 
-\subsection {Existence of a critical value on $\ints^d$}
+\subsection {Existence of a critical value on \texorpdfstring{$\ints^d$}{ Zd}}
 We can easily derive the result that $p_c(d)\in (0,1)$ from the previous section. 
 We notice that for all $d\geq 2$ we can extract $\ints^d$ from $\ints^{d+1}$ by simply ignoring the extra edges and their states.
 Thus, if there exists an infinite open cluster in $\ints^d$ this would also imply there is one in $\ints^{d+1}$.
 Since we have just shown $p_c(2) \in (0,1)$ then we must also have $p_c(d) \in (0,1)$ for all d.
 
-{\color{red}{TODO: explain critical value is non-decreasing in d, by coupling argument?}}
+{\color{red}{TO DO: explain critical value is non-decreasing in d, by coupling argument?}}
 
 
 \section{Harris-Kesten Theorem}
@@ -530,7 +532,7 @@ We now state the inequality we aim to prove.
 	$$C_0 = A_0 \circ B_0$$
 	$$C_1 = (A_1 \circ B_0) \cup (A_0 \circ B_1)$$
 	Applying our assumption that $A$ and $B$ are increasing its clear that $A_0 \subseteq A_1$ and $B_0 \subseteq B_1$.
-	Thus we find
+	Thus we find,
 	$$C_0 = A_0 \circ B_0 \subseteq (A_1 \circ B_0) \cap (A_0 \circ B_1)$$
 	$$C_1 = (A_1 \circ B_0) \cup (A_0 \circ B_1) \subseteq A_1 \circ B_1$$
 	Using this decomposition in conjunction with our inductive hypothesis we find 
@@ -557,7 +559,7 @@ We now state the inequality we aim to prove.
 	$$\prob(A \circ B) = \prob(C) \leq \prob(A)\prob(B)$$
 
 \end{proof}
-The restriction of the BK inequality to increasing events was removed by Reimer, but it is not particularly useful to us so we do not prove it.
+The restriction of the BK inequality to increasing events was removed by Reimer, but it is not particularly useful to us, so we do not prove it.
 
 {\color{red} MIGHT NOT BE NEEDED WITH RSW PROOF.
 Using the BK inequality we can now show a useful inequality more specific to percolation.
@@ -569,7 +571,7 @@ Using the BK inequality we can now show a useful inequality more specific to per
 \end{corollary}
 \begin{proof}
 	{\color{red} todo}
-	Work on an n by n box
+	Work on an n by n box.
 \end{proof}
 }
 \subsection{Crossing rectangles}
@@ -578,7 +580,7 @@ We now introduce some notation to allow us to discuss rectangles and their cross
 \begin{definition}
 	Let $R = [a,b]\times[c, d]$ for integers $a<b$, $c<d$ be a rectangle, we identify this rectangle with a subgraph of $\ints^2$ which includes all vertices and edges on the boundary and inside. Let $k = b-a$ and $l = d-c$, then we say that R is a $k$ by $l$ rectangle.
 	
-	We now let $H(R)$ denote the event that there is a horizontal open crossing of R, i.e. a path from the left boundary of R to the right only using open edges. Similarly we define $V(R)$ to be the event that there is a vertical open crossing of R. 
+	We now let $H(R)$ denote the event that there is a horizontal open crossing of R, i.e. a path from the left boundary of R to the right only using open edges. Similarly, we define $V(R)$ to be the event that there is a vertical open crossing of R. 
 \end{definition}
 
 We note from this definition that if $R$ and $R'$ are distinct rectangles, which includes their boundaries being distinct. Then the events $H(R),V(R)$ are independent of $H(R'),V(R')$.
@@ -596,16 +598,16 @@ It is also useful to specify how the subgraph identified with a rectangle is rel
 	\label{fig:rectangle}
 \end{figure}
 
-We now prove an important result similar to that of Lemma \ref*{originloop}, for rectangles. Relating the horizontal crossings in primal rectangles to vertical crossings in their duals.
+We now prove an important result similar to that of Lemma~\ref*{originloop}, for rectangles. Relating the horizontal crossings in primal rectangles to vertical crossings in their duals.
 
 \begin{lemma}\label{rectangleProof}
 	Let $R$ be a rectangle in $\ints^2$. For any configuration $\omega$ of $\ints^2$, exactly one of the events $H(R)$ and $V^*(R^h)$ holds.
 \end{lemma}
 
 \begin{proof}
-	WLOG we scale the lattice to avoid working with fractions. Let the lattice $L = (0,2) + 4\ints^2$, and hence its dual $L^* = (2,0)+4\ints^2$. Then let R be a $k$ by $l$ rectangle on $L$ with vertex set $\{(4i,4j+2): 0 \leq i \leq k \text{, } 0 \leq j \leq l-1 \}$, and thus we have that $R^h$ has vertex set $\{(4i+2,4j): 0 \leq i \leq k-1 \text{, } 0 \leq j \leq l \}$. Suppose some percolation configuration of $\ints^2$ and let G be the graph induced by the open edges of $R$, similarly let the open edges of $R^h$ induce the graph $G^h$. Now it suffices to show that either $G$ contains a left-right path or $G^h$ contains a top-bottom path, but not both. If we wish to show that $G$ has a left-right, ie a path from $(0,4m+2)$ to $(4k,4n+2)$ for some $m,n \in \mathbb{N}$, then we can assume WLOG that $G$ contains all $2(l-1)$ edges on its left and right most sides. We make a similar assumption that $G^h$ has all $2(k-1)$ on its top and bottom. This means we only have to consider one vertex each of the sides of the rectangles.
+	Without loss of generality we scale the lattice to avoid working with fractions. Let the lattice $L = (0,2) + 4\ints^2$, and hence its dual $L^* = (2,0)+4\ints^2$. Then let R be a $k$ by $l$ rectangle on $L$ with vertex set $\{(4i,4j+2): 0 \leq i \leq k \text{, } 0 \leq j \leq l-1 \}$, and thus we have that $R^h$ has vertex set $\{(4i+2,4j): 0 \leq i \leq k-1 \text{, } 0 \leq j \leq l \}$. Suppose some percolation configuration of $\ints^2$ and let G be the graph induced by the open edges of $R$, similarly let the open edges of $R^h$ induce the graph $G^h$. Now it suffices to show that either $G$ contains a left-right path or $G^h$ contains a top-bottom path, but not both. If we wish to show that $G$ has a left-right, i.e. a path from $(0,4m+2)$ to $(4k,4n+2)$ for some $m,n \in \mathbb{N}$, then we can assume without loss of generality that $G$ contains all $2(l-1)$ edges on its left and right most sides. We make a similar assumption that $G^h$ has all $2(k-1)$ on its top and bottom. This means we only have to consider one vertex each of the sides of the rectangles.
 
-	We now construct a third graph, $M$, which lies between $G$ and $G^h$. Let $R_{odd}$ be a $2k\times 2l$ rectangle with vertex set $\{(2i+1,2j+1): 0 \leq i \leq 2k-1 \text{, } 0 \leq j \leq 2l-1 \}$, then let M be the subgraph of $R_{odd}$ which just contains edges that do not intersect edges of $G$ nor $G^h$. We direct all the edges of $M$ such that edges of $G$ lie on the right and $G^h$ lie on the left. It is evident that this results in all vertices of M having one edge in and one edge out, except for 4 vertices of degree one which lie in the ``corners'' of the rectangle, label them counter-clockwise $x,y,z,w$ as in Figure \ref*{fig:rectangleProof}. Clearly due to the way we previously oriented the edges of $M$, $x$ and $z$ have one out edge, $y$ and $w$ have one in edge. Hence, the component of $M$ which $x$ lies in must be a path, say $P$, which ends at either $y$ or $w$. In the case where $P$ ends at $y$, then we have that the subgraph of $G^h$ to the left of $P$ must be connected from the top to the bottom. Thus, by basic graph theory this subgraph must contain a top-bottom path. If we are in the case where $P$ ends at $w$ then we must have the subgraph of $G$ to the right of $P$ is connected from left to right, thus meaning it admits a left-right path. Clearly then at least one of $H(R)$ and $V^*(R^h)$ occurs.
+	We now construct a third graph, $M$, which lies between $G$ and $G^h$. Let $R_{odd}$ be a $2k\times 2l$ rectangle with vertex set $\{(2i+1,2j+1): 0 \leq i \leq 2k-1 \text{, } 0 \leq j \leq 2l-1 \}$, then let M be the subgraph of $R_{odd}$ which just contains edges that do not intersect edges of $G$ nor $G^h$. We direct all the edges of $M$ such that edges of $G$ lie on the right and $G^h$ lie on the left. It is evident that this results in all vertices of M having one edge in and one edge out, except for 4 vertices of degree one which lie in the ``corners'' of the rectangle, label them counter-clockwise $x,y,z,w$ as in Figure~\ref*{fig:rectangleProof}. Clearly due to the way we previously oriented the edges of $M$, $x$ and $z$ have one out edge, $y$ and $w$ have one in edge. Hence, the component of $M$ which $x$ lies in must be a path, say $P$, which ends at either $y$ or $w$. In the case where $P$ ends at $y$, then we have that the subgraph of $G^h$ to the left of $P$ must be connected from the top to the bottom. Thus, by basic graph theory this subgraph must contain a top-bottom path. If we are in the case where $P$ ends at $w$ then we must have the subgraph of $G$ to the right of $P$ is connected from left to right, thus meaning it admits a left-right path. Clearly then at least one of $H(R)$ and $V^*(R^h)$ occurs.
 	\begin{figure}
 		\centering
 		\includegraphics[scale=0.6]{drawings/rectanglesproof.png}
@@ -613,7 +615,7 @@ We now prove an important result similar to that of Lemma \ref*{originloop}, for
 		\label{fig:rectangleProof}
 	\end{figure}
 	To show that exactly one  $H(R)$ and $V^*(R^h)$ occurs we utilise the Jordan Curve Theorem. A brief summary of this result is, given a non-self-intersecting continuous closed loop in the plane, $J$, called a Jordan Curve, then $J$ divides the plane into two distinct regions, an inside and an outside whose boundary is $J$. We refer the reader to \cite{kosniowski_1980} for a proof of the Jordan Curve Theorem. If the path $P$ runs from $x$ to $w$ then $P$ can be extended to a Jordan curve $J$ by simply adding a curve from $w$ to $x$ over the top of all the vertices of $R^h$. This results in all the vertices on the top of $R^h$ lying inside the Jordan curve and the vertices at the bottom of $R^h$ lie on the outside of the curve. Hence, any top-bottom path in $G^h$ must cross $J$ which means it crosses an edge of $M$, but this contradicts the definition of the edges of $M$. So only $H(R)$ occurs.
-	Similarly, in the case that $P$ ends at $y$, we form a Jordan curve by connecting $x$ to $y$ on the left of the vertices on the left side of $G$. Then by an analogous argument to before, we cannot have a left-right path in $G$ since the left and right sides lie in the interior and exterior of the Jordan curve respectively. Hence only $V^*(R^h)$ occurs in this case.
+	Similarly, in the case that $P$ ends at $y$, we form a Jordan curve by connecting $x$ to $y$ on the left of the vertices on the left side of $G$. Then by an analogous argument to before, we cannot have a left-right path in $G$ since the left and right sides lie in the interior and exterior of the Jordan curve respectively. Hence, only $V^*(R^h)$ occurs in this case.
 \end{proof}
 
 We note that the edges of $L^*$ above are open with probability $1-p$, and so we can form some useful results for rectangles in $\ints^2$ directly from this lemma.
@@ -623,14 +625,14 @@ We note that the edges of $L^*$ above are open with probability $1-p$, and so we
 	$$\prob(H(R))+\mathbb{P}_{1-p}(V(R')) = 1 $$
 \end{corollary}
 
-Further to this, if $k = l = n+1$ for some $n$, then $R'$ is simply a 90-degree rotation of $R$. Hence, $\prob(H(R)) = \mathbb{P}_{1-p}(V(R')$. From this we find the key statement due to the self-duality of $\ints^2$ we discussed in Section \ref*{critvalZ2}.
+Further to this, if $k = l = n+1$ for some $n$, then $R'$ is simply a 90-degree rotation of $R$. Hence, $\prob(H(R)) = \mathbb{P}_{1-p}(V(R')$. From this we find the key statement due to the self-duality of $\ints^2$ we discussed in Section~\ref*{critvalZ2}.
 
 \begin{corollary}\label{squareGEQhalf}
 	If $R$ is an n+1 by n rectangle then $\mathbb{P}_{1/2}(H(R)) = 1/2$. So for $n$ sided square $S$, which is just defined as an $n$ by $n$ rectangle. We must have,
 	$$\mathbb{P}_{1/2}(H(S))=\mathbb{P}_{1/2}(V(S)) \geq 1/2$$
 \end{corollary}
 
-While it might now feel intuitively obvious that $p_c(2) \geq 1/2$, and certainly Corollary \ref*{squareGEQhalf} is essential in the reasoning for this, we are yet to prove it rigorously.
+While it might now feel intuitively obvious that $p_c(2) \geq 1/2$, and certainly Corollary~\ref*{squareGEQhalf} is essential in the reasoning for this, we are yet to prove it rigorously.
 
 \subsection{Harris' Theorem}
 
@@ -712,7 +714,7 @@ We are now in a position to prove Harris' theorem.
 \end{theorem}
 
 \begin{proof}
-	We work by constructing a sequence of square annuli in the dual graph. The first annulus is formed by arranging four 6n by 2n rectangles around the origin such that the 2n by 2n ends of each rectangle overlap. See Figure~\ref{fig:squareAnnulus} for the arrangement, we note that the chosen direction to offset the annuus in the dual does not matter so long as it encloses the origin of the primal graph. 
+	We work by constructing a sequence of square annuli in the dual graph. The first annulus is formed by arranging four 6n by 2n rectangles around the origin such that the 2n by 2n ends of each rectangle overlap. See Figure~\ref{fig:squareAnnulus} for the arrangement, we note that the chosen direction to offset the annulus in the dual does not matter so long as it encloses the origin of the primal graph. 
 	\begin{figure}
 		\centering
 		\includegraphics[scale=0.48]{drawings/squareAnnulus.png}
@@ -728,7 +730,7 @@ We are now in a position to prove Harris' theorem.
 	Take the first $E_k$ which occurs, then the annulus $A_k$ in the dual graph contains an open cycle enclosing the origin. Thus, there cannot be an infinite cluster containing the origin in the primal graph.
 \end{proof}
 
-\subsection{Kestern's Theorem}
+\subsection{Kesten's Theorem}
 We now move onto proving Kesten's theorem, specifically that the percolation threshold is less than or equal to a half. In this section we again follow the definitions and methods detailed in \cite{bollobas2006short}. Firstly we introduce a powerful result due to Friedgut and Kalai \cite{friedgut1996every}.
 We assume the reader has some basic group theory knowledge, although it is not critical to understanding.
 
@@ -754,7 +756,7 @@ Using the Friedgut-Kalai sharp threshold theorem we will now work to prove that 
 \end{lemma}
 
 \begin{proof}
-	For the sake of simplicity, we prove the case of $\rho = 3$ since this implies the result for $\rho =2$ and these are the only cases we will later need. Let $p>1/2$, then by Corollary~\ref*{rectangleBound} with $\rho = 7$ we know there exists a constant $0<c_2<1/2$ such that for any 14n by 2n rectangle $R$, the probability of a horizontal crossing is bounded below by $c_2$, $\mathbb{P}_{1/2}(H(R)) \geq c_2$. Now we cannot directly apply the Friedgut-Kalai sharp threshold theorem since $H(R)$ is not a symmetric event, since $X$ in this case is the set of all edges in $\ints^2$. In order to get around this we introduce new symmetric events on the discrete torus. 
+	For the sake of simplicity, we prove the case of $\rho = 3$ since this implies the result for $\rho =2$ and these are the only cases we will later need. The other cases can be proved by an analogous argument. Let $p>1/2$, then by Corollary~\ref*{rectangleBound} with $\rho = 7$ we know there exists a constant $0<c_2<1/2$ such that for any 14n by 2n rectangle $R$, the probability of a horizontal crossing is bounded below by $c_2$, $\mathbb{P}_{1/2}(H(R)) \geq c_2$. Now we cannot directly apply the Friedgut-Kalai sharp threshold theorem since $H(R)$ is not a symmetric event, since $X$ in this case is the set of all edges in $\ints^2$. In order to get around this we introduce new symmetric events on the discrete torus. 
 	\begin{definition}[Discrete Torus]
 	For $n \geq 3$, the $n$ by $n$ discrete torus, $\mathbb{T}_n$, is the Cartesian product of two length n cycles. Equivalently $\mathbb{T}_n$ can be formed by identifying all pairs of vertices on $\ints^2$ whose coordinates are congruent modulo $n$. We note that $\mathbb{T}_n$ has $n^2$ vertices and $2n^2$ edges.
 	\end{definition}
@@ -802,15 +804,47 @@ Using the Friedgut-Kalai sharp threshold theorem we will now work to prove that 
 	$$\prob(H(R')) = \probtorus(H(R)) \geq 1-n^{-\delta}$$
 \end{proof}
 
-Using this lemma we are in a position to prove Kestern's Theorem, for the proof we follow the method outlined in \cite{bollo2006}.
+Using this lemma we are in a position to prove Kesten's Theorem, for the proof we follow the method outlined in \cite{bollo2006}.
 
-\begin{theorem}[Kestern's Theorem]
+\begin{theorem}[Kesten's Theorem]
 	For Bernoulli bond percolation on $\ints^2$, if $p>1/2$ then $\theta(p) > 0$
 \end{theorem}
 
 \begin{proof}
-	Let $p >1/2$
+	Let $p >1/2$, and define $\delta = \delta(p)$ and $n_0 = n_0(p,2)$ as in Lemma~\ref*{kesternLemma}. Initially suppose some integer $n$ such that $n > n_0$, we will put further constraints on $n$ later. Then for $k = 0,1,2,3,...$ define $R_k$ to be the rectangle with side lengths $2^{k}n$ and $2^{k+1}n$, with the longer side vertical if $k$ is even and horizontal otherwise. We position the bottom left corner of all $R_k$ rectangles at the origin so that $R_i$ encloses $R_{i-1}$, see Figure~\ref*{fig:KesternRectangle}.
+
+	\begin{figure}
+		\centering
+		\includegraphics[scale=0.58]{drawings/kestenRectangles.png}
+		\caption{Rectangles $R_k$ for $k=0,1,2,3$ with their open crossings corresponding to all $E_k$ holding. $R_0$ in purple, $R_1$ in green, $R_2$ in red and $R_3$ in blue.}
+		\label{fig:KesternRectangle}
+	\end{figure}
+
+	Let $E_k$ be the event that $R_k$ admits an open crossing of edges the long way. Clearly if $E_k$ and $E_{k+1}$ hold then the open crossings of $R_k$ and $R_{k+1}$ must meet, as depicted in Figure~\ref*{fig:KesternRectangle}. Then using Lemma~\ref*{kesternLemma} and the formula for infinite geometric series we see that,
+	$$\sum_{k=0}^{\infty}\prob(E^c_k) \leq \sum_{k=0}^{\infty}(2^kn)^{-\delta} = \frac{n^{-\delta}}{1-2^{-\delta}}$$
+	Clearly we can require $n$ to be large enough such that,
+	$$\sum_{k=0}^{\infty}\prob(E^c_k) \leq  \frac{n^{-\delta}}{1-2^{-\delta}} < 1$$
+	Which implies that $$\prob\left(\bigcap_{k=0}^{\infty}E_k\right)>0$$
+	Now if $E_k$ holds for all $k$ then the event,$E_{\infty}$, that there is an infinite open cluster must also hold. Thus,
+	$$\prob(E_{\infty}) \geq \prob\left(\bigcap_{k=0}^{\infty}E_k\right)>0$$
+	Attentive readers may note that while $E_{\infty}$ implies there is an infinite open path, this path may not necessarily start at the origin. However clearly the probability of an open path from the origin along the bottom edge of $R_0$ is positive, thus when $p>1/2$ we have $\theta(p) >0$. 
+
 \end{proof}
+It may interest the reader to know that the final step in the proof is not strictly necessary, the event that there is an infinite open cluster containing the origin is translation invariant. This means that probability of an infinite cluster is not affected by a shift in edge configurations. We not do prove this property here, but the reader may wish to see \cite{duminil2018introduction} for details. 
+
+Furthermore, the event that there is an infinite open cluster in the lattice is an example of a tail event, since clearly it is independent of the configuration of any finite number of edges. Thus, Kolmogorov's 0-1 law can be applied to this event. We take the definition from \cite{bollo2006}.
+\begin{theorem}[Kolmogorov's 0-1 law]\label{01Law}
+	Let $X = (X_1,X_2,...)$ be a sequence of independent random variables, and let $A$ be an event generated by the \sigalg generated by $X$. Suppose that for all $n$, the event $A$ is independent of $X_1,...,X_n$. Then, $$\mathbb{P}(A) \in \{0,1\}.$$
+\end{theorem}
+This theorem immediately tells us when the square lattice admits an infinite open cluster. 
+
+\begin{corollary}
+	By Theorem~\ref*{01Law}, we have 
+	$$\prob(E_{\infty}) = \begin{cases}
+		0 & \text{if }p \leq 1/2\\
+		1 & \text{if }p > 1/2\\
+	\end{cases} $$
+\end{corollary}
 
 % \section{Conformal Invariance}
 % Discuss what conformal invariance is and perhaps talk about the result on the triangular lattice due to Smirnov
@@ -828,7 +862,7 @@ While we know that the fact that a configuration having an open crossing from on
 
 There are a number of factors to consider when setting up this simulation such that it can run sufficiently fast, firstly how do we assign each edge to be open or closed so that we can traverse the graph with different values of $p$.
 
-The simplest approach would be to assign a Bernoulli random variable with probability $p$ to each edge, however this has the drawback of requiring us to revaluate the random variable on each edge when we change the value of $p$, and to mirror the non-decreasing nature of the percolation function $\theta(p)$, we would have to only do this for previously closed edges. To avoid these issues I chose to implement a method similar to one we used to prove \ref{incEventlemma}, where we coupled configurations using uniform random variables. To recap this, by assigning an edge with a value from independent uniform random on $[0,1]$ we can then set an edge to be open if this value is less than or equal to $p$ and closed otherwise. In this way every edge is open with probability $p$, and increasing p has the desired property that edges which were previously open remain so. Additionally, after the values between 0 and 1 have been assigned to each edge, we gain the benefit of only needing to query the state of edges as we come to them by comparing the assigned value to $p$, rather than needing to assign the open or closed states to every edge each time we alter $p$.
+The simplest approach would be to assign a Bernoulli random variable with probability $p$ to each edge, however this has the drawback of requiring us to revaluate the random variable on each edge when we change the value of $p$, and to mirror the non-decreasing nature of the percolation function $\theta(p)$, we would have to only do this for previously closed edges. To avoid these issues I chose to implement a method similar to one we used to prove Lemma~\ref{incEventlemma}, where we coupled configurations using uniform random variables. To recap this, by assigning an edge with a value from independent uniform random on $[0,1]$ we can then set an edge to be open if this value is less than or equal to $p$ and closed otherwise. In this way every edge is open with probability $p$, and increasing p has the desired property that edges which were previously open remain so. Additionally, after the values between 0 and 1 have been assigned to each edge, we gain the benefit of only needing to query the state of edges as we come to them by comparing the assigned value to $p$, rather than needing to assign the open or closed states to every edge each time we alter $p$.
 
 We could remove the initial pass of assigning the uniform random variable values to each edge initially. Instead, we could define some hash function mapping the existing attributes of each edge to the range $[0,1]$, allowing us to compute the states of edges on the fly. However, I did not find this speed up necessary.
 
@@ -873,7 +907,7 @@ The fastest way to go about this, since we have an unweighted graph, is to use a
 We note a queue is a simple data structure which works in the same way as a queue at a shop. The first item added to the queue is the first to then be removed.
 The above algorithm runs in $O(|V|+|E|)$ worst-case time, where $V$ and $E$ are the vertex and edge sets of the graph $G$ respectively. With a little thought it is clear no algorithm can do better for this problem. 
 
-We also note that Algorithm \ref*{bfs} returns the list of nodes on the path between the two vertices. Depending on the use case this can be easily modified to just return true if a path exists. 
+We also note that Algorithm~\ref*{bfs} returns the list of nodes on the path between the two vertices. Depending on the use case this can be easily modified to just return true if a path exists. 
 
 Now we can determine if there is a path from one side of a box to another for a given percolation parameter $p$, we want to determine the lowest threshold for which a crossing path exists for a given configuration of uniform random variables. For the case of the planar square lattice we could use some heuristic based on our prior knowledge that the threshold should lie around 1/2. However, to enable the general applicability of the algorithm described to any graph, we do not make any specific assumptions about the threshold distribution.
 
@@ -884,7 +918,7 @@ In order to check if a given value of $p$ is the crossing threshold, we must che
 	\item If $p$ does not admit a box crossing, then $p+\epsilon$ is the crossing threshold if and only if $p+\epsilon$ does admit a crossing.
 \end{itemize}
 
-Now we can follow an adapted binary search to centre in on the threshold, where we let isPath(G, u, v) be the aforementioned change to Algorithm \ref*{bfs} so that it returns a boolean value.
+Now we can follow an adapted binary search to centre in on the threshold, where we let isPath(G, u, v) be the aforementioned change to Algorithm~\ref*{bfs} so that it returns a boolean value.
 
 \begin{algorithm}
 	\caption{Find the crossing threshold for a given graph}\label{findthreshold}
@@ -918,14 +952,14 @@ Now we can follow an adapted binary search to centre in on the threshold, where 
 	\end{algorithmic}
 \end{algorithm}
 
-You can inspect the above algorithm to see how whenever the current value of $p$ is not the threshold we can safely throw out one half of the current search range. This technique, commonly referred to as divide and conquer, gives good asymptotic search performance. We would say in general a binary search finds the target in $O(nlog(n))$ worst-case time where n is the number of elements to be searched. In our case the effective number of ``items'' depends on the precision parameter $\epsilon$, where the number of potential threshold values to check is $\frac{1}{\epsilon}$. Thus Algorithm \ref*{findthreshold} runs in $O(\frac{1}{\epsilon}log(\frac{1}{\epsilon}))$ worst-case time.
+You can inspect the above algorithm to see how whenever the current value of $p$ is not the threshold we can safely throw out one half of the current search range. This technique, commonly referred to as divide and conquer, gives good asymptotic search performance. We would say in general a binary search finds the target in $O(nlog(n))$ worst-case time where n is the number of elements to be searched. In our case the effective number of ``items'' depends on the precision parameter $\epsilon$, where the number of potential threshold values to check is $\frac{1}{\epsilon}$. Thus Algorithm~\ref*{findthreshold} runs in $O(\frac{1}{\epsilon}log(\frac{1}{\epsilon}))$ worst-case time.
 
-You may notice a possible optimization when both the algorithms are used together. Instead of first constructing the induced subgraph by the open edges then seeing if there is a crossing, we can directly only consider the open edges during our breadth first search by requiring in line 18 of Algorithm \ref*{bfs} that the edges $w$ must have associated uniform random variable value of less than or equal to p. In essence, we can construct the subgraph induced by the open edges on the fly, saving us one pass over the edge set. 
+You may notice a possible optimization when both the algorithms are used together. Instead of first constructing the induced subgraph by the open edges then seeing if there is a crossing, we can directly only consider the open edges during our breadth first search by requiring in line 18 of Algorithm~\ref*{bfs} that the edges $w$ must have associated uniform random variable value of less than or equal to p. In essence, we can construct the subgraph induced by the open edges on the fly, saving us one pass over the edge set. 
 
 My initial plan to investigate the percolation threshold for the planar square lattice was to simulate many boxes each of increasing width to see how the variation in the crossing threshold decreases with box width. Using the previously described algorithms to find the threshold for each box.
 
 I implemented the simulation using Python due to its extensive set of community libraries and ease of prototyping. Since Python is an interpreted language it can be less performant than other complied languages which can be an important consideration for very large simulations. However, alternative interpreters  of Python such as PyPy can mitigate this issue \cite{PyPy}. PyPy uses just-in-time compilation and other optimization techniques to speed up native python code.
-I decided to simulate one box of each width from width 2 (3x3 vertices) to width 1950, with a precision of $0.0001$. I then used the matplotlib library to draw a scatter plot of the box width against the computed crossing threshold, which can be seen in Figure \ref*{fig:thresholdplot2}. The red dashed line lies at the threshold value 0.5 which we know is the true value for an infinite lattice.
+I decided to simulate one box of each width from width 2 (3x3 vertices) to width 1950, with a precision of $0.0001$. I then used the matplotlib library to draw a scatter plot of the box width against the computed crossing threshold, which can be seen in Figure~\ref*{fig:thresholdplot2}. The red dashed line lies at the threshold value 0.5 which we know is the true value for an infinite lattice.
 
 You can clearly see how the variability of crossing threshold decreases as the box width increases, becoming more concentrated around 0.5. Supposing we did not already know the true value of the infinite lattice, this would provide us with a strong insight that the percolation threshold lies around 0.5. In fact if we calculate the mean of the crossing thresholds for each box, disregarding the first 50 due to their small size, we would get a value of 0.499979 which when rounded to our precision of 0.0001 is 0.5000.
 
@@ -942,9 +976,7 @@ This verifies the method we have used as giving a good approximation for the per
 \begin{landscape}
 \begin{figure}
 	\centering
-	\makebox[3\textwidth][l]{
-		\includegraphics[scale=0.58]{CrossingSimulationPlot3.png}
-	}
+	\makebox[3\textwidth][l]{\includegraphics[scale=0.58]{CrossingSimulationPlot3.png}}
 	\caption{Crossing thresholds for simulated lattices}
 	\label{fig:thresholdplot2}
 \end{figure}
