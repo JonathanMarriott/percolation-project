@@ -399,7 +399,7 @@ Then 20 years later Kesten \cite{kesten1980critical} proved $p_c(2) \leq \frac{1
 \begin{theorem}[Harris-Kesten theorem]
 	The critical value on $\ints^2$,  $p_c(2) =  \frac{1}{2}$.
 \end{theorem}
-In this project our aim is to show the Harris part of the theorem, that $p_c(2) \leq \frac{1}{2}$. We roughly follow the proofs and methods of \cite{bollobas2006short}, which in turn is largely based on the proofs by Russo, Seymour and Welsh.
+The aim of this section is to construct a proof of this theorem. We largely follow the proofs and methods of \cite{bollobas2006short}, which in turn is largely based on the proofs by Russo, Seymour and Welsh.
 To do this we first introduce some more foundational results.
 
 Recall from earlier the definition of an increasing event.
@@ -559,21 +559,20 @@ We now state the inequality we aim to prove.
 	$$\prob(A \circ B) = \prob(C) \leq \prob(A)\prob(B)$$
 
 \end{proof}
-The restriction of the BK inequality to increasing events was removed by Reimer, but it is not particularly useful to us, so we do not prove it.
 
-{\color{red} MIGHT NOT BE NEEDED WITH RSW PROOF.
-Using the BK inequality we can now show a useful inequality more specific to percolation.
-\begin{corollary}
-	For a finite subset $S \subset \ints^d$ which contains the origin, and some $x \notin S$, 
-	$$\prob(0 \longleftrightarrow x) \sum_{y\in \partial S} \prob({0\stackrel{S}{\longleftrightarrow}y})\prob(y \longleftrightarrow x)$$
-	Where $0\stackrel{S}{\longleftrightarrow}y$ occurs if $0$ is connected to $y$ by open edges in $S$. If no set S is given we allow any open edges.
-	Also, $\partial S$ denotes the vertex boundary of S, i.e. $\forall s \in \partial S$, the neighbourhood of s contains some $x \in \ints^d \setminus S$
-\end{corollary}
-\begin{proof}
-	{\color{red} todo}
-	Work on an n by n box.
-\end{proof}
-}
+% {\color{red} MIGHT NOT BE NEEDED WITH RSW PROOF.
+% Using the BK inequality we can now show a useful inequality more specific to percolation.
+% \begin{corollary}
+% 	For a finite subset $S \subset \ints^d$ which contains the origin, and some $x \notin S$, 
+% 	$$\prob(0 \longleftrightarrow x) \sum_{y\in \partial S} \prob({0\stackrel{S}{\longleftrightarrow}y})\prob(y \longleftrightarrow x)$$
+% 	Where $0\stackrel{S}{\longleftrightarrow}y$ occurs if $0$ is connected to $y$ by open edges in $S$. If no set S is given we allow any open edges.
+% 	Also, $\partial S$ denotes the vertex boundary of S, i.e. $\forall s \in \partial S$, the neighbourhood of s contains some $x \in \ints^d \setminus S$
+% \end{corollary}
+% \begin{proof}
+% 	{\color{red} todo}
+% 	Work on an n by n box.
+% \end{proof}
+% }
 \subsection{Crossing rectangles}
 
 We now introduce some notation to allow us to discuss rectangles and their crossings in a succinct manner.
@@ -593,8 +592,8 @@ It is also useful to specify how the subgraph identified with a rectangle is rel
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.6]{drawings/RectangleDual.png}
-	\caption{An example 6 by 4 rectangle R shown in black and the dual $R^h$ in red.}
+	\includegraphics[scale=0.6]{drawings/RectangleDual2.png}
+	\caption{An example 5 by 4 rectangle $R$ shown in black and the dual $R^h$ in red.}
 	\label{fig:rectangle}
 \end{figure}
 
@@ -961,9 +960,18 @@ My initial plan to investigate the percolation threshold for the planar square l
 I implemented the simulation using Python due to its extensive set of community libraries and ease of prototyping. Since Python is an interpreted language it can be less performant than other complied languages which can be an important consideration for very large simulations. However, alternative interpreters  of Python such as PyPy can mitigate this issue \cite{PyPy}. PyPy uses just-in-time compilation and other optimization techniques to speed up native python code.
 I decided to simulate one box of each width from width 2 (3x3 vertices) to width 1950, with a precision of $0.0001$. I then used the matplotlib library to draw a scatter plot of the box width against the computed crossing threshold, which can be seen in Figure~\ref*{fig:thresholdplot2}. The red dashed line lies at the threshold value 0.5 which we know is the true value for an infinite lattice.
 
+\begin{landscape}
+	\begin{figure}
+		\centering
+		\makebox[3\textwidth][l]{\includegraphics[scale=0.58]{CrossingSimulationPlot3.png}}
+		\caption{Crossing thresholds for simulated lattices}
+		\label{fig:thresholdplot2}
+	\end{figure}
+	\end{landscape}
+
 You can clearly see how the variability of crossing threshold decreases as the box width increases, becoming more concentrated around 0.5. Supposing we did not already know the true value of the infinite lattice, this would provide us with a strong insight that the percolation threshold lies around 0.5. In fact if we calculate the mean of the crossing thresholds for each box, disregarding the first 50 due to their small size, we would get a value of 0.499979 which when rounded to our precision of 0.0001 is 0.5000.
 
-This verifies the method we have used as giving a good approximation for the percolation threshold. Since no part of our simulation or algorithm depended on specific structure of the square planar lattice, it would be very easy to use this approach to investigate other planar graph structure. In fact, with some adaptations the Algorithm~\ref*{bfs} could be extended to consider an $n$-dimension hypercube to allow the investigation of Bernoulli percolation on arbitrary dimension lattices. Further to this we can easily assign values from different random distributions to each edge, and explore how this affects the crossing threshold.
+This verifies the method we have used as giving a good approximation for the percolation threshold. Since no part of our simulation or algorithm depended on specific structure of the square planar lattice, it would be very easy to use this approach to investigate other planar graph structures. In fact, with some adaptations the Algorithm~\ref*{bfs} could be extended to consider an $n$-dimension hypercube to allow the investigation of Bernoulli percolation on arbitrary dimension lattices. Further to this we can easily assign values from different random distributions to each edge, and explore how this affects the crossing threshold.
 
 % \begin{figure}
 % 	    \centering
@@ -973,14 +981,7 @@ This verifies the method we have used as giving a good approximation for the per
 % \end{figure}
 
 
-\begin{landscape}
-\begin{figure}
-	\centering
-	\makebox[3\textwidth][l]{\includegraphics[scale=0.58]{CrossingSimulationPlot3.png}}
-	\caption{Crossing thresholds for simulated lattices}
-	\label{fig:thresholdplot2}
-\end{figure}
-\end{landscape}
+
 % \subsection{Finding the pivotal edges in a finite box}
 % Discuss an algorithm to find the pivotal edges in the percolation box, perhaps relate to Russo's formula for pivotal edges.
 % \subsection{Fast Monte Carlo algorithm for percolation}
