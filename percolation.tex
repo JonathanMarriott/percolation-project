@@ -466,7 +466,7 @@ $$ \mathbb{E}_p(fg) \geq \mathbb{E}_p(f)\mathbb{E}_p(g)$$
 
 	Now assuming as our inductive hypothesis that the inequality holds for functions dependent on $n = k$ edges.
 	We consider when $ n = k+1$.
-	We fix the state of the first k edges, $\omega_1,...,\omega_k$, and condition on them since we aim to use the tower law for expectation later.
+	We fix the state of the first $k$ edges, $\omega_1, ..., \omega_k$, and condition on them since we aim to use the tower law for expectation later.
 	Then,
 	$$\expp(fg|\omega_1,...,\omega_k) = p f(\omega_1,...,\omega_k,1)g(\omega_1,...,\omega_k,1)
 	+ qf(\omega_1,...,\omega_k,0)g(\omega_1,...,\omega_k,0)$$
@@ -498,7 +498,7 @@ $$ \mathbb{E}_p(fg) \geq \mathbb{E}_p(f)\mathbb{E}_p(g)$$
 		f_n &:= \expp(f | \omega_1,...,\omega_n)\\
 		g_n &:= \expp(g | \omega_1,...,\omega_n)
 	\end{align*}
-	We note that $(f_n)$ and $(g_n)$ form martingales due to the tower law of expectation.
+	We see that $(f_n)$ and $(g_n)$ form martingales due to the tower law of expectation.
 	Then since we assumed $f$ and $g$ are bounded we can apply the martingale convergence theorem to see that $f_n$ converges to $f$  as $n \rightarrow \infty$ and similarly $g_n$ converges to $g$.
 	We do not give a rigorous proof of this here, but the reader may wish to seek further information on Doob's martingale convergence theorem from \cite{williams_1991}.
 	
@@ -511,7 +511,19 @@ We also note a useful rearrangement of Harris' Inequality which captures the ide
 	Intuitively this makes sense, the probability A occurs increases when we know more edges are open, and knowing B has occurred tells us about open edges.
 \end{corollary}
 
-We now prove a useful inequality for events that occur disjointly, first we define what we mean for events to occur disjointly.
+Furthermore, we have an immediate analogous result for decreasing events.
+
+\begin{corollary}\label{negEventsPosCorrelated}
+	If $A, B \subseteq \Omega$ are decreasing events then 
+	$$\mathbb{P}(A \cap B) \geq \mathbb{P}(A)\mathbb{P}(B)$$
+	This means decreasing events are also positively correlated.
+\end{corollary}
+\begin{proof}
+	Simply set $f$ and $g$ to be the negative of the indicator functions of $A$ and $B$ and apply the FKG inequality.
+\end{proof}
+
+We now prove an interesting inequality for events that occur disjointly. We do not need to use this inequality in our proof of the Harris-Kesten Theorem, but we include it simply for the readers interest since it was used in the original proof of Kesten's theorem. First we define what we mean for events to occur disjointly. 
+
 \begin{definition}[Disjoint realisation of events]
 	Let $A$ and $B$ be events. For a configuration $\omega \in A$, there is some witness set $I \subset E$ for $\omega$ such that for any other configuration $\omega'$ which satisfies:
 	$$\forall e \in I \text{, } \omega_e = \omega'_e$$
@@ -587,7 +599,7 @@ We now state the inequality we aim to prove.
 % }
 \subsection{Crossing rectangles}
 
-We now introduce some notation to allow us to discuss rectangles and their crossings in a succinct manner.
+We now introduce some notation to allow us to discuss rectangles and their crossings in a succinct manner. Again we follow the definitions and proofs given in \cite{bollobas2006short}.
 \begin{definition}
 	Let $R = [a,b]\times[c, d]$ for integers $a<b$, $c<d$ be a rectangle, we identify this rectangle with a subgraph of $\ints^2$ which includes all vertices and edges on the boundary and inside. Let $k = b-a$ and $l = d-c$, then we say that R is a $k$ by $l$ rectangle.
 	
@@ -616,16 +628,29 @@ We now prove an important result similar to that of Lemma~\ref*{originloop}, for
 \end{lemma}
 
 \begin{proof}
-	Without loss of generality we scale the lattice to avoid working with fractions. Let the lattice $L = (0,2) + 4\ints^2$, and hence its dual $L^* = (2,0)+4\ints^2$. Then let R be a $k$ by $l$ rectangle on $L$ with vertex set $\{(4i,4j+2): 0 \leq i \leq k \text{, } 0 \leq j \leq l-1 \}$, and thus we have that $R^h$ has vertex set $\{(4i+2,4j): 0 \leq i \leq k-1 \text{, } 0 \leq j \leq l \}$. Suppose some percolation configuration of $\ints^2$ and let G be the graph induced by the open edges of $R$, similarly let the open edges of $R^h$ induce the graph $G^h$. Now it suffices to show that either $G$ contains a left-right path or $G^h$ contains a top-bottom path, but not both. If we wish to show that $G$ has a left-right, i.e. a path from $(0,4m+2)$ to $(4k,4n+2)$ for some $m,n \in \mathbb{N}$, then we can assume without loss of generality that $G$ contains all $2(l-1)$ edges on its left and right most sides. We make a similar assumption that $G^h$ has all $2(k-1)$ on its top and bottom. This means we only have to consider one vertex each of the sides of the rectangles.
+	Without loss of generality we scale the lattice to avoid working with fractions. Let the lattice $L = (0,2) + 4\ints^2$, and hence its dual $L^* = (2,0)+4\ints^2$. Then let R be a $k$ by $l$ rectangle on $L$ with vertex set, 
+	$$\{(4i,4j+2): 0 \leq i \leq k \text{, } 0 \leq j \leq l-1 \}$$ 
+	Thus we have that $R^h$ has vertex set 
+	$$\{(4i+2,4j): 0 \leq i \leq k-1 \text{, } 0 \leq j \leq l \}$$
+	Suppose some percolation configuration of $\ints^2$ and let G be the graph induced by the open edges of $R$, similarly let the open edges of $R^h$ induce the graph $G^h$. Now it suffices to show that either $G$ contains a left-right path or $G^h$ contains a top-bottom path, but not both. If we wish to show that $G$ has a left-right path, i.e. a path from $(0,4m+2)$ to $(4k,4n+2)$ for some $m,n \in \mathbb{N}$, then we can assume without loss of generality that $G$ contains all $2(l-1)$ edges on its left and right most sides. We make a similar assumption that $G^h$ has all $2(k-1)$ on its top and bottom. This means we only have to consider one vertex on each of the sides of the rectangles.
 
-	We now construct a third graph, $M$, which lies between $G$ and $G^h$. Let $R_{odd}$ be a $2k\times 2l$ rectangle with vertex set $\{(2i+1,2j+1): 0 \leq i \leq 2k-1 \text{, } 0 \leq j \leq 2l-1 \}$, then let M be the subgraph of $R_{odd}$ which just contains edges that do not intersect edges of $G$ nor $G^h$. We direct all the edges of $M$ such that edges of $G$ lie on the right and $G^h$ lie on the left. It is evident that this results in all vertices of M having one edge in and one edge out, except for 4 vertices of degree one which lie in the ``corners'' of the rectangle, label them counter-clockwise $x,y,z,w$ as in Figure~\ref*{fig:rectangleProof}. Clearly due to the way we previously oriented the edges of $M$, $x$ and $z$ have one out edge, $y$ and $w$ have one in edge. Hence, the component of $M$ which $x$ lies in must be a path, say $P$, which ends at either $y$ or $w$. In the case where $P$ ends at $y$, then we have that the subgraph of $G^h$ to the left of $P$ must be connected from the top to the bottom. Thus, by basic graph theory this subgraph must contain a top-bottom path. If we are in the case where $P$ ends at $w$ then we must have the subgraph of $G$ to the right of $P$ is connected from left to right, thus meaning it admits a left-right path. Clearly then at least one of $H(R)$ and $V^*(R^h)$ occurs.
+
+	We now construct a third graph, $M$, which lies between $G$ and $G^h$. Let $R_{odd}$ be a $2k\times 2l$ rectangle with vertex set, 
+	$$\{(2i+1,2j+1): 0 \leq i \leq 2k-1 \text{, } 0 \leq j \leq 2l-1 \}$$ 
+	Then let M be the subgraph of $R_{odd}$ which just contains edges that do not intersect edges of $G$ nor $G^h$. We direct all the edges of $M$ such that edges of $G$ lie on the right and $G^h$ lie on the left. It is evident that this results in all vertices of M having one edge in and one edge out, except for 4 vertices of degree one which lie in the ``corners'' of the rectangle, label them counter-clockwise $x,y,z,w$ as in Figure~\ref*{fig:rectangleProof}.
+	
+	Clearly due to the way we previously oriented the edges of $M$, $x$ and $z$ have one out edge, $y$ and $w$ have one in edge. Hence, the component of $M$ which $x$ lies in must be a path, say $P$, which ends at either $y$ or $w$. In the case where $P$ ends at $y$, then we have that the subgraph of $G^h$ to the left of $P$ must be connected from the top to the bottom. Thus, by basic graph theory this subgraph must contain a top-bottom path. If we are in the case where $P$ ends at $w$ then we must have the subgraph of $G$ to the right of $P$ is connected from left to right, thus meaning it admits a left-right path. Clearly then at least one of $H(R)$ and $V^*(R^h)$ occurs.
+
 	\begin{figure}
 		\centering
 		\includegraphics[scale=0.6]{drawings/rectanglesproof.png}
 		\caption{An example with $G$ in black, $G^h$ in red and $M$ in green. The dashed green line shows the Jordan Curve construction.}
 		\label{fig:rectangleProof}
 	\end{figure}
-	To show that exactly one  $H(R)$ and $V^*(R^h)$ occurs we utilise the Jordan Curve Theorem. A brief summary of this result is, given a non-self-intersecting continuous closed loop in the plane, $J$, called a Jordan Curve, then $J$ divides the plane into two distinct regions, an inside and an outside whose boundary is $J$. We refer the reader to \cite{kosniowski_1980} for a proof of the Jordan Curve Theorem. If the path $P$ runs from $x$ to $w$ then $P$ can be extended to a Jordan curve $J$ by simply adding a curve from $w$ to $x$ over the top of all the vertices of $R^h$. This results in all the vertices on the top of $R^h$ lying inside the Jordan curve and the vertices at the bottom of $R^h$ lie on the outside of the curve. Hence, any top-bottom path in $G^h$ must cross $J$ which means it crosses an edge of $M$, but this contradicts the definition of the edges of $M$. So only $H(R)$ occurs.
+
+	To show that exactly one  $H(R)$ and $V^*(R^h)$ occurs we utilise the Jordan Curve Theorem. A summary of this result is, given a non-self-intersecting continuous closed loop in the plane, $J$, called a Jordan Curve, then $J$ divides the plane into two distinct regions, an inside and an outside whose boundary is $J$. We refer the reader to \cite{kosniowski_1980} for a proof of the Jordan Curve Theorem. 
+	
+	If the path $P$ runs from $x$ to $w$, then $P$ can be extended to a Jordan curve $J$ by simply adding a curve from $w$ to $x$ over the top of all the vertices of $R^h$. This results in all the vertices on the top of $R^h$ lying inside the Jordan curve and the vertices at the bottom of $R^h$ lie on the outside of the curve. Hence, any top-bottom path in $G^h$ must cross $J$ which means it crosses an edge of $M$, but this contradicts the definition of the edges of $M$. So only $H(R)$ occurs.
 	Similarly, in the case that $P$ ends at $y$, we form a Jordan curve by connecting $x$ to $y$ on the left of the vertices on the left side of $G$. Then by an analogous argument to before, we cannot have a left-right path in $G$ since the left and right sides lie in the interior and exterior of the Jordan curve respectively. Hence, only $V^*(R^h)$ occurs in this case.
 \end{proof}
 
@@ -636,7 +661,7 @@ We note that the edges of $L^*$ above are open with probability $1-p$, and so we
 	$$\prob(H(R))+\mathbb{P}_{1-p}(V(R')) = 1 $$
 \end{corollary}
 
-Further to this, if $k = l = n+1$ for some $n$, then $R'$ is simply a 90-degree rotation of $R$. Hence, $\prob(H(R)) = \mathbb{P}_{1-p}(V(R')$. From this we find the key statement due to the self-duality of $\ints^2$ we discussed in Section~\ref*{critvalZ2}.
+Further to this, if $k = l = n+1$ for some $n$, then $R'$ is simply a 90-degree rotation of $R$. Hence, $\prob(H(R)) = \mathbb{P}_{1-p}(V(R'))$. From this we find the key statement of self-duality of $\ints^2$ we discussed in Section~\ref*{critvalZ2}.
 
 \begin{corollary}\label{squareGEQhalf}
 	If $R$ is an n+1 by n rectangle then $\mathbb{P}_{1/2}(H(R)) = 1/2$. So for $n$ sided square $S$, which is just defined as an $n$ by $n$ rectangle. We must have,
@@ -647,7 +672,7 @@ While it might now feel intuitively obvious that $p_c(2) \geq 1/2$, and certainl
 
 \subsection{Harris' Theorem}
 
-In order to make this idea rigorous, we now aim to show that $\theta(1/2) = 0$. This is Harris' Theorem, although the method we use will be different to Harris' original as previously mentioned, we follow the ideas of Russo, Seymour and Welsh.
+In order to make this idea rigorous, we now aim to show that $\theta(1/2) = 0$. This is Harris' Theorem, although the method we use will be different to Harris' original as previously mentioned, we follow the ideas of Russo, Seymour and Welsh as outlined in \cite{bollobas2006short}.
 
 \begin{lemma}\label{mby2nLemma}
 	Let $R = [0,m]\times[0,2n]$ be an $m$ by $2n$ rectangle with $m\geq n$. Let $X(R)$ be the event that there are paths $P_1$ and $P_2$ of open edges, where $P_1$ crosses the square $S = [0,n]\times[0,n]$ from top to bottom, and $P_2$ lies inside $R$ and joins some vertex on $P_1$ to some vertex on the right side of $R$. Then, 
@@ -658,7 +683,7 @@ In order to make this idea rigorous, we now aim to show that $\theta(1/2) = 0$. 
 
 	\begin{figure}
 		\centering
-		\includegraphics[scale=0.48]{drawings/2nbymRectangle.png}
+		\includegraphics[scale=0.4]{drawings/2nbymRectangle.png}
 		\caption{An example m by 2n rectangle R, where $P_3$ crosses $P_1$ and thus the event $X(R)$ has occurred.}
 		\label{fig:2nbymProof}
 	\end{figure}
