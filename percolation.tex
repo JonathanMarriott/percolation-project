@@ -688,11 +688,11 @@ In order to make this idea rigorous, we now aim to show that $\theta(1/2) = 0$. 
 		\label{fig:2nbymProof}
 	\end{figure}
 
-	Now let $P$ be the path constructed by joining $P_1$ to its reflection $P_1'$ in the line $y=n$, note $P$ may not necessarily be open. Then $P$ crosses the left $[0,n] \times [0,2n]$ section of $R$ top to bottom. By definition, we know with probability $\prob(H(R))$ there is an open path $P_3$ crossing $R$ left to right. We know this path $P_3$ must cross $P$ at some vertex. Due to symmetry by which we constructed $P$, we know the probability that $P_3$ crosses $P$ at a vertex in $P_1$ (the bottom half of P) is at least $\prob(H(R))/2$. Now let $Y(P_1)$ be the event there is an open path $P_2$ from the RHS of $R$ to some vertex of $P_1$, then clearly $Y(P_1)$ must occur with probability at least $\prob(H(R))/2$ too. We note that the event $Y(P_1)$ only depends on the edges to the right of $P_1$. So since the event $\{LV(S) = P_1\}$ does not depend on any edges to the right of $P_1$ as previously mentioned, $Y(P_1)$ and $\{LV(S) = P_1\}$ are independent. So we have:
+	Now let $P$ be the path constructed by joining $P_1$ to its reflection $P_1'$ in the line $y=n$, note $P$ may not necessarily be open. Then $P$ crosses the left $[0,n] \times [0,2n]$ section of $R$ top to bottom. By definition, we know with probability $\prob(H(R))$ there is an open path $P_3$ crossing $R$ left to right. We know this path $P_3$ must cross $P$ at some vertex. Due to symmetry by which we constructed $P$, we know the probability that $P_3$ crosses $P$ at a vertex in $P_1$ (the bottom half of P) is at least $\prob(H(R))/2$. Now let $Y(P_1)$ be the event there is an open path $P_2$ from the right-hand side of $R$ to some vertex of $P_1$, then clearly $Y(P_1)$ must occur with probability at least $\prob(H(R))/2$ too. We note that the event $Y(P_1)$ only depends on the edges to the right of $P_1$. So since the event $\{LV(S) = P_1\}$ does not depend on any edges to the right of $P_1$ as previously mentioned, $Y(P_1)$ and $\{LV(S) = P_1\}$ are independent. So we have:
 	$$\prob(Y(P_1) \, | \, LV(S) = P_1) = \prob(Y(P_1)) \geq \prob(H(R))/2 $$
 	Furthermore we can see that $Y(P_1)$ and $\{LV(S) = P_1\}$ occurring implies that $X(R)$ has occurred. So, it is clear that:
 	$$\prob(X(R) \, | \, LV(S) = P_1) \geq \prob(H(R))/2 $$
-	Finally we that the event there is a vertical crossing of $S$, $V(S)$, is the disjoint union of the events ${LV(S) = P_1}$ for all $P_1$ in $S$. So, we get that:
+	Finally we get that the event there is a vertical crossing of $S$, denoted $V(S)$, is the disjoint union of the events ${LV(S) = P_1}$ for all $P_1$ in $S$. So, we get that:
 	$$\prob(X(R) \, | \, V(S)) \geq \prob(H(R))/2 $$
 	Then by simple rearrangement we get the required result.
 
@@ -705,7 +705,7 @@ We now prove an important corollary of the above lemma which bounds below the pr
 \end{corollary}
 
 \begin{proof}
-	Let $h_{m,n} = \mathbb{P}_{1/2}(R_{m,n})$ where $R_{m,n}$ is an m by n rectangle. We aim to show that for $m>n$ we have
+	Let $h_{m,n} = \mathbb{P}_{1/2}(H(R_{m,n}))$ where $R_{m,n}$ is an m by n rectangle. We aim to show that for $m>n$ we have
 	\[
 		h_{2m-n,2n} \geq \frac{h_{m,2n}^2}{2^5} \tag{$\star$}
 	\]
@@ -713,7 +713,7 @@ We now prove an important corollary of the above lemma which bounds below the pr
 	Since then we can iteratively apply the inequality using ${h_{2n,2n} \geq 1/2}$ from Corollary~\ref*{squareGEQhalf} to begin, repeating until we reach $h_{2\rho n,2n}$. For example the first step would be:
 	$$h_{3n,2n} =h_{2(2n) -n,2n} \geq \frac{h_{2n,2n}}{2^5} \geq \frac{1/2}{2^5} = 2^{-6}$$
 
-	So in order to show $(\star)$ holds we consider intersecting rectangles $R = [0,m]\times [0,2n]$ and $R' = [n-m,n] \times [0,2n]$, in addition to the lower square $S = [0,n] \times [0,n]$ inside both.
+	So in order to show $(\star)$ holds we consider intersecting rectangles $$R = [0,m]\times [0,2n]$$ and, $$R' = [n-m,n] \times [0,2n]$$ In addition to the lower square $S = [0,n] \times [0,n]$ inside both.
 	Let $E_1 = X(R)$ then let $E_2$ be the corresponding event reflected in the line $y=n/2$ for $R'$. Let $E_3 = H(S)$ be the event there is a horizontal crossing of S.
 	Then if $E_1,E_2,E_3$ all hold we have that $H(R \cup  R')$ holds, by the fact that the horizontal crossing of $S$ must cross the two vertical crossing of $S$ which occur due to $E_1,E_2$. This is shown in Figure~\ref{fig:doubleRectangle}.
 	\begin{figure}
@@ -728,7 +728,7 @@ We now prove an important corollary of the above lemma which bounds below the pr
 	& \geq \prbhlf(E_1)\prbhlf(E_2)\prbhlf(E_3)\\
 	& \geq \prbhlf(X(R))^2\prbhlf(H(S))
 	\end{align*}
-	Where the last line is a result of the symmetry of $E_1$ and $E_2$. From Corollary~\ref{squareGEQhalf} we know $\prbhlf(V(S)) =\prbhlf(H(S)) \ geq 1/2$, and using the result Lemma~\ref{mby2nLemma} we can plug into the above to get.
+	Where the last line is a result of the symmetry of $E_1$ and $E_2$. From Corollary~\ref{squareGEQhalf} we know $\prbhlf(V(S)) =\prbhlf(H(S)) \geq 1/2$, and using the result Lemma~\ref{mby2nLemma} we can plug into the above to get.
 	\begin{align*}
 		\prbhlf(H(R \cup R')) & \geq \prbhlf(X(R))^2\prbhlf(H(S)) \\
 		& \geq \{2^{-1} \prbhlf (H(R)) \prbhlf (V(S))\}^2*1/2 \\
@@ -742,7 +742,7 @@ We now need one more result before we can prove Harris' Theorem, the second Bore
 \begin{lemma}[Second Borel-Cantelli Lemma]
 	Let $(E_n)_{n=1}^\infty$ be an infinite sequence of events. If $(E_n)_{n=1}^\infty$ are all independent and $\sum_{n=1}^{\infty} \mathbb{P}(E_n) = \infty$ Then $\mathbb{P}(\text{infinitely many }E_n\text{ occur}) = 1$.
 \end{lemma}
-
+For a proof we suggest the reader looks at one given in \cite{billingsley2008probability}.
 We are now in a position to prove Harris' theorem.
 
 \begin{theorem}[Harris' theorem]
@@ -750,7 +750,7 @@ We are now in a position to prove Harris' theorem.
 \end{theorem}
 
 \begin{proof}
-	We work by constructing a sequence of square annuli in the dual graph. The first annulus is formed by arranging four 6n by 2n rectangles around the origin such that the 2n by 2n ends of each rectangle overlap. See Figure~\ref{fig:squareAnnulus} for the arrangement, we note that the chosen direction to offset the annulus in the dual does not matter so long as it encloses the origin of the primal graph. 
+	We work by constructing a sequence of square annuli in the dual graph. The first annulus is formed by arranging four $6n$ by $2n$ rectangles around the origin such that the $2n$ by $2n$ ends of each rectangle overlap. See Figure~\ref{fig:squareAnnulus} for the arrangement, we note that the chosen direction to offset the annulus in the dual does not matter so long as it encloses the origin of the primal graph. 
 	\begin{figure}
 		\centering
 		\includegraphics[scale=0.48]{drawings/squareAnnulus.png}
@@ -769,6 +769,7 @@ We are now in a position to prove Harris' theorem.
 \subsection{Kesten's Theorem}
 We now move onto proving Kesten's theorem, specifically that the percolation threshold is less than or equal to a half. In this section we again follow the definitions and methods detailed in \cite{bollobas2006short}. Firstly we introduce a powerful result due to Friedgut and Kalai \cite{friedgut1996every}.
 We assume the reader has some basic group theory knowledge, although it is not critical to understanding.
+%%%%Proof read to here%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{definition}[Symmetric event]
 	An event $\mathcal{A} \subseteq \mathcal{P}(X)$ is symmetric if there is a permutation group  $G$ acting transitively on $\mathcal{P}(X)$ which preserves $\mathcal{A}$
