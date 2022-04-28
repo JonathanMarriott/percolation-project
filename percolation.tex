@@ -855,7 +855,7 @@ Using this lemma we are in a position to prove Kesten's Theorem, for the proof w
 \end{theorem}
 
 \begin{proof}
-	Let $p >1/2$, and define $\delta = \delta(p)$ and $n_0 = n_0(p,2)$ as in Lemma~\ref*{kesternLemma}. Initially suppose some integer $n$ such that $n > n_0$, we will put further constraints on $n$ later. Then for $k = 0,1,2,3,...$ define $R_k$ to be the rectangle with side lengths $2^{k}n$ and $2^{k+1}n$, with the longer side vertical if $k$ is even and horizontal otherwise. We position the bottom left corner of all $R_k$ rectangles at the origin so that $R_i$ encloses $R_{i-1}$, see Figure~\ref*{fig:KesternRectangle}.
+	Let $p >1/2$, and define $\delta = \delta(p)$ and $n_0 = n_0(p,2)$ as in Lemma~\ref*{kesternLemma}. Initially suppose some integer $n$ such that $n > n_0$, we will a put another bound on $n$ later. Define $R_k$ for $k = 0,1,2,\ell$ to be the rectangle with side lengths $2^{k}n$ and $2^{k+1}n$, with the longer side vertical if $k$ is even and horizontal otherwise. We position the bottom left corner of all $R_k$ rectangles at the origin so that $R_i$ encloses $R_{i-1}$, see Figure~\ref*{fig:KesternRectangle}.
 
 	\begin{figure}
 		\centering
@@ -864,12 +864,12 @@ Using this lemma we are in a position to prove Kesten's Theorem, for the proof w
 		\label{fig:KesternRectangle}
 	\end{figure}
 
-	Let $E_k$ be the event that $R_k$ admits an open crossing of edges the long way. Clearly if $E_k$ and $E_{k+1}$ hold then the open crossings of $R_k$ and $R_{k+1}$ must meet, as depicted in Figure~\ref*{fig:KesternRectangle}. Then using Lemma~\ref*{kesternLemma} and the formula for infinite geometric series we see that,
+	Let $E_k$ be the event that $R_k$ admits an open crossing of edges the long way. Clearly if $E_k$ and $E_{k+1}$ hold then the open crossings of $R_k$ and $R_{k+1}$ must meet, as depicted in Figure~\ref*{fig:KesternRectangle}. Then using Lemma~\ref*{kesternLemma} and the formula for the sum of an infinite geometric series we see that,
 	$$\sum_{k=0}^{\infty}\prob(E^c_k) \leq \sum_{k=0}^{\infty}(2^kn)^{-\delta} = \frac{n^{-\delta}}{1-2^{-\delta}}$$
-	Clearly we can require $n$ to be large enough such that,
+	Clearly we impose a bound on $n$ to be large enough such that,
 	$$\sum_{k=0}^{\infty}\prob(E^c_k) \leq  \frac{n^{-\delta}}{1-2^{-\delta}} < 1$$
 	Which implies that $$\prob\left(\bigcap_{k=0}^{\infty}E_k\right)>0$$
-	Now if $E_k$ holds for all $k$ then the event,$E_{\infty}$, that there is an infinite open cluster must also hold. Thus,
+	Now if $E_k$ holds for all $k$ then the event, $E_{\infty} = {|C(x)| = \infty: x \in \ints^2}$, that there is an infinite open cluster must also hold. Thus,
 	$$\prob(E_{\infty}) \geq \prob\left(\bigcap_{k=0}^{\infty}E_k\right)>0$$
 	Attentive readers may note that while $E_{\infty}$ implies there is an infinite open path, this path may not necessarily start at the origin. However clearly the probability of an open path from the origin along the bottom edge of $R_0$ is positive, thus when $p>1/2$ we have $\theta(p) >0$. 
 
@@ -890,6 +890,8 @@ This theorem immediately tells us when the square lattice admits an infinite ope
 	\end{cases} $$
 \end{corollary}
 
+Finally, since we have shown Harris' Theorem that for $p=1/2$ we have that $\theta(p) =0$ in conjunction with Kesten's Theorem that for $p>1/2$ we have that $\theta(p) >0$. It must be that $p_c(2) = 1/2$ by the definition of the critical value, which completes our proof of the Harris-Kesten Theorem.
+
 % \section{Conformal Invariance}
 % Discuss what conformal invariance is and perhaps talk about the result on the triangular lattice due to Smirnov
 
@@ -900,13 +902,13 @@ In this section we discuss techniques and algorithms which can be used to explor
 % Then plot the threshold for open crossings across some size box. 
 % Then see the sharpening of said plot when the box size increases.}}
 
-As we have seen previously the task of determining the percolation threshold for a given lattice structure is highly non-trivial and so for many lattices the task of finding exact values is still an open problem \cite{StoverThreshold}. Subsequently, a great deal of work has been carried out to determine approximate values for a variety of lattices and distributions of open sites or bonds by way of computer simulations. In this section we explore a method I used to estimate the bond percolation threshold for the square lattice, since we can compare this to the exact value of $1/2$ we proved earlier. 
+As we have seen previously the task of determining the percolation threshold for a given lattice structure is highly non-trivial and so for many lattices the task of finding exact values is still an open problem \cite{StoverThreshold}. Subsequently, a great deal of work has been carried out to determine approximate values for a variety of lattices and distributions of open sites or bonds by way of computer simulations. In this section we explore an algorithm I used to estimate the bond percolation threshold for boxes of the square lattice, since we can compare the results to the exact value of $1/2$ we proved earlier. The algorithm described makes no assumptions specific to bond percolation on the square lattice and thus will have applicability to other percolation models.
 
-While we know that the fact that a configuration having an open crossing from one side to another of a single finite box in $\ints^2$ does not affect the probability of there being an infinite connected cluster. It is clear that we would expect the probability of such a crossing in a very large box to tend towards the percolation threshold for the infinite cluster. Hence, we can exploit this behaviour to find an estimate for the percolation threshold, create some large square grid, assign some configuration of open and closed edges with probability $p$, then check for a left-right crossing. We alter the value of $p$ repeatedly until we find the lowest value at which a crossing occurs.
+While we know that a configuration having an open crossing from one side to another of a single finite box in $\ints^2$ does not affect the probability of there being an infinite open cluster since it is a tail event. It is clear that we would expect the probability of such a crossing in a very large box to tend towards the percolation threshold for the graph. Hence, we can exploit this behaviour to find an estimate for the percolation threshold by creating some large square grid, assign some configuration of open and closed edges with probability $p$, then check for a left-right crossing. We alter the value of $p$ repeatedly until we find the lowest value at which a crossing occurs.
 
 There are a number of factors to consider when setting up this simulation such that it can run sufficiently fast, firstly how do we assign each edge to be open or closed so that we can traverse the graph with different values of $p$.
 
-The simplest approach would be to assign a Bernoulli random variable with probability $p$ to each edge, however this has the drawback of requiring us to revaluate the random variable on each edge when we change the value of $p$, and to mirror the non-decreasing nature of the percolation function $\theta(p)$, we would have to only do this for previously closed edges. To avoid these issues I chose to implement a method similar to one we used to prove Lemma~\ref{incEventlemma}, where we coupled configurations using uniform random variables. To recap this, by assigning an edge with a value from independent uniform random on $[0,1]$ we can then set an edge to be open if this value is less than or equal to $p$ and closed otherwise. In this way every edge is open with probability $p$, and increasing p has the desired property that edges which were previously open remain so. Additionally, after the values between 0 and 1 have been assigned to each edge, we gain the benefit of only needing to query the state of edges as we come to them by comparing the assigned value to $p$, rather than needing to assign the open or closed states to every edge each time we alter $p$.
+The simplest approach would be to assign a Bernoulli random variable with probability $p$ to each edge, however this has the drawback of requiring us to revaluate the random variable on each edge when we change the value of $p$, and to mirror the non-decreasing nature of the percolation function $\theta(p)$, we would have to only do this for previously closed edges. To avoid these issues I chose to implement an idea similar to one we used to prove Lemma~\ref{incEventlemma}, where we coupled configurations using uniform random variables. To recap this, by assigning an edge with a value from independent uniform random on $[0,1]$ we can then set an edge to be open if this value is less than or equal to $p$ and closed otherwise. In this way every edge is open with probability $p$, and increasing $p$ has the desired property that edges which were previously open remain so. Additionally, after the values between $0$ and $1$ have been assigned to each edge, we gain the benefit of only needing to query the state of edges as we come to them by comparing the assigned value to $p$, rather than needing to assign the open or closed states to every edge each time we alter $p$.
 
 We could remove the initial pass of assigning the uniform random variable values to each edge initially. Instead, we could define some hash function mapping the existing attributes of each edge to the range $[0,1]$, allowing us to compute the states of edges on the fly. However, I did not find this speed up necessary.
 
@@ -948,15 +950,15 @@ The fastest way to go about this, since we have an unweighted graph, is to use a
 	\end{algorithmic}
 	\end{algorithm}
 
-We note a queue is a simple data structure which works in the same way as a queue at a shop. The first item added to the queue is the first to then be removed.
-The above algorithm runs in $O(|V|+|E|)$ worst-case time, where $V$ and $E$ are the vertex and edge sets of the graph $G$ respectively. With a little thought it is clear no algorithm can do better for this problem. 
+The algorithm uses a queue, which is a simple data structure that works in the same way as a queue at a shop. The first item added to the queue is the first to then be removed.
+Algorithm~\ref*{bfs} runs in $O(|V|+|E|)$ worst-case time, where $V$ and $E$ are the vertex and edge sets of the graph $G$ respectively. With a little thought it is clear no algorithm can do better for this problem. 
 
 We also note that Algorithm~\ref*{bfs} returns the list of nodes on the path between the two vertices. Depending on the use case this can be easily modified to just return true if a path exists. 
 
 Now we can determine if there is a path from one side of a box to another for a given percolation parameter $p$, we want to determine the lowest threshold for which a crossing path exists for a given configuration of uniform random variables. For the case of the planar square lattice we could use some heuristic based on our prior knowledge that the threshold should lie around 1/2. However, to enable the general applicability of the algorithm described to any graph, we do not make any specific assumptions about the threshold distribution.
 
-While a variety of possible approaches exist, a rather efficient one is an adapted form of binary search on the parameter. While usually a binary search can be used to identity sorted items in a list, in some sense our parameter values are also sorted. All the values with a left right crossing appear before those which do have a crossing, this is only true due to our implementation via uniform random variables on each edge.
-In order to check if a given value of $p$ is the crossing threshold, we must check a value very close to $p$ to see if it is different. Say we have some precision constant $\epsilon$ then we define:
+While a variety of possible approaches exist, a rather efficient one is an adapted form of binary search on the parameter. While usually a binary search can be used to identity sorted items in a list, in some sense our parameter values are also sorted. All the values of $p$ which admit a left right crossing appear after those which do have a crossing, this is only true due to our coupling implementation with uniform random variables assigned to each edge.
+In order to check if a given value of $p$ is the crossing threshold, we must check a value very close to $p$ to see if it is different. Say we have some precision constant $\epsilon$ then we observe:
 \begin{itemize}
 	\item If $p$ admits a box crossing, then $p$ is the crossing threshold if and only if $p-\epsilon$ does not.
 	\item If $p$ does not admit a box crossing, then $p+\epsilon$ is the crossing threshold if and only if $p+\epsilon$ does admit a crossing.
@@ -996,27 +998,32 @@ Now we can follow an adapted binary search to centre in on the threshold, where 
 	\end{algorithmic}
 \end{algorithm}
 
-You can inspect the above algorithm to see how whenever the current value of $p$ is not the threshold we can safely throw out one half of the current search range. This technique, commonly referred to as divide and conquer, gives good asymptotic search performance. We would say in general a binary search finds the target in $O(nlog(n))$ worst-case time where n is the number of elements to be searched. In our case the effective number of ``items'' depends on the precision parameter $\epsilon$, where the number of potential threshold values to check is $\frac{1}{\epsilon}$. Thus Algorithm~\ref*{findthreshold} runs in $O(\frac{1}{\epsilon}log(\frac{1}{\epsilon}))$ worst-case time.
+You can inspect Algorithm~\ref*{findthreshold} to see how whenever the current value of $p$ is not the threshold we can safely throw out one half of the current search range. This technique, commonly referred to as divide and conquer, gives good asymptotic search performance. We would say in general a binary search finds the target in $O(nlog(n))$ worst-case time where $n$ is the number of elements to be searched. In our case the effective number of ``items'' depends on the precision parameter $\epsilon$, where the number of potential threshold values to check is $\frac{1}{\epsilon}$. Thus Algorithm~\ref*{findthreshold} runs in $O(\frac{1}{\epsilon}log(\frac{1}{\epsilon}))$ worst-case time.
 
-You may notice a possible optimization when both the algorithms are used together. Instead of first constructing the induced subgraph by the open edges then seeing if there is a crossing, we can directly only consider the open edges during our breadth first search by requiring in line 18 of Algorithm~\ref*{bfs} that the edges $w$ must have associated uniform random variable value of less than or equal to p. In essence, we can construct the subgraph induced by the open edges on the fly, saving us one pass over the edge set. 
+You may notice a possible optimization when both the algorithms are used together. Instead of first constructing the induced subgraph by the open edges then seeing if there is a crossing, we can directly only consider the open edges during our breadth first search by requiring in line 18 of Algorithm~\ref*{bfs} that the edges $w$ must have associated uniform random variable value of less than or equal to $p$. In essence, we can construct the subgraph induced by the open edges on the fly, saving us one pass over the edge set. 
 
 My initial plan to investigate the percolation threshold for the planar square lattice was to simulate many boxes each of increasing width to see how the variation in the crossing threshold decreases with box width. Using the previously described algorithms to find the threshold for each box.
 
 I implemented the simulation using Python due to its extensive set of community libraries and ease of prototyping. Since Python is an interpreted language it can be less performant than other complied languages which can be an important consideration for very large simulations. However, alternative interpreters  of Python such as PyPy can mitigate this issue \cite{PyPy}. PyPy uses just-in-time compilation and other optimization techniques to speed up native python code.
-I decided to simulate one box of each width from width 2 (3x3 vertices) to width 1950, with a precision of $0.0001$. I then used the matplotlib library to draw a scatter plot of the box width against the computed crossing threshold, which can be seen in Figure~\ref*{fig:thresholdplot2}. The red dashed line lies at the threshold value 0.5 which we know is the true value for an infinite lattice.
+I decided to simulate boxes of edge widths from width 2 (3x3 vertices) to width 1950, with a precision of $0.0001$. I then used the matplotlib library to draw a scatter plot of the box width against the computed crossing threshold, which can be seen in Figure~\ref*{fig:thresholdplot2}. The red dashed line lies at the threshold value 0.5 which we know is the true value for an infinite lattice.
 
 \begin{landscape}
 	\begin{figure}
 		\centering
-		\makebox[3\textwidth][l]{\includegraphics[scale=0.58]{CrossingSimulationPlot3.png}}
-		\caption{Crossing thresholds for simulated lattices}
+		\makebox[3\textwidth][l]{\includegraphics[scale=0.48]{Simulation_with_stddev_lines.png}}
+		\caption{simulated crossing thresholds for  boxes of the square lattice. Expected standard deviations marked in green.}
 		\label{fig:thresholdplot2}
 	\end{figure}
 	\end{landscape}
 
-You can clearly see how the variability of crossing threshold decreases as the box width increases, becoming more concentrated around 0.5. Supposing we did not already know the true value of the infinite lattice, this would provide us with a strong insight that the percolation threshold lies around 0.5. In fact if we calculate the mean of the crossing thresholds for each box, disregarding the first 50 due to their small size, we would get a value of 0.499979 which when rounded to our precision of 0.0001 is 0.5000.
+You can clearly see how the variability of crossing threshold decreases as the box width increases, becoming more concentrated around $0.5$. Supposing we did not already know the true value of the infinite square lattice, this would provide us with a strong indication that the percolation threshold lies close to $0.5$. In fact if we calculate the mean of the crossing thresholds for each box, disregarding the first 50 due to their small size, we would get a value of $0.499979$ which when rounded to our precision of $0.0001$ is $0.5000$.
 
-This verifies the method we have used as giving a good approximation for the percolation threshold. Since no part of our simulation or algorithm depended on specific structure of the square planar lattice, it would be very easy to use this approach to investigate other planar graph structures. In fact, with some adaptations the Algorithm~\ref*{bfs} could be extended to consider an $n$-dimension hypercube to allow the investigation of Bernoulli percolation on arbitrary dimension lattices. Further to this we can easily assign values from different random distributions to each edge, and explore how this affects the crossing threshold.
+Another way to check our simulation technique is working correctly is to compare our observed distribution of crossing probabilities as $p$ increases with what is known analytically. Proposition~6.8 of \cite{garban2014noise} tells how `sharp' the threshold is around the critical value. It tells us that the derivative with respect to $p$ of the probability of a horizontal open path around an $n$ by $n$ torus evaluated at the critical value $p=1/2$ is 
+$$n^{3/4 + o(1)}$$
+We would expect a very similar result for horizontal open crossings of $n+1$ by $n$ boxes. This informs us that the standard deviation of crossing thresholds should tend to $n^{3/4}$ as the box width $n$ tends to infinity. Therefore, I plotted the first and second expected standard deviations in green on Figure~\ref*{fig:thresholdplot2}. We can see almost all points lie within one standard deviation which provides further evidence that the simulation results are correct.
+
+
+This verifies the method we have used gives a good approximation for the percolation threshold. Since no part of our simulation or algorithm depended on specific structure of the square planar lattice, it would be very easy to use this approach to investigate other planar graph structures. In fact, with some adaptations the Algorithm~\ref*{bfs} could be extended to consider an $n$-dimension hypercube to allow the investigation of Bernoulli percolation on arbitrary dimension lattices. Further to this we can easily assign values from different random distributions to each edge, and explore how this affects the crossing threshold.
 
 % \begin{figure}
 % 	    \centering
@@ -1035,8 +1042,8 @@ This verifies the method we have used as giving a good approximation for the per
 % \section{Conclusion}
 % Is a conclusion necessary for this project?
 
-
-\printbibliography
+\section{References}
+\printbibliography[heading=none]
 
 \section{Appendix}
 Below is the Python code I used to carry out my simulations:
@@ -1124,4 +1131,8 @@ Below is the Python code I used to carry out my simulations:
 	
 \end{minted}
 
+Here is the code I used to create the plot shown in Figure~\ref*{fig:thresholdplot2}.
+\begin{minted}[tabsize=3,xleftmargin=-80pt]{python}
+	
+\end{minted}
 \end{document}

@@ -23,5 +23,5 @@ plt.plot(np.linspace(0,2000,500),0.5-2*np.linspace(0,2000,500)**(-0.75),'--g',li
 # plt.axis([-20,000,0.32,0.68])
 plt.xlabel('Box width')
 plt.ylabel('Crossing probability threshold')
-plt.title('Simulation of Crossing Threshold Probability of Boxes of width between 1 to 2000')
+plt.title('Simulation of Crossing Threshold Probability of Boxes of width between 1 to 1950')
 plt.show()
