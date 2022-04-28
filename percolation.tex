@@ -688,11 +688,11 @@ In order to make this idea rigorous, we now aim to show that $\theta(1/2) = 0$. 
 		\label{fig:2nbymProof}
 	\end{figure}
 
-	Now let $P$ be the path constructed by joining $P_1$ to its reflection $P_1'$ in the line $y=n$, note $P$ may not necessarily be open. Then $P$ crosses the left $[0,n] \times [0,2n]$ section of $R$ top to bottom. By definition, we know with probability $\prob(H(R))$ there is an open path $P_3$ crossing $R$ left to right. We know this path $P_3$ must cross $P$ at some vertex. Due to symmetry by which we constructed $P$, we know the probability that $P_3$ crosses $P$ at a vertex in $P_1$ (the bottom half of P) is at least $\prob(H(R))/2$. Now let $Y(P_1)$ be the event there is an open path $P_2$ from the right-hand side of $R$ to some vertex of $P_1$, then clearly $Y(P_1)$ must occur with probability at least $\prob(H(R))/2$ too. We note that the event $Y(P_1)$ only depends on the edges to the right of $P_1$. So since the event $\{LV(S) = P_1\}$ does not depend on any edges to the right of $P_1$ as previously mentioned, $Y(P_1)$ and $\{LV(S) = P_1\}$ are independent. So we have:
+	Now let $P$ be the path constructed by joining $P_1$ to its reflection $P_1'$ in the line $y=n$, note $P$ may not necessarily be open. Then $P$ crosses the left $[0,n] \times [0,2n]$ section of $R$ top to bottom. By definition, we know with probability $\prob(H(R))$ there is an open path $P_3$ crossing $R$ left to right. We know this path $P_3$ must cross $P$ at some vertex. Due to symmetry by which we constructed $P$, we know the probability that $P_3$ crosses $P$ at a vertex in $P_1$ (the bottom half of P) is at least $\prob(H(R))/2$. Now let $Y(P_1)$ be the event there is an open path $P_2$ from the right-hand side of $R$ to some vertex of $P_1$, then clearly $Y(P_1)$ must occur with probability at least $\prob(H(R))/2$ too. We note that the event $Y(P_1)$ only depends on the edges to the right of $P_1$. So since the event $\{LV(S) = P_1\}$ does not depend on any edges to the right of $P_1$ as previously mentioned, $Y(P_1)$ and $\{LV(S) = P_1\}$ are independent. Hence, we have:
 	$$\prob(Y(P_1) \, | \, LV(S) = P_1) = \prob(Y(P_1)) \geq \prob(H(R))/2 $$
 	Furthermore we can see that $Y(P_1)$ and $\{LV(S) = P_1\}$ occurring implies that $X(R)$ has occurred. So, it is clear that:
 	$$\prob(X(R) \, | \, LV(S) = P_1) \geq \prob(H(R))/2 $$
-	Finally we get that the event there is a vertical crossing of $S$, denoted $V(S)$, is the disjoint union of the events ${LV(S) = P_1}$ for all $P_1$ in $S$. So, we get that:
+	Finally we get that the event there is a vertical crossing of $S$, denoted $V(S)$, is the disjoint union of the events ${LV(S) = P_1}$ for all $P_1$ in $S$. Subsequently, we get that:
 	$$\prob(X(R) \, | \, V(S)) \geq \prob(H(R))/2 $$
 	Then by simple rearrangement we get the required result.
 
@@ -998,7 +998,7 @@ Now we can follow an adapted binary search to centre in on the threshold, where 
 	\end{algorithmic}
 \end{algorithm}
 
-You can inspect Algorithm~\ref*{findthreshold} to see how whenever the current value of $p$ is not the threshold we can safely throw out one half of the current search range. This technique, commonly referred to as divide and conquer, gives good asymptotic search performance. We would say in general a binary search finds the target in $O(nlog(n))$ worst-case time where $n$ is the number of elements to be searched. In our case the effective number of ``items'' depends on the precision parameter $\epsilon$, where the number of potential threshold values to check is $\frac{1}{\epsilon}$. Thus Algorithm~\ref*{findthreshold} runs in $O(\frac{1}{\epsilon}log(\frac{1}{\epsilon}))$ worst-case time.
+You can inspect Algorithm~\ref*{findthreshold} to see how whenever the current value of $p$ is not the threshold we can safely throw out one half of the current search range. This technique, commonly referred to as divide and conquer, gives good asymptotic search performance. We would say in general a binary search finds the target in $O(nlog(n))$ worst-case time where $n$ is the number of elements to be searched. In our case the effective number of ``items'' depends on the precision parameter $\epsilon$, where the number of potential threshold values to check is $\frac{1}{\epsilon}$. Thus, Algorithm~\ref*{findthreshold} runs in $O(\frac{1}{\epsilon}log(\frac{1}{\epsilon}))$ worst-case time.
 
 You may notice a possible optimization when both the algorithms are used together. Instead of first constructing the induced subgraph by the open edges then seeing if there is a crossing, we can directly only consider the open edges during our breadth first search by requiring in line 18 of Algorithm~\ref*{bfs} that the edges $w$ must have associated uniform random variable value of less than or equal to $p$. In essence, we can construct the subgraph induced by the open edges on the fly, saving us one pass over the edge set. 
 
@@ -1013,7 +1013,7 @@ I decided to simulate boxes of edge widths from width 2 (3x3 vertices) to width 
 	\begin{figure}
 		\centering
 		\makebox[3\textwidth][l]{\includegraphics[scale=0.48]{Simulation_with_stddev_lines.png}}
-		\caption{simulated crossing thresholds for  boxes of the square lattice. Expected standard deviations marked in green.}
+		\caption{Simulated crossing thresholds for  boxes of the square lattice. Expected standard deviations marked in green.}
 		\label{fig:thresholdplot2}
 	\end{figure}
 	\end{landscape}
