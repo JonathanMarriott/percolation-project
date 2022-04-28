@@ -897,7 +897,7 @@ Finally, since we have shown Harris' Theorem that for $p=1/2$ we have that $\the
 
 \section{Simulation}
 In this section we discuss techniques and algorithms which can be used to explore percolation via simulations. We aim to outline a general method to investigate the critical crossing probability of finite boxes in such a way that it can be applied to any graph with minimal modification. We use the analytical proof for the critical value on the square lattice presented in Section~\ref*{HarrisKesten} to verify correctness of our method.
-\subsection{The ``water level'' of open crossings in finite boxes}
+\subsection{Percolation simulation design}
 % {\color{red}{Discuss how uniform R.V.s can be assigned to edges to simulate percolation. 
 % Then plot the threshold for open crossings across some size box. 
 % Then see the sharpening of said plot when the box size increases.}}
@@ -1001,6 +1001,8 @@ Now we can follow an adapted binary search to centre in on the threshold, where 
 You can inspect Algorithm~\ref*{findthreshold} to see how whenever the current value of $p$ is not the threshold we can safely throw out one half of the current search range. This technique, commonly referred to as divide and conquer, gives good asymptotic search performance. We would say in general a binary search finds the target in $O(nlog(n))$ worst-case time where $n$ is the number of elements to be searched. In our case the effective number of ``items'' depends on the precision parameter $\epsilon$, where the number of potential threshold values to check is $\frac{1}{\epsilon}$. Thus Algorithm~\ref*{findthreshold} runs in $O(\frac{1}{\epsilon}log(\frac{1}{\epsilon}))$ worst-case time.
 
 You may notice a possible optimization when both the algorithms are used together. Instead of first constructing the induced subgraph by the open edges then seeing if there is a crossing, we can directly only consider the open edges during our breadth first search by requiring in line 18 of Algorithm~\ref*{bfs} that the edges $w$ must have associated uniform random variable value of less than or equal to $p$. In essence, we can construct the subgraph induced by the open edges on the fly, saving us one pass over the edge set. 
+
+\subsection{Simulation Implementation }
 
 My initial plan to investigate the percolation threshold for the planar square lattice was to simulate many boxes each of increasing width to see how the variation in the crossing threshold decreases with box width. Using the previously described algorithms to find the threshold for each box.
 
@@ -1131,8 +1133,4 @@ Below is the Python code I used to carry out my simulations:
 	
 \end{minted}
 
-Here is the code I used to create the plot shown in Figure~\ref*{fig:thresholdplot2}.
-\begin{minted}[tabsize=3,xleftmargin=-80pt]{python}
-	
-\end{minted}
 \end{document}
