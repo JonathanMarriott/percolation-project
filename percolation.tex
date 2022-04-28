@@ -767,14 +767,14 @@ We are now in a position to prove Harris' theorem.
 \end{proof}
 
 \subsection{Kesten's Theorem}
-We now move onto proving Kesten's theorem, specifically that the percolation threshold is less than or equal to a half. In this section we again follow the definitions and methods detailed in \cite{bollobas2006short}. Firstly we introduce a powerful result due to Friedgut and Kalai \cite{friedgut1996every}.
+We now move onto proving Kesten's theorem, specifically that the critical value for the square lattice is less than or equal to a half. In this section we again follow the definitions and methods detailed in \cite{bollobas2006short}. Firstly we introduce a powerful result due to Friedgut and Kalai \cite{friedgut1996every}.
 We assume the reader has some basic group theory knowledge, although it is not critical to understanding.
 %%%%Proof read to here%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{definition}[Symmetric event]
 	An event $\mathcal{A} \subseteq \mathcal{P}(X)$ is symmetric if there is a permutation group  $G$ acting transitively on $\mathcal{P}(X)$ which preserves $\mathcal{A}$
 \end{definition}
- To explain briefly, the action of a group $G$ on a set $X$ is transitive if for all $x,y \in X$, there exists $g \in G$ such that $g \cdot  x = y$. This means G shuffles the elements of X, in essence given some $x \in X$ you can obtain any $y \in X$ by some $g \in G$. Then an event $\mathcal{A}$ being preserved under $G$ just means that if $A \in \mathcal{A}$ then there exists $g \in G$ such that $g(A) \in \mathcal{A}$. 
+ To explain briefly, the action of a group $G$ on a set $X$ is transitive if for all $x,y \in X$, there exists $g \in G$ such that $g \cdot  x = y$. This means G shuffles the elements of X, in essence given some $x \in X$ you can obtain any $y \in X$ by some $g \in G$. Then an event $\mathcal{A}$ being preserved under $G$ just means that if $A \in \mathcal{A}$ then there exists $g \in G$ such that $g \cdot A \in \mathcal{A}$. 
 
 
 \begin{theorem}[Friedgut-Kalai sharp threshold theorem]\label{sharpThreshold}
@@ -784,7 +784,14 @@ We assume the reader has some basic group theory knowledge, although it is not c
 	$$q - p \geq c_1 \frac{log(1/(2\epsilon))}{log |X|}$$
 \end{theorem}
 
-We do not give the proof since it is too long to include within the scope of this project, but the reader is recommended to view \cite{friedgut1996every} for details. This theorem tells us all symmetric increasing events have 'sharp threshold', meaning a small increase of order $1/log|X|$ to the parameter $p$ is enough to take the probability of the event from a value close 0 to nearly 1.
+We do not give the proof since it is too long to include within the scope of this project, but the reader is recommended to view \cite{friedgut1996every} for details. This theorem tells us all symmetric increasing events have 'sharp threshold', meaning a small increase of order $1/log|X|$ to the parameter $p$ is enough to take the probability of the event from a value close 0 to nearly 1, see Figure~\ref*{fig:sharpThreshold}.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.62]{drawings/sharpThreshold.png}
+	\caption{An example of a sharp threshold, plotted in red is the probability of some symmetric increasing event as the percolation parameter increases.}
+	\label{fig:sharpThreshold}
+\end{figure}
 
 Using the Friedgut-Kalai sharp threshold theorem we will now work to prove that when $p>1/2$ the probability of crossing rectangles larger than a certain size is close to 1.
 
@@ -805,11 +812,11 @@ Using the Friedgut-Kalai sharp threshold theorem we will now work to prove that 
 		\label{fig:torus}
 	\end{figure}
 
-	Now for $1 \leq k,l \leq n-2$, we define a $k$ by $l$ rectangle $R$ in $\mathbb{T}_n$ to be an induced subgraph in $\mathbb{T}_n$ which has an associated $k$ by $l$ rectangle $R' = [a,a+k] \times [b,b+l]$ in $\ints^2$, for some $a,b \in \ints$. Due to the restriction in size of $k$ and $l$ our rectangles in the torus never wrap around on themselves and thus always have an associated planar rectangle in $\ints^2$.
+	Now for $1 \leq k,l \leq n-2$, we define a $k$ by $l$ rectangle $R$ in $\mathbb{T}_n$ to be an induced subgraph in $\mathbb{T}_n$ which has an associated $k$ by $l$ rectangle $R' = [a,a+k] \times [b,b+l]$ in $\ints^2$, for some $a,b \in \ints$. Due to the restriction in size of $k$ and $l$, our rectangles in the torus never wrap around on themselves and thus always have an associated planar rectangle in $\ints^2$.
 	
 	We define Bernoulli bond percolation on $\mathbb{T}_n$ as you would expect, where each edge is open independently with probability $p$. We will write $\mathbb{P}^{\mathbb{T}_n}_{p} = \probtorus$ for the corresponding probability measure, dropping the $n$ when it is clear from the context for readability.
 	
-	Then define $E_n$ to be the event that $\mathbb{T}_{16n}$ admits a $14n$ by $2n$ rectangle with an open horizontal crossing, or it admits a $2n$ by $14n$ rectangle with an open vertical crossing. Now $E_n$ is a symmetric event on $\mathcal{P}(X)$ where $X$ is the edge set of the 16 by 16 torus, we note $|X| = 512n^2$. Suppose a fixed $14n$ by $2n$ rectangle R in $\mathbb{T}_{16n}$ and its corresponding rectangle $R'$ in $\ints^2$, we know 
+	Then define $E_n$ to be the event that $\mathbb{T}_{16n}$ admits a $14n$ by $2n$ rectangle with an open horizontal crossing, or it admits a $2n$ by $14n$ rectangle with an open vertical crossing. Now $E_n$ is a symmetric event on $\mathcal{P}(X)$ where $X$ is the edge set of the $16n$ by $16n$ torus, we note $|X| = 512n^2$. Suppose a fixed $14n$ by $2n$ rectangle $R$ in $\mathbb{T}_{16n}$ and its corresponding rectangle $R'$ in $\ints^2$, we know 
 	$$\probtorush(E_n) \geq \probtorush(H(R)) = \prbhlf(H(R')) \geq c_2$$
 	Now we aim to apply Theorem~\ref{sharpThreshold}, firstly setting $$\delta = \delta(p) = \frac{p-1/2}{64 c_1}$$
 	$$\epsilon = n^{-128 \delta}$$
@@ -829,9 +836,9 @@ Using the Friedgut-Kalai sharp threshold theorem we will now work to prove that 
 		\label{fig:rectangleOverlap}
 	\end{figure}
 
-	Then for each $i$ we can take complements of Harris' Lemma (Lemma~\ref*{harrisLemma}) to see that the decreasing events $E^c_{n,i}$ and $\cap_{j<i}E^c_{n,j}$ are positively correlated. Thus we see,
+	Then for each $i$ we can use the corollary of Harris' Lemma (Corollary~\ref*{negEventsPosCorrelated}) to get that the decreasing events $E^c_{n,i}$ and $\cap_{j<i}E^c_{n,j}$ are positively correlated. Thus we see,
 	$$\probtorus(E^c_n) \geq \probtorus\left(\bigcap^{128}_{i=1}E^c_{n,i}\right) \geq \prod_{i=1}^{128}\probtorus(E^c_{n,i}) = \probtorus(E^c_{n,1})^{128}$$
-	Where we have repeatedly applied Harris' Lemma to get the second inequality.
+	Where we have repeatedly applied Corollary~\ref*{negEventsPosCorrelated} to get the second inequality.
 	Now combining this with our earlier result that $\probtorus(E_n) \geq 1-n^{-128 \delta}$, we find that for $n> n_0$:
 	$$\probtorus(E_{n,1}^c) \leq \probtorus(E_n^c)^{1/128} \leq n^{- \delta}$$
 	Hence,
