@@ -14,9 +14,11 @@
 \usepackage{algpseudocode}
 \usepackage{pdflscape}
 
+
+
 \usepackage[UKenglish]{babel}
 \usepackage{csquotes}
-
+\usepackage{pdfpages}
 \usepackage[hidelinks]{hyperref}
 \hypersetup{
     colorlinks=false, %set true if you want colored links
@@ -86,6 +88,10 @@ Level 6\\
 \today
 \end{center}
 	
+\includepdf[pages=-]{project_sources_acknowledge.pdf}
+
+
+
 \title{Percolation}
 \author{Jonathan Marriott}
 \date{}
@@ -101,7 +107,7 @@ Level 6\\
 
 
 \section{Introduction}
-Originally the percolation model was devised to capture the physical properties of liquids flowing through porous mediums. The model introduced in 1957 by Broadbent and Hammersley \cite{broadbent_hammersley_1957} has produced a rich mathematical theory with wide-ranging applications in areas including disease spread \cite{meyers2007contact}, network robustness \cite{callaway2000network}, ferromagnetism \cite{aizenman1991strict} and forest fire spread \cite{stauffer2018introduction}.
+Originally the percolation model was devised to capture the physical properties of liquids flowing through porous media. The model introduced in 1957 by Broadbent and Hammersley \cite{broadbent_hammersley_1957} has produced a rich mathematical theory with wide-ranging applications in areas including disease spread \cite{meyers2007contact}, network robustness \cite{callaway2000network}, ferromagnetism \cite{aizenman1991strict} and forest fire spread \cite{stauffer2018introduction}.
 In this report we first introduce the percolation model, with no expectation on the reader to have a strong understanding of measure theory nor probability theory as the necessary definitions are included here. Subsequently, our main aim is to prove a key result in percolation theory - the Harris-Kesten Theorem. This theorem tells us the point at which percolation on the square lattice undergoes its phase transition, notably percolation is  one of the simplest mathematical models to exhibit such behaviour. Finally, we look at percolation through the lens of computer simulations, to see how one might investigate the critical behaviour in unknown graph structures.
 
 
